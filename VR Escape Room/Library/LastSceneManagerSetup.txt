@@ -1,0 +1,4 @@
+sceneSetups:
+- path: "Assets/Scenes/Menu g\u0142\xF3wne.unity"
+  isLoaded: 1
+  isActive: 1
