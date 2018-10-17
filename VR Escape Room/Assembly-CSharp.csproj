@@ -325,6 +325,24 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>E:/Programowanie/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="I18N.CJK">
+      <HintPath>E:/Programowanie/Projekty/VR_Escape_Room/VR Escape Room/Assets/Plugins/I18N.CJK.dll</HintPath>
+    </Reference>
+    <Reference Include="I18N">
+      <HintPath>E:/Programowanie/Projekty/VR_Escape_Room/VR Escape Room/Assets/Plugins/I18N.dll</HintPath>
+    </Reference>
+    <Reference Include="I18N.MidEast">
+      <HintPath>E:/Programowanie/Projekty/VR_Escape_Room/VR Escape Room/Assets/Plugins/I18N.MidEast.dll</HintPath>
+    </Reference>
+    <Reference Include="I18N.Other">
+      <HintPath>E:/Programowanie/Projekty/VR_Escape_Room/VR Escape Room/Assets/Plugins/I18N.Other.dll</HintPath>
+    </Reference>
+    <Reference Include="I18N.Rare">
+      <HintPath>E:/Programowanie/Projekty/VR_Escape_Room/VR Escape Room/Assets/Plugins/I18N.Rare.dll</HintPath>
+    </Reference>
+    <Reference Include="I18N.West">
+      <HintPath>E:/Programowanie/Projekty/VR_Escape_Room/VR Escape Room/Assets/Plugins/I18N.West.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Data.Sqlite">
       <HintPath>E:/Programowanie/Projekty/VR_Escape_Room/VR Escape Room/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
     </Reference>

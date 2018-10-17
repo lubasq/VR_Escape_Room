@@ -31,16 +31,21 @@ public class Login : MonoBehaviour
     public TMP_Text niezalogowanykomunikat;
     public GameObject zalogowany_;
     public GameObject niezalogowany_;
+
     // Use this for initialization
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void TaskOnClick()
+    {
+        LoginIn();
     }
 
     public void LoginIn()
@@ -71,7 +76,6 @@ public class Login : MonoBehaviour
             zalogowany.text = login.text;
             zalogowany_.SetActive(true);
             niezalogowany_.SetActive(false);
-            
         }
         else
         {
