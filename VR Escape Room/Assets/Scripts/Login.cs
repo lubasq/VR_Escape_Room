@@ -5,6 +5,7 @@ using TMPro;
 using Mono.Data.Sqlite;
 using System.Data;
 using System;
+using System.IO;
 
 public class User : IEquatable<User>
 {
@@ -43,15 +44,23 @@ public class Login : MonoBehaviour
 
     }
 
+
     public void TaskOnClick()
     {
         LoginIn();
     }
-
+        
     public void LoginIn()
     {
+        Debug.Log("1");
+        Debug.Log(Application.persistentDataPath);
+        Debug.Log("2");
+        Debug.Log(Application.dataPath);
+
+        
+
         List<User> uzytkownik = new List<User>();
-        string conn = "URI=file:" + Application.dataPath + "/Database.db"; //Path to database.
+        string conn = "URI=file:" + Application.dataPath + "/"+ "Database.db"; //Path to database.
         IDbConnection dbconn;
         dbconn = (IDbConnection)new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
