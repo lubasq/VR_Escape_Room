@@ -7,3 +7,5 @@ SQLiteDatabaseBrowserPortable
 
 checkproject
 1234qwer
+
+jdk nie wyzsze niz 1.8
