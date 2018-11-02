@@ -6,6 +6,10 @@ using Mono.Data.Sqlite;
 using System.Data;
 using System;
 using System.IO;
+using UnityEditor;
+
+
+
 
 public class User : IEquatable<User>
 {
@@ -30,18 +34,33 @@ public class Login : MonoBehaviour
     public TMP_InputField password;
     public TMP_Text zalogowany;
     public TMP_Text niezalogowanykomunikat;
+    public TMP_Text test;
     public GameObject zalogowany_;
     public GameObject niezalogowany_;
+    string conn;
 
     // Use this for initialization
     void Start()
     {
+#if UNITY_EDITOR
+        conn = "URI=file:" + Application.dataPath + "/StreamingAssets/" + "Database.db";
+#endif
+
+#if UNITY_ANDROID
+        string filepath = Application.persistentDataPath + "/" + "Database.db";
+        if (!File.Exists(filepath))
+        {
+            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/" + "Database.db");
+            while (!loadDB.isDone) { }
+            File.WriteAllBytes(filepath, loadDB.bytes);
+        }
+        conn = "URI=file:" + filepath;
+#endif
     }
 
     // Update is called once per frame
     void Update()
-    {
-
+    {        
     }
 
 
@@ -52,25 +71,22 @@ public class Login : MonoBehaviour
         
     public void LoginIn()
     {
-        Debug.Log("1");
-        Debug.Log(Application.persistentDataPath);
-        Debug.Log("2");
-        Debug.Log(Application.dataPath);
-
         
+        Debug.Log("Persistent" + Application.persistentDataPath);
+        Debug.Log("dataPath" + Application.dataPath);
 
         List<User> uzytkownik = new List<User>();
-        string conn = "URI=file:" + Application.dataPath + "/"+ "Database.db"; //Path to database.
-        IDbConnection dbconn;
-        dbconn = (IDbConnection)new SqliteConnection(conn);
-        dbconn.Open(); //Open connection to the database.
+
+        test.text = conn;
+
+        //IDbConnection dbconn;
+        SqliteConnection dbconn =  new SqliteConnection(conn);
+        dbconn.Open(); //Open connection to the database. TU SIE COS SYPIE I DALEJ NIE IDZIE
         IDbCommand dbcmd = dbconn.CreateCommand();
         string sqlQuery = "SELECT * FROM Users WHERE login = '" + login.text + "' AND password = '" + password.text + "';";
         Debug.Log(sqlQuery);
-        Debug.Log("I WAS HERE Pog");
         dbcmd.CommandText = sqlQuery;
         IDataReader reader = dbcmd.ExecuteReader();
-
         while (reader.Read())
         {
             uzytkownik.Add(new User() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
@@ -88,7 +104,7 @@ public class Login : MonoBehaviour
         }
         else
         {
-           niezalogowanykomunikat.text = "Niezalogowano :wykrzyknik:";
+           niezalogowanykomunikat.text = "Niezalogowano ;p";
         }
 
 

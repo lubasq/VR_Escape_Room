@@ -2,7 +2,7 @@ WindowsStandalone
 PlayerPath?
 C:/Users/Maydan/Desktop/Studia/Inżynierka/Builds/VR Escape Room.exe
 SceneListBegin?
-Assets/Scenes/Menu główne.unity
+Assets/Scenes/MainMenu.unity
 SceneListEnd?
 c422dd62785a6d0afa870fbd111886ce Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 7b803eb2910e9b4cd5e521ae07b9f7d6 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
