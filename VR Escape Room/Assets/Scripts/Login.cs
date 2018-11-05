@@ -37,32 +37,14 @@ public class Login : MonoBehaviour
     public TMP_Text test;
     public GameObject zalogowany_;
     public GameObject niezalogowany_;
-    string conn;
-
-    // Use this for initialization
+    
     void Start()
     {
-#if UNITY_EDITOR
-        conn = "URI=file:" + Application.dataPath + "/StreamingAssets/" + "Database.db";
-#endif
-
-#if UNITY_ANDROID
-        string filepath = Application.persistentDataPath + "/" + "Database.db";
-        if (!File.Exists(filepath))
-        {
-            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/" + "Database.db");
-            while (!loadDB.isDone) { }
-            File.WriteAllBytes(filepath, loadDB.bytes);
-        }
-        conn = "URI=file:" + filepath;
-#endif
     }
-
-    // Update is called once per frame
+    
     void Update()
     {        
     }
-
 
     public void TaskOnClick()
     {
@@ -70,34 +52,30 @@ public class Login : MonoBehaviour
     }
         
     public void LoginIn()
-    {
-        
+    {        
+        //sprawdzenie sciezek
         Debug.Log("Persistent" + Application.persistentDataPath);
         Debug.Log("dataPath" + Application.dataPath);
 
+        //pobierz dane
         List<User> uzytkownik = new List<User>();
-
-        test.text = conn;
-
-        //IDbConnection dbconn;
-        SqliteConnection dbconn =  new SqliteConnection(conn);
-        dbconn.Open(); //Open connection to the database. TU SIE COS SYPIE I DALEJ NIE IDZIE
-        IDbCommand dbcmd = dbconn.CreateCommand();
-        string sqlQuery = "SELECT * FROM Users WHERE login = '" + login.text + "' AND password = '" + password.text + "';";
-        Debug.Log(sqlQuery);
-        dbcmd.CommandText = sqlQuery;
-        IDataReader reader = dbcmd.ExecuteReader();
+        global::Database user = new global::Database();
+        IDataReader reader = user.DBSelect("Users", new string[] { "login", "password" }, new string[] { login.text, password.text });
+        
+        //odczytaj dane i zamień w liste
         while (reader.Read())
         {
             uzytkownik.Add(new User() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
         }
-        //Debug.Log(uzytkownik.Count);
+
+        //Zamknij połączenie z bazą danych, zniszcz obiekt 
+        user.DBClose();
+        user = null;
+        
+        //Sprawdź czy istnieją jakiekolwiek rekordy - jeżeli tak, to znaczy
+        //że jesteś zalogowany.
         if (uzytkownik.Count > 0)
-        {
-           /* foreach (User uzytkownika in uzytkownik)
-            {
-                Debug.Log("_id: " + uzytkownika._id);
-            }*/
+        {           
             zalogowany.text = login.text;
             zalogowany_.SetActive(true);
             niezalogowany_.SetActive(false);
@@ -106,13 +84,5 @@ public class Login : MonoBehaviour
         {
            niezalogowanykomunikat.text = "Niezalogowano ;p";
         }
-
-
-        reader.Close();
-        reader = null;
-        dbcmd.Dispose();
-        dbcmd = null;
-        dbconn.Close();
-        dbconn = null;
     }
 }

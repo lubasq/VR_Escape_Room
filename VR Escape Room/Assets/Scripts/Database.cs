@@ -1,4 +1,5 @@
 ﻿using Mono.Data.Sqlite;
+using System;
 using System.Data;
 using System.IO;
 using UnityEngine;
@@ -14,7 +15,8 @@ public class Database {
 
     // obiekty obsługujące wymiane danych z bazą
     private SqliteConnection DBConnetion;
-    private IDbCommand DBCommand;    
+    private IDbCommand DBCommand;
+    private IDataReader DBDataReader;
 
     //zmienne dostępowe
     private string baseFilePath;
@@ -25,11 +27,11 @@ public class Database {
     /// </summary>
     public Database()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
             connectionLink = "URI=file:" + Application.dataPath + "/StreamingAssets/" + "Database.db";
-        #endif  
+#endif
 
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
             baseFilePath = Application.persistentDataPath + "/" + "Database.db";
             if (!File.Exists(baseFilePath))
             {
@@ -38,9 +40,9 @@ public class Database {
                 File.WriteAllBytes(baseFilePath, loadDB.bytes);
             }
             connectionLink = "URI=file:" + baseFilePath;
-        #endif
+#endif
 
-        DBConnetion = new SqliteConnection(connectionLink);
+        DBConnetion = new SqliteConnection(String.Format("Data Source={0};Version=3;", Application.dataPath + "/StreamingAssets/" + "Database.db"));
         //byc moze to zalatwi problem z polaczeniem jezeli nadal bedzie
         // connectionLink = String.Format("Data Source={0};Version=3;", pathDB)
     }
@@ -54,36 +56,32 @@ public class Database {
     /// <param name="whereValues"> Wartości pól dla szukanych wynikow</param>
     /// <returns> Zwraca obiekt z wyszukanymi danymi</returns>
     public IDataReader DBSelect(string tableName, string[] whereColumns, string[] whereValues)
-    { 
-        IDataReader DBDataReader;
+    {
         string sqlQuery = "SELECT * FROM " + tableName;
 
-        if(whereColumns.Length > 0)
+        if (whereColumns.Length > 0)
         {
             sqlQuery += " WHERE ";
 
-            for (int i = 0; i > whereColumns.Length; i++)
+            for (int i = 0; i < whereColumns.Length; i++)
             {
                 sqlQuery += whereColumns[i] + "='" + whereValues[i] + "'";
 
-                if( (whereColumns.Length>1) && (i<whereColumns.Length-1) )
+                if ((whereColumns.Length > 1) && (i < whereColumns.Length - 1))
                 {
                     sqlQuery += " AND ";
                 }
             }
         }
-
+        
         //polacz sie z baza i wykonaj polecenie
         DBConnetion.Open();
-        DBCommand = DBCommand.CreateCommand();
+        DBCommand = DBConnetion.CreateCommand();
         DBCommand.CommandText = sqlQuery;
 
         //pobierz dane z bazy
         DBDataReader = DBCommand.ExecuteReader();
         
-        //wyczyszczenie zapytania do bazy i rozlaczenie
-        DBConnetion.Dispose();
-        DBConnetion.Close();
         return DBDataReader;
     }
 
@@ -97,9 +95,9 @@ public class Database {
     public bool DBInsert(string tableName, string[] columns, string[] values)
     {
 
-        string sqlQuery = "INSERT INTO " + tableName + "(";
+        string sqlQuery = "INSERT INTO " + tableName + " (";
 
-        for (int i = 0; i > columns.Length; i++)
+        for (int i = 0; i < columns.Length; i++)
         {
             sqlQuery += columns[i];
 
@@ -107,12 +105,12 @@ public class Database {
             {
                 sqlQuery += ", ";
             }
-            
+
         }
 
-        sqlQuery = ") VALUES (";
+        sqlQuery += ") VALUES (";
 
-        for (int i = 0; i > values.Length; i++)
+        for (int i = 0; i < values.Length; i++)
         {
             sqlQuery += "'" + values[i] + "'";
 
@@ -123,28 +121,35 @@ public class Database {
 
         }
 
-        sqlQuery += ");"
+        sqlQuery += ");";
         try
         {
-            IDataReader DBDataReader;
-
             //polacz sie z baza i wykonaj polecenie
             DBConnetion.Open();
-            DBCommand = DBCommand.CreateCommand();
+            DBCommand = DBConnetion.CreateCommand();
             DBCommand.CommandText = sqlQuery;
-
-            //wyczyszczenie zapytania do bazy i rozlaczenie
-            DBCommand.Dispose();
-            IDbCommand = null;
-            DBConnetion.Close();
-
+            DBDataReader = DBCommand.ExecuteReader();
+            
             return true;
         }
         catch (System.Exception e)
         {
-            Debug.Log("Problem z Insertem, " + e.ErrorCode)
+            Debug.Log("Problem z Insertem, " + e.ToString());
             return false;
         }
+    }
 
-
+    /// <summary>
+    /// Funkcja zamykająca połączenie i zerowanie informacji
+    /// w obiekcie.
+    /// </summary>
+    public void DBClose()
+    {
+        DBDataReader.Close();
+        DBDataReader = null;
+        DBCommand.Dispose();
+        DBCommand = null;
+        DBConnetion.Close();
+        DBConnetion = null;        
+    }
 }

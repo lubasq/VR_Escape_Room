@@ -17,26 +17,25 @@ public class Rejestracja : MonoBehaviour
     {
 
     }
-    // Use this for initialization
+
+    
     public void RegisterPlayer()
     {
-        string conn = "URI=file:" + Application.dataPath + "/StreamingAssets/Database.db"; //Path to database.
-        IDbConnection dbconn;
-        dbconn = (IDbConnection)new SqliteConnection(conn);
-        dbconn.Open(); //Open connection to the database.
-        IDbCommand dbcmd = dbconn.CreateCommand();
-        Debug.Log(email.text);
-        Debug.Log(login.text);
-        Debug.Log(password.text);
-        string sqlQuery = "INSERT INTO Users (login, password, email) VALUES ('" + login.text + "',' " + password.text + "' ,'" + email.text + "');";
-        dbcmd.CommandText = sqlQuery;
-        IDataReader reader = dbcmd.ExecuteReader();
+        //rejestrowanie użytkownika
+        global::Database register = new global::Database();
 
-        reader.Close();
-        reader = null;
-        dbcmd.Dispose();
-        dbcmd = null;
-        dbconn.Close();
-        dbconn = null;
+        if( register.DBInsert("Users", new string[] { "login", "password", "email" }, new string[] { login.text, password.text, email.text }) )
+        {
+            //Zarejestrowano pomyślnie
+        }
+        else
+        {
+            //Błąd podczas rejestracji
+        }
+
+        //Zamknij połączenie z bazą danych, zniszcz obiekt 
+        register.DBClose();
+        register = null;
+
     }
 }
