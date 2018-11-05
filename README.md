@@ -8,4 +8,6 @@ SQLiteDatabaseBrowserPortable
 checkproject
 1234qwer
 
-jdk nie wyzsze niz 1.8
+JDK nie wyzsze niz 1.8
+
+Wersja Unity: 2018.2.14 f1
