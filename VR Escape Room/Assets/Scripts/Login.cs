@@ -35,6 +35,8 @@ public class Login : MonoBehaviour
     public TMP_Text zalogowany;
     public TMP_Text niezalogowanykomunikat;
     public TMP_Text test;
+    public TMP_Text test2;
+    public TMP_Text test3;
     public GameObject zalogowany_;
     public GameObject niezalogowany_;
     
@@ -52,26 +54,22 @@ public class Login : MonoBehaviour
     }
         
     public void LoginIn()
-    {        
+    {
         //sprawdzenie sciezek
         Debug.Log("Persistent" + Application.persistentDataPath);
         Debug.Log("dataPath" + Application.dataPath);
-
         //pobierz dane
         List<User> uzytkownik = new List<User>();
         global::Database user = new global::Database();
         IDataReader reader = user.DBSelect("Users", new string[] { "login", "password" }, new string[] { login.text, password.text });
-        
         //odczytaj dane i zamień w liste
         while (reader.Read())
         {
             uzytkownik.Add(new User() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
         }
-
         //Zamknij połączenie z bazą danych, zniszcz obiekt 
         user.DBClose();
         user = null;
-        
         //Sprawdź czy istnieją jakiekolwiek rekordy - jeżeli tak, to znaczy
         //że jesteś zalogowany.
         if (uzytkownik.Count > 0)

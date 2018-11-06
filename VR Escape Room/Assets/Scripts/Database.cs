@@ -19,7 +19,7 @@ public class Database {
     private IDataReader DBDataReader;
 
     //zmienne dostępowe
-    private string connectionLink;
+    public string connectionLink;
 
     /// <summary>
     /// Konstruktor klasy
