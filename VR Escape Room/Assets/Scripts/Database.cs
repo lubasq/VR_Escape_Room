@@ -19,7 +19,6 @@ public class Database {
     private IDataReader DBDataReader;
 
     //zmienne dostępowe
-    private string baseFilePath;
     private string connectionLink;
 
     /// <summary>
@@ -27,22 +26,19 @@ public class Database {
     /// </summary>
     public Database()
     {
-#if UNITY_EDITOR
-            connectionLink = "URI=file:" + Application.dataPath + "/StreamingAssets/" + "Database.db";
-#endif
-
-#if UNITY_ANDROID
-            baseFilePath = Application.persistentDataPath + "/" + "Database.db";
-            if (!File.Exists(baseFilePath))
+        if (Application.platform != RuntimePlatform.Android) {
+            connectionLink = Application.dataPath + "/StreamingAssets/Database.db";
+        } else {
+            connectionLink = Application.persistentDataPath + "/Database.db";
+            if (!File.Exists(connectionLink))
             {
-                WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/" + "Database.db");
+                WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/Database.db");
                 while (!loadDB.isDone) { }
-                File.WriteAllBytes(baseFilePath, loadDB.bytes);
+                File.WriteAllBytes(connectionLink, loadDB.bytes);
             }
-            connectionLink = "URI=file:" + baseFilePath;
-#endif
+        }
 
-        DBConnetion = new SqliteConnection(String.Format("Data Source={0};Version=3;", Application.dataPath + "/StreamingAssets/" + "Database.db"));
+        DBConnetion = new SqliteConnection("URI=file:"+ connectionLink);
         //byc moze to zalatwi problem z polaczeniem jezeli nadal bedzie
         // connectionLink = String.Format("Data Source={0};Version=3;", pathDB)
     }
