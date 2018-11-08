@@ -10,15 +10,8 @@ public class MenuController : MonoBehaviour {
         Application.Quit();
     }
 
-    public void GameScene()
+    public void GameSceneLoader()
     {
-        //SceneManager.LoadScene("TestRoom", LoadSceneMode.Additive);
-        //SceneManager.LoadScene("TestRoom"); <- najpierw to spróbować@
-    }
-
-    public void MenuScene()
-    {
-        //SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
-        //SceneManager.LoadScene("MainMenu"); <- najpierw to spróbować@
+        SceneManager.LoadScene("TestRoom");
     }
 }
