@@ -32,13 +32,10 @@ public class Login : MonoBehaviour
 {
     public TMP_InputField login;
     public TMP_InputField password;
-    public TMP_Text zalogowany;
-    public TMP_Text niezalogowanykomunikat;
-    public TMP_Text test;
-    public TMP_Text test2;
-    public TMP_Text test3;
-    public GameObject zalogowany_;
-    public GameObject niezalogowany_;
+    public TMP_Text loggedIn;
+    public TMP_Text notLoggedIn;
+    public GameObject loggedScene;
+    public GameObject notLoggedScene;
     
     void Start()
     {
@@ -74,13 +71,13 @@ public class Login : MonoBehaviour
         //że jesteś zalogowany.
         if (uzytkownik.Count > 0)
         {           
-            zalogowany.text = login.text;
-            zalogowany_.SetActive(true);
-            niezalogowany_.SetActive(false);
+            loggedIn.text = login.text;
+            loggedScene.SetActive(true);
+            notLoggedScene.SetActive(false);
         }
         else
         {
-           niezalogowanykomunikat.text = "Niezalogowano ;p";
+           notLoggedIn.text = "Oops, something went wrong!\n Please check your login or password and try again!";
         }
     }
 }
