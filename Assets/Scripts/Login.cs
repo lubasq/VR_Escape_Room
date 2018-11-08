@@ -34,6 +34,7 @@ public class Login : MonoBehaviour
     public TMP_InputField password;
     public TMP_Text loggedIn;
     public TMP_Text notLoggedIn;
+    public TMP_Text test;
     public GameObject loggedScene;
     public GameObject notLoggedScene;
     
@@ -50,11 +51,11 @@ public class Login : MonoBehaviour
         LoginIn();
     }
         
-    public void LoginIn()
+    private void LoginIn()
     {
         //sprawdzenie sciezek
-        Debug.Log("Persistent" + Application.persistentDataPath);
-        Debug.Log("dataPath" + Application.dataPath);
+        Debug.Log("Persistent path: " + Application.persistentDataPath);
+        Debug.Log("dataPath path: " + Application.dataPath);
         //pobierz dane
         List<User> uzytkownik = new List<User>();
         global::Database user = new global::Database();
