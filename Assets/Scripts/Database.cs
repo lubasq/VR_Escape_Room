@@ -50,10 +50,18 @@ public class Database {
     /// <param name="tableName"> Nazwa przeszukiwanej tabeli</param>
     /// <param name="whereColumns"> Nazwy kolumn, według których ma być szukany wynik</param>
     /// <param name="whereValues"> Wartości pól dla szukanych wynikow</param>
+    /// <param name="joinTables"> Tabele do połączenia</param>
     /// <returns> Zwraca obiekt z wyszukanymi danymi</returns>
-    public IDataReader DBSelect(string tableName, string[] whereColumns, string[] whereValues)
+    public IDataReader DBSelect(string tableName, string[] whereColumns, string[] whereValues, string[] joinTables)
     {
-        string sqlQuery = "SELECT * FROM " + tableName;
+        string sqlQuery = "SELECT * FROM " + tableName + "AS " + tableName[0] + tableName[1];
+
+        for (int i = 0; i < whereColumns.Length; i++)
+        {
+            sqlQuery += "JOIN " + joinTables[i] + " AS " + (joinTables[i])[0] + (joinTables[i])[1] + " ON " +
+                        tableName[0] + tableName[1] + "." + joinTables[i] + "_id_" + joinTables[i].Remove(joinTables[i].Length - 1).ToLower +
+                        " = " + (joinTables[i])[0] + (joinTables[i])[1] + ".id_" +joinTables[i].Remove(joinTables[i].Length - 1).ToLower;
+        }
 
         if (whereColumns.Length > 0)
         {
@@ -61,7 +69,7 @@ public class Database {
 
             for (int i = 0; i < whereColumns.Length; i++)
             {
-                sqlQuery += whereColumns[i] + "='" + whereValues[i] + "'";
+                sqlQuery += tableName[0] + tableName[1] + "." + whereColumns[i] + "='" + whereValues[i] + "'";
 
                 if ((whereColumns.Length > 1) && (i < whereColumns.Length - 1))
                 {
