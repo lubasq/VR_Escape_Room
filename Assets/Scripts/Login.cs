@@ -59,7 +59,8 @@ public class Login : MonoBehaviour
         //pobierz dane
         List<User> uzytkownik = new List<User>();
         global::Database user = new global::Database();
-        IDataReader reader = user.DBSelect("Users", new string[] { "login", "password" }, new string[] { login.text, password.text });
+        IDataReader reader = user.DBSelect("Scores", new string[] { "Us.login", "Sc.game_time" }, new string[] {}, new string[] { login.text, password.text }, new string[] { "Users", "Levels" }, "");
+        reader = user.DBSelect("Users", new string[] {}, new string[] { "login", "password" }, new string[] { login.text, password.text }, new string[] {}, "");
         //odczytaj dane i zamień w liste
         while (reader.Read())
         {

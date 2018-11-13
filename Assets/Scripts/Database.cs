@@ -48,19 +48,38 @@ public class Database {
     /// Zapytanie budowane dynamicznie.
     /// </summary>
     /// <param name="tableName"> Nazwa przeszukiwanej tabeli</param>
+    /// <param name="selectedValues"> Nazwy kolumn, z których chcemy mieć informacje. Domyślnie *</param>
     /// <param name="whereColumns"> Nazwy kolumn, według których ma być szukany wynik</param>
     /// <param name="whereValues"> Wartości pól dla szukanych wynikow</param>
     /// <param name="joinTables"> Tabele do połączenia</param>
+    /// <param name="orderBy"> Uporządkowanie danych w tabeli</param>
     /// <returns> Zwraca obiekt z wyszukanymi danymi</returns>
-    public IDataReader DBSelect(string tableName, string[] whereColumns, string[] whereValues, string[] joinTables)
+    public IDataReader DBSelect(string tableName, string[] selectedValues, string[] whereColumns, string[] whereValues, string[] joinTables, string orderBy)
     {
-        string sqlQuery = "SELECT * FROM " + tableName + "AS " + tableName[0] + tableName[1];
-
-        for (int i = 0; i < whereColumns.Length; i++)
+        string sqlQuery = "SELECT ";
+        if (selectedValues.Length > 0)
         {
-            sqlQuery += "JOIN " + joinTables[i] + " AS " + (joinTables[i])[0] + (joinTables[i])[1] + " ON " +
-                        tableName[0] + tableName[1] + "." + joinTables[i] + "_id_" + joinTables[i].Remove(joinTables[i].Length - 1).ToLower +
-                        " = " + (joinTables[i])[0] + (joinTables[i])[1] + ".id_" +joinTables[i].Remove(joinTables[i].Length - 1).ToLower;
+            for (int i = 0; i < selectedValues.Length; i++)
+            {
+                sqlQuery += selectedValues[i];
+
+                if ((selectedValues.Length > 1) && (i < selectedValues.Length - 1))
+                {
+                    sqlQuery += ", ";
+                }
+            }
+        } 
+        else
+        {
+            sqlQuery += "*";
+        }
+            sqlQuery +=" FROM " + tableName + " AS " + tableName[0] + tableName[1];
+
+        for (int i = 0; i < joinTables.Length; i++)
+        {
+            sqlQuery += " JOIN " + joinTables[i] + " AS " + (joinTables[i])[0] + (joinTables[i])[1] + " ON " +
+                        tableName[0] + tableName[1] + "." + joinTables[i] + "_id_" + joinTables[i].Remove(joinTables[i].Length - 1).ToLower() +
+                        " = " + (joinTables[i])[0] + (joinTables[i])[1] + ".id_" +joinTables[i].Remove(joinTables[i].Length - 1).ToLower();
         }
 
         if (whereColumns.Length > 0)
@@ -69,7 +88,11 @@ public class Database {
 
             for (int i = 0; i < whereColumns.Length; i++)
             {
-                sqlQuery += tableName[0] + tableName[1] + "." + whereColumns[i] + "='" + whereValues[i] + "'";
+                if (joinTables.Length <= 0)
+                {
+                    sqlQuery += "" + tableName[0] + tableName[1] + ".";
+                }
+                sqlQuery += whereColumns[i] + "='" + whereValues[i] + "'";
 
                 if ((whereColumns.Length > 1) && (i < whereColumns.Length - 1))
                 {
@@ -77,7 +100,7 @@ public class Database {
                 }
             }
         }
-        
+        Debug.Log(sqlQuery);
         //polacz sie z baza i wykonaj polecenie
         DBConnetion.Open();
         DBCommand = DBConnetion.CreateCommand();
