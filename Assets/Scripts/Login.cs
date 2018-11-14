@@ -11,7 +11,7 @@ using UnityEditor;
 
 
 
-public class User : IEquatable<User>
+public class UserData : IEquatable<UserData>
 {
     public int _id { get; set; }
 
@@ -21,7 +21,7 @@ public class User : IEquatable<User>
 
     public string email { get; set; }
 
-    public bool Equals(User other)
+    public bool Equals(UserData other)
     {
         if (other == null) return false;
         return (this._id.Equals(other._id));
@@ -57,14 +57,14 @@ public class Login : MonoBehaviour
         Debug.Log("Persistent path: " + Application.persistentDataPath);
         Debug.Log("dataPath path: " + Application.dataPath);
         //pobierz dane
-        List<User> uzytkownik = new List<User>();
+        List<UserData> uzytkownik = new List<UserData>();
         global::Database user = new global::Database();
         IDataReader reader = user.DBSelect("Scores", new string[] { "Us.login", "Sc.game_time" }, new string[] {}, new string[] { login.text, password.text }, new string[] { "Users", "Levels" }, "");
         reader = user.DBSelect("Users", new string[] {}, new string[] { "login", "password" }, new string[] { login.text, password.text }, new string[] {}, "");
         //odczytaj dane i zamień w liste
         while (reader.Read())
         {
-            uzytkownik.Add(new User() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
+            uzytkownik.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
         }
         //Zamknij połączenie z bazą danych, zniszcz obiekt 
         user.DBClose();
