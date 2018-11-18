@@ -52,7 +52,7 @@ public class Database {
     /// <param name="whereColumns"> Nazwy kolumn, według których ma być szukany wynik</param>
     /// <param name="whereValues"> Wartości pól dla szukanych wynikow</param>
     /// <param name="joinTables"> Tabele do połączenia</param>
-    /// <param name="orderBy"> Uporządkowanie danych w tabeli</param>
+    /// <param name="orderBy"> Uporządkowanie danych w tabeli, podana pełna składnia bez ORDER BY</param>
     /// <returns> Zwraca obiekt z wyszukanymi danymi</returns>
     public IDataReader DBSelect(string tableName, string[] selectedValues, string[] whereColumns, string[] whereValues, string[] joinTables, string orderBy)
     {
@@ -100,6 +100,12 @@ public class Database {
                 }
             }
         }
+
+        if (orderBy.Length > 0)
+        {
+            sqlQuery += " ORDER BY " + orderBy;
+        }
+
         Debug.Log(sqlQuery);
         //polacz sie z baza i wykonaj polecenie
         DBConnetion.Open();
