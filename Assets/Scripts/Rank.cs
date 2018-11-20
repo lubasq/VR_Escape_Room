@@ -9,6 +9,8 @@ public class Rank : MonoBehaviour {
     public TMP_Text playersTime;
     public TMP_Text loggedPlayerPosition;
     public TMP_Text loggedPlayerTime;
+    public static string localLogin;
+    public TMP_Text loggedPlayerLogin;
 
     // Use this for initialization
     void Start () {
@@ -22,6 +24,7 @@ public class Rank : MonoBehaviour {
 
     private void RankOfBestPlayers()
     {
+        localLogin = Login.loginText;
         global::Database user = new global::Database();
         IDataReader reader = user.DBSelect("Scores", new string[] { "Us.login", "Sc.game_time" }, new string[] { }, new string[] { }, new string[] { "Users", "Levels" }, "Sc.game_time ASC LIMIT 10");
         string logins = "";
@@ -33,10 +36,10 @@ public class Rank : MonoBehaviour {
             times += reader.GetString(1) + "\n";
         }
 
-        if (!logins.Contains("user3"))
+        if (!logins.Contains(localLogin))
         {
-            //Debug.Log("dziala");
-            RankOfLoggedPlayer("user3");
+            Debug.Log(localLogin);
+            RankOfLoggedPlayer(localLogin);
         }
 
         playersLogin.text = logins;
@@ -62,6 +65,6 @@ public class Rank : MonoBehaviour {
             loggedPlayerPosition.text = position.ToString();
             loggedPlayerTime.text = time;
         }
-        
+        loggedPlayerLogin.text = Login.loginText;
     }
 }

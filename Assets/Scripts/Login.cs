@@ -34,7 +34,7 @@ public class Login : MonoBehaviour
     public TMP_InputField password;
     public TMP_Text loggedIn;
     public TMP_Text notLoggedIn;
-    public TMP_Text test;
+    public static string loginText;
     public GameObject loggedScene;
     public GameObject notLoggedScene;
     
@@ -76,6 +76,7 @@ public class Login : MonoBehaviour
             loggedIn.text = login.text;
             loggedScene.SetActive(true);
             notLoggedScene.SetActive(false);
+            loginText = login.text;
         }
         else
         {
