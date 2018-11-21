@@ -1,22 +1,17 @@
 /************************************************************************************
+Copyright : Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
 
-Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
-
-Licensed under the Oculus SDK License Version 3.4.1 (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
-otherwise accompanies this software in either electronic or hard copy form.
+Licensed under the Oculus Utilities SDK License Version 1.31 (the "License"); you may not use
+the Utilities SDK except in compliance with the License, which is provided at the time of installation
+or download, or which otherwise accompanies this software in either electronic or hard copy form.
 
 You may obtain a copy of the License at
+https://developer.oculus.com/licenses/utilities-1.31
 
-https://developer.oculus.com/licenses/sdk-3.4.1
-
-Unless required by applicable law or agreed to in writing, the Oculus SDK
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Unless required by applicable law or agreed to in writing, the Utilities SDK distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ANY KIND, either express or implied. See the License for the specific language governing
+permissions and limitations under the License.
 ************************************************************************************/
 
 #if UNITY_EDITOR
@@ -259,7 +254,7 @@ public class OVRLint : EditorWindow
 		// Should we recommend this?  Seems to be mutually exclusive w/ dynamic batching.
 		if (!PlayerSettings.graphicsJobs)
 		{
-			AddFix ("Optimize Graphics Jobs", "For CPU performance, please use graphics jobs.", delegate(UnityEngine.Object obj, bool last, int selected) 
+			AddFix ("Optimize Graphics Jobs", "For CPU performance, please use graphics jobs.", delegate(UnityEngine.Object obj, bool last, int selected)
 			{
 				PlayerSettings.graphicsJobs = true;
 			}, null, "Fix");
@@ -693,6 +688,19 @@ public class OVRLint : EditorWindow
 		if (clearCount > 2)
 		{
 			AddFix("Camera Clears", "Please use 2 or fewer clears.", null, null);
+		}
+
+		for (int i = 0; i < cameras.Length; ++i)
+		{
+			if (cameras[i].forceIntoRenderTexture)
+			{
+				AddFix("Optimize Mobile Rendering", "For GPU performance, please don't enable forceIntoRenderTexture on your camera, this might be a flag pollution created by post process stack you used before, \nif your post process had already been turned off, we strongly encourage you to disable forceIntoRenderTexture. If you still want to use post process for some reasons, \nyou can leave this one on, but be warned, enabling this flag will introduce huge GPU performance cost. To view your flag status, please turn on you inspector's debug mode",
+				delegate (UnityEngine.Object obj, bool last, int selected)
+				{
+					Camera thisCamera = (Camera)obj;
+					thisCamera.forceIntoRenderTexture = false;
+				}, cameras[i], "Disable forceIntoRenderTexture");
+			}
 		}
 	}
 

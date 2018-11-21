@@ -1,22 +1,17 @@
 /************************************************************************************
+Copyright : Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
 
-Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
-
-Licensed under the Oculus SDK License Version 3.4.1 (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
-otherwise accompanies this software in either electronic or hard copy form.
+Licensed under the Oculus Utilities SDK License Version 1.31 (the "License"); you may not use
+the Utilities SDK except in compliance with the License, which is provided at the time of installation
+or download, or which otherwise accompanies this software in either electronic or hard copy form.
 
 You may obtain a copy of the License at
+https://developer.oculus.com/licenses/utilities-1.31
 
-https://developer.oculus.com/licenses/sdk-3.4.1
-
-Unless required by applicable law or agreed to in writing, the Oculus SDK
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Unless required by applicable law or agreed to in writing, the Utilities SDK distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ANY KIND, either express or implied. See the License for the specific language governing
+permissions and limitations under the License.
 ************************************************************************************/
 
 using UnityEngine;
@@ -29,12 +24,12 @@ using System.Runtime.InteropServices;
 /// rendered as a TimeWarp overlay instead by drawing it into the eye buffer.
 /// This will take full advantage of the display resolution and avoid double
 /// resampling of the texture.
-/// 
+///
 /// We support 3 types of Overlay shapes right now
 ///		1. Quad : This is most common overlay type , you render a quad in Timewarp space.
 ///		2. Cylinder: [Mobile Only][Experimental], Display overlay as partial surface of a cylinder
 ///			* The cylinder's center will be your game object's center
-///			* We encoded the cylinder's parameters in transform.scale, 
+///			* We encoded the cylinder's parameters in transform.scale,
 ///				**[scale.z] is the radius of the cylinder
 ///				**[scale.y] is the height of the cylinder
 ///				**[scale.x] is the length of the arc of cylinder
@@ -46,7 +41,7 @@ using System.Runtime.InteropServices;
 ///		4. OffcenterCubemap: [Mobile Only] Display overlay as a cube map with a texture coordinate offset
 ///			* The actually sampling will looks like [color = texture(cubeLayerSampler, normalize(direction) + offset)] instead of [color = texture( cubeLayerSampler, direction )]
 ///			* The extra center offset can be feed from transform.position
-///			* Note: if transform.position's magnitude is greater than 1, which will cause some cube map pixel always invisible 
+///			* Note: if transform.position's magnitude is greater than 1, which will cause some cube map pixel always invisible
 ///					Which is usually not what people wanted, we don't kill the ability for developer to do so here, but will warn out.
 ///     5. Equirect: Display overlay as a 360-degree equirectangular skybox.
 /// </summary>
@@ -152,8 +147,8 @@ public class OVROverlay : MonoBehaviour
 	public ExternalSurfaceObjectCreated externalSurfaceObjectCreated;
 
 	/// <summary>
-	/// Use this function to set texture and texNativePtr when app is running 
-	/// GetNativeTexturePtr is a slow behavior, the value should be pre-cached 
+	/// Use this function to set texture and texNativePtr when app is running
+	/// GetNativeTexturePtr is a slow behavior, the value should be pre-cached
 	/// </summary>
 #if UNITY_2017_2_OR_NEWER
 	public void OverrideOverlayTextureInfo(Texture srcTexture, IntPtr nativePtr, UnityEngine.XR.XRNode node)
@@ -169,7 +164,7 @@ public class OVROverlay : MonoBehaviour
 
 		if (textures.Length <= index)
 			return;
-		
+
 		textures[index] = srcTexture;
 		texturePtrs[index] = nativePtr;
 
@@ -309,7 +304,7 @@ public class OVROverlay : MonoBehaviour
 		{
 			if (layerTextures[eyeId].swapChain == null)
 				layerTextures[eyeId].swapChain = new Texture[stageCount];
-			
+
 			if (layerTextures[eyeId].swapChainPtr == null)
 				layerTextures[eyeId].swapChainPtr = new IntPtr[stageCount];
 
@@ -414,7 +409,7 @@ public class OVROverlay : MonoBehaviour
 					var rt = textures[i] as RenderTexture;
 					if (rt && !rt.IsCreated())
 						rt.Create();
-					
+
 					layerTextures[i].appTexturePtr = (texturePtrs[i] != IntPtr.Zero) ? texturePtrs[i] : textures[i].GetNativeTexturePtr();
 
 					if (layerTextures[i].appTexturePtr != IntPtr.Zero)
@@ -480,7 +475,7 @@ public class OVROverlay : MonoBehaviour
 		{
 			if (tex2D.format == TextureFormat.RGBAHalf || tex2D.format == TextureFormat.RGBAFloat)
 				newDesc.Format = OVRPlugin.EyeTextureFormat.R16G16B16A16_FP;
-			
+
 			newDesc.MipLevels = tex2D.mipmapCount;
 		}
 
@@ -489,7 +484,7 @@ public class OVROverlay : MonoBehaviour
 		{
 			if (texCube.format == TextureFormat.RGBAHalf || texCube.format == TextureFormat.RGBAFloat)
 				newDesc.Format = OVRPlugin.EyeTextureFormat.R16G16B16A16_FP;
-			
+
 			newDesc.MipLevels = texCube.mipmapCount;
 		}
 
@@ -568,7 +563,7 @@ public class OVROverlay : MonoBehaviour
 				if (currentOverlayShape != OverlayShape.Cubemap && currentOverlayShape != OverlayShape.OffcenterCubemap)
 				{
 					tex2DMaterial.SetInt("_linearToSrgb", (!isHdr && dataIsLinear) ? 1 : 0);
-					
+
 					//Resolve, decompress, swizzle, etc not handled by simple CopyTexture.
 #if !UNITY_ANDROID || UNITY_EDITOR
 					// The PC compositor uses premultiplied alpha, so multiply it here.
@@ -583,7 +578,7 @@ public class OVROverlay : MonoBehaviour
 					for (int face = 0; face < 6; ++face)
 					{
 						cubeMaterial.SetInt("_linearToSrgb", (!isHdr && dataIsLinear) ? 1 : 0);
-						
+
 #if !UNITY_ANDROID || UNITY_EDITOR
 						// The PC compositor uses premultiplied alpha, so multiply it here.
 						cubeMaterial.SetInt("_premultiply", 1);
@@ -607,9 +602,9 @@ public class OVROverlay : MonoBehaviour
 	private bool SubmitLayer(bool overlay, bool headLocked, bool noDepthBufferTesting, OVRPose pose, Vector3 scale, int frameIndex)
 	{
 		int rightEyeIndex = (texturesPerStage >= 2) ? 1 : 0;
-		bool isOverlayVisible = OVRPlugin.EnqueueSubmitLayer(overlay, headLocked, noDepthBufferTesting, 
+		bool isOverlayVisible = OVRPlugin.EnqueueSubmitLayer(overlay, headLocked, noDepthBufferTesting,
 			isExternalSurface ? System.IntPtr.Zero : layerTextures[0].appTexturePtr,
-			isExternalSurface ? System.IntPtr.Zero : layerTextures[rightEyeIndex].appTexturePtr, 
+			isExternalSurface ? System.IntPtr.Zero : layerTextures[rightEyeIndex].appTexturePtr,
 			layerId, frameIndex, pose.flipZ().ToPosef(), scale.ToVector3f(), layerIndex, (OVRPlugin.OverlayShape)currentOverlayShape);
 
 		prevOverlayShape = currentOverlayShape;
@@ -652,7 +647,7 @@ public class OVROverlay : MonoBehaviour
 	{
 		if ((gameObject.hideFlags & HideFlags.DontSaveInBuild) != 0)
 			return;
-	
+
 		DestroyLayerTextures();
 		DestroyLayer();
 	}
@@ -733,7 +728,7 @@ public class OVROverlay : MonoBehaviour
 
 		if (layerIndex == -1 || layerId <= 0)
 			return;
-	
+
 		bool useMipmaps = (newDesc.MipLevels > 1);
 
 		createdLayer |= CreateLayerTextures(useMipmaps, newDesc.TextureSize, isHdr);
@@ -757,7 +752,7 @@ public class OVROverlay : MonoBehaviour
 		prevFrameIndex = frameIndex;
 		if (isDynamic)
 			++frameIndex;
-		
+
 		// Backward compatibility: show regular renderer if overlay isn't visible.
 		if (rend)
 			rend.enabled = !isOverlayVisible;

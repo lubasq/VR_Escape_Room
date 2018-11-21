@@ -102,16 +102,22 @@ class OVRPluginUpdater
 	}
 
 	private static bool restartPending = false;
+	private static bool unityRunningInBatchmode = false;
 	private static bool unityVersionSupportsAndroidUniversal = false;
 	private static bool enableAndroidUniversalSupport = true;
 
-    static OVRPluginUpdater()
+	static OVRPluginUpdater()
 	{
 		EditorApplication.delayCall += OnDelayCall;
 	}
 
 	static void OnDelayCall()
 	{
+		if (System.Environment.CommandLine.Contains("-batchmode"))
+		{
+			unityRunningInBatchmode = true;
+		}
+ 
 		if (enableAndroidUniversalSupport)
 		{
 #if UNITY_2018_1_OR_NEWER
@@ -266,10 +272,17 @@ class OVRPluginUpdater
 
 		return pluginVersion;
 	}
-	
+
 	private static bool ShouldAttemptPluginUpdate()
 	{
-		return !UnitySupportsEnabledAndroidPlugin() || (autoUpdateEnabled && !restartPending && !Application.isPlaying);
+		if (unityRunningInBatchmode)
+		{
+			return false;
+		}
+		else
+		{
+			return !UnitySupportsEnabledAndroidPlugin() || (autoUpdateEnabled && !restartPending && !Application.isPlaying);
+		}
 	}
 
 	private static void DisableAllUtilitiesPluginPackages()
@@ -417,18 +430,38 @@ class OVRPluginUpdater
 
 		if (enabledUtilsPluginPkg == null)
 		{
-			if (EditorUtility.DisplayDialog("Disable Oculus Utilities Plugin", "The OVRPlugin included with Oculus Utilities is already disabled. The OVRPlugin bundled with the Unity Editor will continue to be used.\n\nBundled version: " + bundledPluginPkg.Version, "Ok", ""))
+			if (unityRunningInBatchmode
+				|| EditorUtility.DisplayDialog("Disable Oculus Utilities Plugin",
+					"The OVRPlugin included with Oculus Utilities is already disabled."
+						+ " The OVRPlugin bundled with the Unity Editor will continue to be used.\n\n"
+						+ "Bundled version: "
+						+ bundledPluginPkg.Version,
+					"Ok",
+					""))
 			{
 				return;
 			}
 		}
 		else
 		{
-			if (EditorUtility.DisplayDialog("Disable Oculus Utilities Plugin", "Do you want to disable the OVRPlugin included with Oculus Utilities and revert to the OVRPlugin bundled with the Unity Editor?\n\nCurrent version: " + enabledUtilsPluginPkg.Version + "\nBundled version: " + bundledPluginPkg.Version, "Yes", "No"))
+			if (unityRunningInBatchmode
+				|| EditorUtility.DisplayDialog("Disable Oculus Utilities Plugin",
+					"Do you want to disable the OVRPlugin included with Oculus Utilities and revert to the OVRPlugin bundled with the Unity Editor?\n\n"
+						+ "Current version: " + enabledUtilsPluginPkg.Version
+						+ "\nBundled version: " + bundledPluginPkg.Version,
+					"Yes",
+					"No"))
 			{
 				DisableAllUtilitiesPluginPackages();
 
-				if (EditorUtility.DisplayDialog("Restart Unity", "OVRPlugin has been updated to " + bundledPluginPkg.Version + ".\n\nPlease restart the Unity Editor to complete the update process. You may need to manually relaunch Unity if you are using Unity 5.6 and higher.", "Restart", "Not Now"))
+				if (unityRunningInBatchmode
+					|| EditorUtility.DisplayDialog("Restart Unity",
+						"OVRPlugin has been updated to "
+							+ bundledPluginPkg.Version
+							+ ".\n\nPlease restart the Unity Editor to complete the update process."
+							+ " You may need to manually relaunch Unity if you are using Unity 5.6 and higher.",
+						"Restart",
+						"Not Now"))
 				{
 					RestartUnityEditor();
 				}
@@ -439,13 +472,20 @@ class OVRPluginUpdater
 	[MenuItem("Tools/Oculus/Update OVR Utilities Plugin")]
 	private static void RunPluginUpdate()
 	{
+		autoUpdateEnabled = true;
+		AttemptPluginUpdate(false);
+	}
+
+	// Separate entry point needed since "-executeMethod" does not support parameters or default parameter values
+	private static void BatchmodePluginUpdate()
+	{
+		OnDelayCall(); // manually invoke when running editor in batchmode
 		AttemptPluginUpdate(false);
 	}
 
 	private static void AttemptPluginUpdate(bool triggeredByAutoUpdate)
 	{
 		OVRPlugin.SendEvent("attempt_plugin_update_auto", triggeredByAutoUpdate.ToString());
-		autoUpdateEnabled = true;
 
 		PluginPackage bundledPluginPkg = GetBundledPluginPackage();
 		List<PluginPackage> allUtilsPluginPkgs = GetAllUtilitiesPluginPackages();
@@ -495,9 +535,14 @@ class OVRPluginUpdater
 
 		if (targetPluginPkg == null)
 		{
-			if (!triggeredByAutoUpdate)
+			if (!triggeredByAutoUpdate && !unityRunningInBatchmode)
 			{
-				EditorUtility.DisplayDialog("Update Oculus Utilities Plugin", "OVRPlugin is already up to date.\n\nCurrent version: " + currentPluginPkg.Version + "\nBundled version: " + bundledPluginPkg.Version, "Ok", "");
+				EditorUtility.DisplayDialog("Update Oculus Utilities Plugin",
+					"OVRPlugin is already up to date.\n\nCurrent version: "
+						+ currentPluginPkg.Version + "\nBundled version: "
+						+ bundledPluginPkg.Version,
+					"Ok",
+					"");
 			}
 
 			return; // No update necessary.
@@ -505,33 +550,47 @@ class OVRPluginUpdater
 
 		System.Version targetVersion = targetPluginPkg.Version;
 
-		string dialogBody = "Oculus Utilities has detected that a newer OVRPlugin is available. Using the newest version is recommended. Do you want to enable it?\n\nCurrent version: "
-			+ currentPluginPkg.Version
-			+ "\nAvailable version: "
-			+ targetVersion;
-		
-		if (reenableCurrentPluginPkg)
-		{
-			dialogBody = "Oculus Utilities has detected a configuration change that requires re-enabling the current OVRPlugin. Do you want to proceed?\n\nCurrent version: "
-				+ currentPluginPkg.Version;
-		}
-
-		int dialogResult = EditorUtility.DisplayDialogComplex("Update Oculus Utilities Plugin", dialogBody, "Yes", "No, Don't Ask Again", "No");
-
 		bool userAcceptsUpdate = false;
 
-		switch (dialogResult)
+		if (unityRunningInBatchmode)
 		{
-			case 0: // "Yes"
-				userAcceptsUpdate = true;
-				break;
-			case 1: // "No, Don't Ask Again"
-				autoUpdateEnabled = false;
+			userAcceptsUpdate = true;
+		}
+		else
+		{
+			string dialogBody = "Oculus Utilities has detected that a newer OVRPlugin is available."
+				+ " Using the newest version is recommended. Do you want to enable it?\n\n"
+				+ "Current version: "
+				+ currentPluginPkg.Version
+				+ "\nAvailable version: "
+				+ targetVersion;
 
-				EditorUtility.DisplayDialog("Oculus Utilities OVRPlugin", "To manually update in the future, use the following menu option:\n\n[Tools -> Oculus -> Update OVR Utilities Plugin]", "Ok", "");
-				return;
-			case 2: // "No"
-				return;
+			if (reenableCurrentPluginPkg)
+			{
+				dialogBody = "Oculus Utilities has detected a configuration change that requires re-enabling the current OVRPlugin."
+					+ " Do you want to proceed?\n\nCurrent version: "
+					+ currentPluginPkg.Version;
+			}
+
+			int dialogResult = EditorUtility.DisplayDialogComplex("Update Oculus Utilities Plugin", dialogBody, "Yes", "No, Don't Ask Again", "No");
+
+			switch (dialogResult)
+			{
+				case 0: // "Yes"
+					userAcceptsUpdate = true;
+					break;
+				case 1: // "No, Don't Ask Again"
+					autoUpdateEnabled = false;
+
+					EditorUtility.DisplayDialog("Oculus Utilities OVRPlugin",
+						"To manually update in the future, use the following menu option:\n\n"
+							+ "[Tools -> Oculus -> Update OVR Utilities Plugin]",
+						"Ok",
+						"");
+					return;
+				case 2: // "No"
+					return;
+			}
 		}
 
 		if (userAcceptsUpdate)
@@ -543,7 +602,14 @@ class OVRPluginUpdater
 				EnablePluginPackage(targetPluginPkg);
 			}
 
-			if (EditorUtility.DisplayDialog("Restart Unity", "OVRPlugin has been updated to " + targetPluginPkg.Version + ".\n\nPlease restart the Unity Editor to complete the update process. You may need to manually relaunch Unity if you are using Unity 5.6 and higher.", "Restart", "Not Now"))
+			if (unityRunningInBatchmode
+				|| EditorUtility.DisplayDialog("Restart Unity",
+					"OVRPlugin has been updated to "
+						+ targetPluginPkg.Version
+						+ ".\n\nPlease restart the Unity Editor to complete the update process."
+						+ " You may need to manually relaunch Unity if you are using Unity 5.6 and higher.",
+					"Restart",
+					"Not Now"))
 			{
 				RestartUnityEditor();
 			}
@@ -576,7 +642,14 @@ class OVRPluginUpdater
 
 	private static void RestartUnityEditor()
 	{
-		restartPending = true;
-		EditorApplication.OpenProject(GetCurrentProjectPath());
+		if (unityRunningInBatchmode)
+		{
+			EditorApplication.Exit(0);
+		}
+		else
+		{
+			restartPending = true;
+			EditorApplication.OpenProject(GetCurrentProjectPath());
+		}
 	}
 }

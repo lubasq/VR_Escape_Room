@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 using Oculus.Avatar;

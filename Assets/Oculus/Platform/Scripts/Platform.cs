@@ -908,6 +908,10 @@ namespace Oculus.Platform
   {
   }
 
+  public static partial class Cal
+  {
+  }
+
   public static partial class CloudStorage
   {
     /// Deletes the specified save data buffer. Conflicts are handled just like
@@ -1153,6 +1157,24 @@ namespace Oculus.Platform
       if (Core.IsInitialized())
       {
         return new Request<Models.AssetDetails>(CAPI.ovr_LanguagePack_GetCurrent());
+      }
+
+      return null;
+    }
+
+    /// Sets the current language to specified. The parameter is the BCP47 language
+    /// tag. If a language pack is not downloaded yet, spawns automatically the
+    /// AssetFile.DownloadByName() request, and sends periodic
+    /// MessageType.Notification_AssetFile_DownloadUpdate to track the downloads.
+    /// Once the language asset file is downloaded, call LanguagePack.GetCurrent()
+    /// to retrive the data, and use the language at runtime.
+    /// \param tag BCP47 language tag
+    ///
+    public static Request<Models.AssetFileDownloadResult> SetCurrent(string tag)
+    {
+      if (Core.IsInitialized())
+      {
+        return new Request<Models.AssetFileDownloadResult>(CAPI.ovr_LanguagePack_SetCurrent(tag));
       }
 
       return null;

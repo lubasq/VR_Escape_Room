@@ -1,22 +1,15 @@
 /************************************************************************************
+Copyright : Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
 
-Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
+Licensed under the Oculus Utilities SDK License Version 1.31 (the "License"); you may not use
+the Utilities SDK except in compliance with the License, which is provided at the time of installation
+or download, or which otherwise accompanies this software in either electronic or hard copy form.
+You may obtain a copy of the License at https://developer.oculus.com/licenses/utilities-1.31
 
-Licensed under the Oculus SDK License Version 3.4.1 (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
-otherwise accompanies this software in either electronic or hard copy form.
-
-You may obtain a copy of the License at
-
-https://developer.oculus.com/licenses/sdk-3.4.1
-
-Unless required by applicable law or agreed to in writing, the Oculus SDK
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Unless required by applicable law or agreed to in writing, the Utilities SDK distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ANY KIND, either express or implied. See the License for the specific language governing
+permissions and limitations under the License.
 ************************************************************************************/
 
 using System;
@@ -84,7 +77,7 @@ public class OVRPlayerController : MonoBehaviour
 	/// Modifies the strength of gravity.
 	/// </summary>
 	public float GravityModifier = 0.379f;
-	
+
 	/// <summary>
 	/// If true, each OVRPlayerController will use the player's physical height.
 	/// </summary>
@@ -104,8 +97,8 @@ public class OVRPlayerController : MonoBehaviour
 	public event Action<Transform> TransformUpdated;
 
 	/// <summary>
-	/// This bool is set to true whenever the player controller has been teleported. It is reset after every frame. Some systems, such as 
-	/// CharacterCameraConstraint, test this boolean in order to disable logic that moves the character controller immediately 
+	/// This bool is set to true whenever the player controller has been teleported. It is reset after every frame. Some systems, such as
+	/// CharacterCameraConstraint, test this boolean in order to disable logic that moves the character controller immediately
 	/// following the teleport.
 	/// </summary>
 	[NonSerialized] // This doesn't need to be visible in the inspector.
@@ -117,7 +110,7 @@ public class OVRPlayerController : MonoBehaviour
 	public event Action CameraUpdated;
 
 	/// <summary>
-	/// This event is raised right before the character controller is actually moved in order to provide other systems the opportunity to 
+	/// This event is raised right before the character controller is actually moved in order to provide other systems the opportunity to
 	/// move the character controller in response to things other than user input, such as movement of the HMD. See CharacterCameraConstraint.cs
 	/// for an example of this.
 	/// </summary>
@@ -590,4 +583,3 @@ public class OVRPlayerController : MonoBehaviour
 		}
 	}
 }
-

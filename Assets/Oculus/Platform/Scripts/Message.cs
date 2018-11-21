@@ -108,6 +108,7 @@ namespace Oculus.Platform
       IAP_GetViewerPurchases                              = 0x3A0F8419,
       IAP_LaunchCheckoutFlow                              = 0x3F9B0D0D,
       LanguagePack_GetCurrent                             = 0x1F90F0D5,
+      LanguagePack_SetCurrent                             = 0x5B4FBBE0,
       Leaderboard_GetEntries                              = 0x5DB3474C,
       Leaderboard_GetEntriesAfterRank                     = 0x18378BEF,
       Leaderboard_GetNextEntries                          = 0x4E207CD9,
@@ -180,6 +181,12 @@ namespace Oculus.Platform
 
       /// Sent to indicate download progress for asset files.
       Notification_AssetFile_DownloadUpdate = 0x2FDD0CCD,
+
+      /// Result of a leader picking an application for CAL launch.
+      Notification_Cal_FinalizeApplication = 0x750C5099,
+
+      /// Application that the group leader has proposed for a CAL launch.
+      Notification_Cal_ProposeApplication = 0x2E7451F5,
 
       /// Sent to indicate that more data has been read or an error occured.
       Notification_HTTP_Transfer = 0x7DD46E2F,
@@ -277,6 +284,9 @@ namespace Oculus.Platform
     public virtual AssetFileDownloadCancelResult GetAssetFileDownloadCancelResult() { return null; }
     public virtual AssetFileDownloadResult GetAssetFileDownloadResult() { return null; }
     public virtual AssetFileDownloadUpdate GetAssetFileDownloadUpdate() { return null; }
+    public virtual CalApplicationFinalized GetCalApplicationFinalized() { return null; }
+    public virtual CalApplicationProposed GetCalApplicationProposed() { return null; }
+    public virtual CalApplicationSuggestionList GetCalApplicationSuggestionList() { return null; }
     public virtual CloudStorageConflictMetadata GetCloudStorageConflictMetadata() { return null; }
     public virtual CloudStorageData GetCloudStorageData() { return null; }
     public virtual CloudStorageMetadata GetCloudStorageMetadata() { return null; }
@@ -285,6 +295,7 @@ namespace Oculus.Platform
     public virtual InstalledApplicationList GetInstalledApplicationList() { return null; }
     public virtual LaunchBlockFlowResult GetLaunchBlockFlowResult() { return null; }
     public virtual LaunchFriendRequestFlowResult GetLaunchFriendRequestFlowResult() { return null; }
+    public virtual LaunchReportFlowResult GetLaunchReportFlowResult() { return null; }
     public virtual LaunchUnblockFlowResult GetLaunchUnblockFlowResult() { return null; }
     public virtual bool GetLeaderboardDidUpdate() { return false; }
     public virtual LeaderboardEntryList GetLeaderboardEntryList() { return null; }
@@ -380,11 +391,20 @@ namespace Oculus.Platform
         case Message.MessageType.AssetFile_Download:
         case Message.MessageType.AssetFile_DownloadById:
         case Message.MessageType.AssetFile_DownloadByName:
+        case Message.MessageType.LanguagePack_SetCurrent:
           message = new MessageWithAssetFileDownloadResult(messageHandle);
           break;
 
         case Message.MessageType.Notification_AssetFile_DownloadUpdate:
           message = new MessageWithAssetFileDownloadUpdate(messageHandle);
+          break;
+
+        case Message.MessageType.Notification_Cal_FinalizeApplication:
+          message = new MessageWithCalApplicationFinalized(messageHandle);
+          break;
+
+        case Message.MessageType.Notification_Cal_ProposeApplication:
+          message = new MessageWithCalApplicationProposed(messageHandle);
           break;
 
         case Message.MessageType.CloudStorage_LoadConflictMetadata:
@@ -779,6 +799,42 @@ namespace Oculus.Platform
     }
 
   }
+  public class MessageWithCalApplicationFinalized : Message<CalApplicationFinalized>
+  {
+    public MessageWithCalApplicationFinalized(IntPtr c_message) : base(c_message) { }
+    public override CalApplicationFinalized GetCalApplicationFinalized() { return Data; }
+    protected override CalApplicationFinalized GetDataFromMessage(IntPtr c_message)
+    {
+      var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
+      var obj = CAPI.ovr_Message_GetCalApplicationFinalized(msg);
+      return new CalApplicationFinalized(obj);
+    }
+
+  }
+  public class MessageWithCalApplicationProposed : Message<CalApplicationProposed>
+  {
+    public MessageWithCalApplicationProposed(IntPtr c_message) : base(c_message) { }
+    public override CalApplicationProposed GetCalApplicationProposed() { return Data; }
+    protected override CalApplicationProposed GetDataFromMessage(IntPtr c_message)
+    {
+      var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
+      var obj = CAPI.ovr_Message_GetCalApplicationProposed(msg);
+      return new CalApplicationProposed(obj);
+    }
+
+  }
+  public class MessageWithCalApplicationSuggestionList : Message<CalApplicationSuggestionList>
+  {
+    public MessageWithCalApplicationSuggestionList(IntPtr c_message) : base(c_message) { }
+    public override CalApplicationSuggestionList GetCalApplicationSuggestionList() { return Data; }
+    protected override CalApplicationSuggestionList GetDataFromMessage(IntPtr c_message)
+    {
+      var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
+      var obj = CAPI.ovr_Message_GetCalApplicationSuggestionArray(msg);
+      return new CalApplicationSuggestionList(obj);
+    }
+
+  }
   public class MessageWithCloudStorageConflictMetadata : Message<CloudStorageConflictMetadata>
   {
     public MessageWithCloudStorageConflictMetadata(IntPtr c_message) : base(c_message) { }
@@ -872,6 +928,18 @@ namespace Oculus.Platform
       var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
       var obj = CAPI.ovr_Message_GetLaunchFriendRequestFlowResult(msg);
       return new LaunchFriendRequestFlowResult(obj);
+    }
+
+  }
+  public class MessageWithLaunchReportFlowResult : Message<LaunchReportFlowResult>
+  {
+    public MessageWithLaunchReportFlowResult(IntPtr c_message) : base(c_message) { }
+    public override LaunchReportFlowResult GetLaunchReportFlowResult() { return Data; }
+    protected override LaunchReportFlowResult GetDataFromMessage(IntPtr c_message)
+    {
+      var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
+      var obj = CAPI.ovr_Message_GetLaunchReportFlowResult(msg);
+      return new LaunchReportFlowResult(obj);
     }
 
   }

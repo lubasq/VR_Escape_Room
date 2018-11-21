@@ -1,24 +1,19 @@
-﻿/************************************************************************************
+/************************************************************************************
+Copyright : Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
 
-Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
-
-Licensed under the Oculus SDK License Version 3.4.1 (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
-otherwise accompanies this software in either electronic or hard copy form.
+Licensed under the Oculus Utilities SDK License Version 1.31 (the "License"); you may not use
+the Utilities SDK except in compliance with the License, which is provided at the time of installation
+or download, or which otherwise accompanies this software in either electronic or hard copy form.
 
 You may obtain a copy of the License at
+https://developer.oculus.com/licenses/utilities-1.31
 
-https://developer.oculus.com/licenses/sdk-3.4.1
-
-
-Unless required by applicable law or agreed to in writing, the Oculus SDK
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Unless required by applicable law or agreed to in writing, the Utilities SDK distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ANY KIND, either express or implied. See the License for the specific language governing
+permissions and limitations under the License.
 ************************************************************************************/
+
 
 using UnityEngine;
 using System.Collections;
@@ -86,8 +81,8 @@ public class OVRGazePointer : MonoBehaviour {
     private OVRProgressIndicator progressIndicator;
 
     private static OVRGazePointer _instance;
-    public static OVRGazePointer instance 
-    { 
+    public static OVRGazePointer instance
+    {
         // If there's no GazePointer already in the scene, instanciate one now.
         get
         {
@@ -98,20 +93,20 @@ public class OVRGazePointer : MonoBehaviour {
             }
             return _instance;
         }
-            
+
     }
 
 
     /// <summary>
     /// Used to determine alpha level of gaze cursor. Could also be used to determine cursor size, for example, as the cursor fades out.
     /// </summary>
-    public float visibilityStrength 
-    { 
-        get 
+    public float visibilityStrength
+    {
+        get
         {
-            // It's possible there are reasons to show the cursor - such as it hovering over some UI - and reasons to hide 
+            // It's possible there are reasons to show the cursor - such as it hovering over some UI - and reasons to hide
             // the cursor - such as another input method (e.g. mouse) being used. We take both of these in to account.
-            
+
 
             float strengthFromShowRequest;
             if (hideByDefault)
@@ -127,13 +122,13 @@ public class OVRGazePointer : MonoBehaviour {
 
             // Now consider factors requesting pointer to be hidden
             float strengthFromHideRequest;
-            
+
             strengthFromHideRequest = (lastHideRequestTime + hideTimeoutPeriod > Time.time) ? (dimOnHideRequest ? 0.1f : 0) : 1;
-            
+
 
             // Hide requests take priority
             return Mathf.Min(strengthFromShowRequest, strengthFromHideRequest);
-        } 
+        }
     }
 
     public float SelectionProgress
@@ -165,12 +160,12 @@ public class OVRGazePointer : MonoBehaviour {
 		gazeIcon = transform.Find("GazeIcon");
         progressIndicator = transform.GetComponent<OVRProgressIndicator>();
     }
-    
-    void Update () 
+
+    void Update ()
     {
 		if (rayTransform == null && Camera.main != null)
 			rayTransform = Camera.main.transform;
-		
+
         // Move the gaze cursor to keep it in the middle of the view
         transform.position = rayTransform.position + rayTransform.forward * depth;
 
@@ -193,7 +188,7 @@ public class OVRGazePointer : MonoBehaviour {
     public void SetPosition(Vector3 pos, Vector3 normal)
     {
         transform.position = pos;
-        
+
         // Set the rotation to match the normal of the surface it's on.
         Quaternion newRot = transform.rotation;
         newRot.SetLookRotation(normal, rayTransform.up);

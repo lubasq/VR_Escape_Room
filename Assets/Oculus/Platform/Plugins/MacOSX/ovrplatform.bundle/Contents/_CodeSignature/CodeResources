@@ -13,6 +13,10 @@
 	<dict>
 		<key>Resources/darwin-x86_64/liboculus_p2p.dylib</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			QLqWrFkjKvpYBdXZLLjN1SP9rdE=
+			</data>
 			<key>hash2</key>
 			<data>
 			0cFSOY1JRQxYH8BXxfQpCWxuZXUcea92du8tjeNOJCg=

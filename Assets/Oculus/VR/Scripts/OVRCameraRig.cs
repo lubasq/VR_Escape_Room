@@ -1,22 +1,17 @@
 /************************************************************************************
+Copyright : Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
 
-Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
-
-Licensed under the Oculus SDK License Version 3.4.1 (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
-otherwise accompanies this software in either electronic or hard copy form.
+Licensed under the Oculus Utilities SDK License Version 1.31 (the "License"); you may not use
+the Utilities SDK except in compliance with the License, which is provided at the time of installation
+or download, or which otherwise accompanies this software in either electronic or hard copy form.
 
 You may obtain a copy of the License at
+https://developer.oculus.com/licenses/utilities-1.31
 
-https://developer.oculus.com/licenses/sdk-3.4.1
-
-Unless required by applicable law or agreed to in writing, the Oculus SDK
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Unless required by applicable law or agreed to in writing, the Utilities SDK distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ANY KIND, either express or implied. See the License for the specific language governing
+permissions and limitations under the License.
 ************************************************************************************/
 
 using System;
@@ -71,6 +66,14 @@ public class OVRCameraRig : MonoBehaviour
 	/// </summary>
 	public Transform rightHandAnchor { get; private set; }
 	/// <summary>
+	/// Anchors controller pose to fix offset issues for the left hand.
+	/// </summary>
+	public Transform leftControllerAnchor { get; private set; }
+	/// <summary>
+	/// Anchors controller pose to fix offset issues for the right hand.
+	/// </summary>
+	public Transform rightControllerAnchor { get; private set; }
+	/// <summary>
 	/// Always coincides with the pose of the sensor.
 	/// </summary>
 	public Transform trackerAnchor { get; private set; }
@@ -96,6 +99,8 @@ public class OVRCameraRig : MonoBehaviour
 	protected readonly string rightEyeAnchorName = "RightEyeAnchor";
 	protected readonly string leftHandAnchorName = "LeftHandAnchor";
 	protected readonly string rightHandAnchorName = "RightHandAnchor";
+	protected readonly string leftControllerAnchorName = "LeftControllerAnchor";
+	protected readonly string rightControllerAnchorName = "RightControllerAnchor";
 	protected Camera _centerEyeCamera;
 	protected Camera _leftEyeCamera;
 	protected Camera _rightEyeCamera;
@@ -156,8 +161,21 @@ public class OVRCameraRig : MonoBehaviour
 		leftEyeAnchor.localRotation = (!hmdPresent || monoscopic) ? centerEyeAnchor.localRotation : InputTracking.GetLocalRotation(Node.LeftEye);
 		rightEyeAnchor.localRotation = (!hmdPresent || monoscopic) ? centerEyeAnchor.localRotation : InputTracking.GetLocalRotation(Node.RightEye);
 
-		leftHandAnchor.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
-		rightHandAnchor.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
+		//Need this for controller offset because if we're on OpenVR, we want to set the local poses as specified by Unity, but if we're not, OVRInput local position is the right anchor
+		if (OVRManager.loadedXRDevice == OVRManager.XRDevice.OpenVR)
+		{
+			leftHandAnchor.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
+			rightHandAnchor.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
+			leftHandAnchor.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
+			rightHandAnchor.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
+		}
+		else
+		{
+			leftHandAnchor.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+			rightHandAnchor.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+			leftHandAnchor.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
+			rightHandAnchor.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
+		}
 
 		trackerAnchor.localPosition = tracker.position;
 
@@ -165,8 +183,23 @@ public class OVRCameraRig : MonoBehaviour
 		leftEyeAnchor.localPosition = (!hmdPresent || monoscopic) ? centerEyeAnchor.localPosition : InputTracking.GetLocalPosition(Node.LeftEye);
 		rightEyeAnchor.localPosition = (!hmdPresent || monoscopic) ? centerEyeAnchor.localPosition : InputTracking.GetLocalPosition(Node.RightEye);
 
-		leftHandAnchor.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
-		rightHandAnchor.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
+		OVRPose leftOffsetPose = OVRPose.identity;
+		OVRPose rightOffsetPose = OVRPose.identity;
+		if (OVRManager.loadedXRDevice == OVRManager.XRDevice.OpenVR)
+		{
+			leftOffsetPose = OVRManager.GetOpenVRControllerOffset(Node.LeftHand);
+			rightOffsetPose = OVRManager.GetOpenVRControllerOffset(Node.RightHand);
+
+			//Sets poses of left and right nodes, local to the tracking space.
+			OVRManager.SetOpenVRLocalPose(trackingSpace.InverseTransformPoint(leftControllerAnchor.position),
+				trackingSpace.InverseTransformPoint(rightControllerAnchor.position),
+				Quaternion.Inverse(trackingSpace.rotation) * leftControllerAnchor.rotation,
+				Quaternion.Inverse(trackingSpace.rotation) * rightControllerAnchor.rotation);
+		}
+		rightControllerAnchor.localPosition = rightOffsetPose.position;
+		rightControllerAnchor.localRotation = rightOffsetPose.orientation;
+		leftControllerAnchor.localPosition = leftOffsetPose.position;
+		leftControllerAnchor.localRotation = leftOffsetPose.orientation;
 
 		RaiseUpdatedAnchorsEvent();
 	}
@@ -203,6 +236,12 @@ public class OVRCameraRig : MonoBehaviour
 
 		if (trackerAnchor == null)
 			trackerAnchor = ConfigureAnchor(trackingSpace, trackerAnchorName);
+
+		if (leftControllerAnchor == null)
+			leftControllerAnchor = ConfigureAnchor(leftHandAnchor, leftControllerAnchorName);
+
+		if (rightControllerAnchor == null)
+			rightControllerAnchor = ConfigureAnchor(rightHandAnchor, rightControllerAnchorName);
 
 		if (_centerEyeCamera == null || _leftEyeCamera == null || _rightEyeCamera == null)
 		{
@@ -264,7 +303,7 @@ public class OVRCameraRig : MonoBehaviour
 
 	protected virtual Transform ConfigureAnchor(Transform root, string name)
 	{
-		Transform anchor = (root != null) ? transform.Find(root.name + "/" + name) : null;
+		Transform anchor = (root != null) ? root.Find(name) : null;
 
 		if (anchor == null)
 		{
