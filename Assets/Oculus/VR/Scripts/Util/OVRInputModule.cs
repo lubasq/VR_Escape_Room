@@ -869,15 +869,17 @@ namespace UnityEngine.EventSystems
         /// <returns></returns>
         virtual protected PointerEventData.FramePressState GetGazeButtonState()
         {
-            var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.GetDown(joyPadClickButton);
-            var released = Input.GetKeyUp(gazeClickKey) || OVRInput.GetUp(joyPadClickButton);
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-            // On Gear VR the mouse button events correspond to touch pad events. We only use these as gaze pointer clicks
-            // on Gear VR because on PC the mouse clicks are used for actual mouse pointer interactions.
-            pressed |= Input.GetMouseButtonDown(0);
-            released |= Input.GetMouseButtonUp(0);
-#endif
+            //var pressed = Input.GetKeyDown(gazeClickKey) || OVRInput.GetDown(joyPadClickButton);
+            //var released = Input.GetKeyUp(gazeClickKey) || OVRInput.GetUp(joyPadClickButton);
+            //text above has been commented because it didn't work on VR 
+//#if UNITY_ANDROID && !UNITY_EDITOR
+//            // On Gear VR the mouse button events correspond to touch pad events. We only use these as gaze pointer clicks
+//            // on Gear VR because on PC the mouse clicks are used for actual mouse pointer interactions.
+//            pressed |= Input.GetMouseButtonDown(0);
+//            released |= Input.GetMouseButtonUp(0);
+//#endif
+            var pressed = Input.GetMouseButtonDown(0);
+            var released = Input.GetMouseButtonUp(0);
 
             if (pressed && released)
                 return PointerEventData.FramePressState.PressedAndReleased;
