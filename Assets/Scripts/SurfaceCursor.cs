@@ -1,6 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using Mono.Data.Sqlite;
+using System.Data;
 using System;
+using System.IO;
+using UnityEditor;
+
 
 public class SurfaceCursor : MonoBehaviour {
     public Camera viewCamera;
@@ -10,8 +17,11 @@ public class SurfaceCursor : MonoBehaviour {
     private GameObject cursorInstance;
     private GameObject teleportInstance;
 
-	// Use this for initialization
-	void Start () {
+    public Transform Player;
+
+
+    // Use this for initialization
+    void Start () {
         cursorInstance = Instantiate(cursorPrefab);
         teleportInstance = Instantiate(teleportPrefab);
         cursorInstance.SetActive(true);
@@ -21,7 +31,8 @@ public class SurfaceCursor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         UpdateCursor();
-	}
+        CheckInput();
+    }
 
     /// <summary>
     /// Updates the cursor based on what the camera is pointed at.
@@ -46,7 +57,6 @@ public class SurfaceCursor : MonoBehaviour {
                 cursorInstance.SetActive(true);
             }
             
-        
         }
         else
         {
@@ -55,4 +65,24 @@ public class SurfaceCursor : MonoBehaviour {
             cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, -ray.direction);
         }
     }
+
+    private void CheckInput()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            // If it's not a double click, it's a single click.
+            // If anything has subscribed to OnClick call it.
+            Teleport();
+        }
+    }
+
+    public void Teleport()
+    {
+        if (teleportInstance.activeInHierarchy)
+        {
+            Vector3 markerPosition = teleportInstance.transform.position;
+            Player.position = new Vector3(markerPosition.x, Player.position.y, markerPosition.z);
+        }
+    }
+
 }

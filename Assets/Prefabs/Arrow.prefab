@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 23913941116903732}
   - component: {fileID: 95062718743642682}
   - component: {fileID: 114331752749233896}
-  - component: {fileID: 114211394850979090}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -105,24 +104,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114211394850979090
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1566745628728096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30530ad0e40d0a64ea26d753ee4996ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hideByDefault: 1
-  showTimeoutPeriod: 1
-  hideTimeoutPeriod: 0.1
-  dimOnHideRequest: 1
-  depthScaleMultiplier: 0.03
-  rayTransform: {fileID: 0}
-  cursorRadius: 1
 --- !u!114 &114331752749233896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,4 +116,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Arrow: {fileID: 1566745628728096}
-  xd: 0.2
+  yAxis: 0.14
