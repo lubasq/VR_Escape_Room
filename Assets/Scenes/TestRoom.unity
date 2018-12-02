@@ -2250,7 +2250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewCamera: {fileID: 1276358018}
-  cursorPrefab: {fileID: 1598431167304984, guid: 8f53ac0796d59894bbfa5dfcf8b93838,
+  gameCursorPrefab: {fileID: 1598431167304984, guid: 8f53ac0796d59894bbfa5dfcf8b93838,
     type: 2}
   teleportPrefab: {fileID: 1566745628728096, guid: 839c5e774a17160469e9fe2ed9b3063a,
     type: 2}

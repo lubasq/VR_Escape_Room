@@ -368,7 +368,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 9078068}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f1a9a1d119a5944aacfb87d1ec283a2, type: 3}
   m_Name: 
@@ -1011,17 +1011,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 200655503}
         m_MethodName: TaskOnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 200655503}
-        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3468,7 +3457,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: 126d619cf4daa52469682f85c1378b4a,
     type: 2}
   m_PrefabInternal: {fileID: 3848566}
---- !u!114 &858384408
+--- !u!114 &858384407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3476,13 +3465,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 858384406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90cb6c515ff577e4383f185e56fdbdec, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d78f99c9135b034b9210b66cba4c333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewCamera: {fileID: 257403447}
-  cursorPrefab: {fileID: 1731326227}
-  teleportPrefab: {fileID: 1287984589705128, guid: 839c5e774a17160469e9fe2ed9b3063a,
-    type: 2}
+  menuCursorPrefab: {fileID: 1731326227}
 --- !u!1 &870729217
 GameObject:
   m_ObjectHideFlags: 0
@@ -4844,6 +4831,7 @@ GameObject:
   - component: {fileID: 1190712672}
   - component: {fileID: 1190712671}
   - component: {fileID: 1190712670}
+  - component: {fileID: 1190712674}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4935,6 +4923,22 @@ RectTransform:
   m_AnchoredPosition: {x: 574, y: 261}
   m_SizeDelta: {x: 800.00006, y: 363.7631}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1190712674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1190712669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1218854906
 GameObject:
   m_ObjectHideFlags: 0

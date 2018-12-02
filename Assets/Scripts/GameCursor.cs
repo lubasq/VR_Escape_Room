@@ -9,9 +9,9 @@ using System.IO;
 using UnityEditor;
 
 
-public class SurfaceCursor : MonoBehaviour {
+public class GameCursor : MonoBehaviour {
     public Camera viewCamera;
-    public GameObject cursorPrefab;
+    public GameObject gameCursorPrefab;
     public GameObject teleportPrefab;
 
     private GameObject cursorInstance;
@@ -22,7 +22,7 @@ public class SurfaceCursor : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        cursorInstance = Instantiate(cursorPrefab);
+        cursorInstance = Instantiate(gameCursorPrefab);
         teleportInstance = Instantiate(teleportPrefab);
         cursorInstance.SetActive(true);
         teleportInstance.SetActive(false);
