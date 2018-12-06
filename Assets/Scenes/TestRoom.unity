@@ -2252,7 +2252,7 @@ MonoBehaviour:
   viewCamera: {fileID: 1276358018}
   gameCursorPrefab: {fileID: 1598431167304984, guid: 8f53ac0796d59894bbfa5dfcf8b93838,
     type: 2}
-  teleportPrefab: {fileID: 1566745628728096, guid: 839c5e774a17160469e9fe2ed9b3063a,
+  teleportPrefab: {fileID: 1715855308221632, guid: c9da4dfefd5c3d744b530c409b385edf,
     type: 2}
   Player: {fileID: 999777051}
 --- !u!1 &1287378382
