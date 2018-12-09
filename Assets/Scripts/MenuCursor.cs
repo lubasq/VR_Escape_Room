@@ -12,15 +12,11 @@ using UnityEditor;
 public class MenuCursor : MonoBehaviour
 {
     public Camera viewCamera;
-    public GameObject menuCursorPrefab;
-
-    private GameObject cursorInstance;
+    public GameObject menuCursor;
  
     // Use this for initialization
     void Start()
     {
-        cursorInstance = Instantiate(menuCursorPrefab);
-        cursorInstance.SetActive(true);
     }
 
     // Update is called once per frame
@@ -42,8 +38,8 @@ public class MenuCursor : MonoBehaviour
         {
 
             // If the ray hits something, set the position to the hit point and rotate based on the normal vector of the hit
-            menuCursorPrefab.transform.position = hit.point;
-            menuCursorPrefab.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            menuCursor.transform.position = hit.point;
+            menuCursor.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
         }
         
     }
