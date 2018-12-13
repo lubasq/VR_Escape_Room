@@ -12,7 +12,7 @@ JDK nie wyzsze niz 1.8
 
 Wersja Unity: 2018.2.14 f1
 
-Wymagana Blender
+Wymagany Blender
 
 Downloads:
 https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022
