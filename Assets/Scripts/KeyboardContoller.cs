@@ -4,28 +4,30 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Experimental.UIElements;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class KeyboardContoller : MonoBehaviour {
 
-    string word = null;
-    int wordIndex = -1;
-    public TMP_InputField mainLogin;
-    public TMP_InputField mainPassword;
-    public TMP_InputField rankLogin;
-    public TMP_InputField rankPassword;
-    public TMP_InputField rankMail;
+    [SerializeField] string word = null;
+    [SerializeField] int wordIndex = -1;
+    [SerializeField] private TMP_InputField mainLogin;
+    [SerializeField] private TMP_InputField mainPassword;
+    [SerializeField] private TMP_InputField rankLogin;
+    [SerializeField] private TMP_InputField rankPassword;
+    [SerializeField] private TMP_InputField rankMail;
     [SerializeField] private TMP_InputField activeInput = null;
-    char[] nameChar = new char[30];
-    string alpha = null;
-    public GameObject upperCaseLetters;
-    public GameObject lowerCaseLetters;
-    public bool isShiftClicked = false;
-    public GameObject keyboardCanvas;
-    public GameObject Login;
-    public GameObject Register;
-    public GameObject Create;
-    public GameObject Credits;
-    public GameObject Return;
+    [SerializeField] char[] nameChar = new char[30];
+    [SerializeField] string alpha = null;
+    [SerializeField] private GameObject upperCaseLetters;
+    [SerializeField] private GameObject lowerCaseLetters;
+    [SerializeField] private bool isShiftClicked = false;
+    [SerializeField] private GameObject keyboardCanvas;
+    [SerializeField] private GameObject Login;
+    [SerializeField] private GameObject Register;
+    [SerializeField] private GameObject Create;
+    [SerializeField] private GameObject Credits;
+    [SerializeField] private GameObject Return;
+    [SerializeField] private bool showButtons=true;
 
     private void Start()
     {
@@ -57,6 +59,7 @@ public class KeyboardContoller : MonoBehaviour {
         Debug.Log("Adding letter: " + alpha);
         activeInput.text = word;
         isShiftClicked = false;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void Backspace(string alphabet)
@@ -88,7 +91,7 @@ public class KeyboardContoller : MonoBehaviour {
 
     public void MainLogin()
     {
-        ButtonsOff();
+        Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = mainLogin;
@@ -96,7 +99,7 @@ public class KeyboardContoller : MonoBehaviour {
 
     public void MainPassword()
     {
-        ButtonsOff();
+        Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = mainPassword;
@@ -104,7 +107,7 @@ public class KeyboardContoller : MonoBehaviour {
 
     public void RankLogin()
     {
-        ButtonsOff();
+        Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = rankLogin;
@@ -112,7 +115,7 @@ public class KeyboardContoller : MonoBehaviour {
 
     public void RankPassword()
     {
-        ButtonsOff();
+        Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = rankPassword;
@@ -120,33 +123,27 @@ public class KeyboardContoller : MonoBehaviour {
 
     public void RankMail()
     {
-        ButtonsOff();
+        Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = rankMail;
     }
 
-    public void ButtonsOff()
+    public void Buttons()
     {
-    Login.SetActive(false);
-    Register.SetActive(false);
-    Create.SetActive(false);
-    Credits.SetActive(false);
-    Return.SetActive(false);
-    }
-
-    public void ButtonsOn()
-    {
-        Login.SetActive(true);
-        Register.SetActive(true);
-        Create.SetActive(true);
-        Credits.SetActive(true);
-        Return.SetActive(true);
+        Debug.Log("Current state: " + showButtons);
+        showButtons = !showButtons;
+        Debug.Log("Changing state to: " + showButtons);
+        Login.SetActive(showButtons);
+        Register.SetActive(showButtons);
+        Create.SetActive(showButtons);
+        Credits.SetActive(showButtons);
+        Return.SetActive(showButtons);
     }
 
     public void KeyboardOff()
     {
         keyboardCanvas.SetActive(false);
-        ButtonsOn();
+        Buttons();
     }
 }
