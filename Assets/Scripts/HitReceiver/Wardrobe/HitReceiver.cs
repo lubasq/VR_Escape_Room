@@ -5,6 +5,7 @@ using UnityEngine;
 public class HitReceiver : MonoBehaviour {
 
     private Animator anim;
+
 	void Start () {
         anim = GetComponent<Animator>();
 	}
