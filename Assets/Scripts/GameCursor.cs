@@ -56,6 +56,7 @@ public class GameCursor : MonoBehaviour
             }
             else {
                 teleportInstance.SetActive(false);
+                Debug.Log("JD KURWE");
                 cursorInstance.SetActive(true);
             }
 
@@ -67,9 +68,7 @@ public class GameCursor : MonoBehaviour
         }
 
         if (Physics.Raycast(transform.position, transform.forward, out hit)) {
-            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght - 1)) {
-                cursorInstance.SetActive(false);
-                teleportInstance.SetActive(false);
+            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght - 0,5)) {
                 var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
                 if (hitReceiver != null) {
                     hitReceiver.OnRayHit();

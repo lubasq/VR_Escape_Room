@@ -22,5 +22,8 @@ public class HitReceiver : MonoBehaviour {
         else if (Input.GetButtonDown("Fire1") && anim.GetBool("isOpen")) {
             anim.SetBool("isOpen", false);
         }
+        if(Input.GetButtonDown("Fire1") && !anim.GetBool("fallDown")) {
+            anim.SetBool("fallDown", true);
+        }
     }
 }
