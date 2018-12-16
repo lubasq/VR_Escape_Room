@@ -30,14 +30,15 @@ public class UserData : IEquatable<UserData>
 
 public class Login : MonoBehaviour
 {
-    public TMP_InputField login;
-    public TMP_InputField password;
-    public TMP_Text loggedIn;
-    public TMP_Text notLoggedIn;
+    [SerializeField] private TMP_InputField login;
+    [SerializeField] private TMP_InputField password;
+    [SerializeField] private TMP_Text loggedIn;
+    [SerializeField] private TMP_Text notLoggedIn;
+    [SerializeField] private GameObject loggedScene;
+    [SerializeField] private GameObject notLoggedScene;
+
     public static string loginText;
-    public GameObject loggedScene;
-    public GameObject notLoggedScene;
-    
+
     void Start()
     {
     }
@@ -57,21 +58,21 @@ public class Login : MonoBehaviour
         Debug.Log("Persistent path: " + Application.persistentDataPath);
         Debug.Log("dataPath path: " + Application.dataPath);
         //pobierz dane
-        List<UserData> uzytkownik = new List<UserData>();
+        List<UserData> currentUser = new List<UserData>();
         global::Database user = new global::Database();
         IDataReader reader = user.DBSelect("Users", new string[] {}, new string[] { "login", "password" }, new string[] { login.text, password.text }, new string[] {}, "");
 
         //odczytaj dane i zamień w liste
         while (reader.Read())
         {
-            uzytkownik.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
+            currentUser.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
         }
         //Zamknij połączenie z bazą danych, zniszcz obiekt 
         user.DBClose();
         user = null;
         //Sprawdź czy istnieją jakiekolwiek rekordy - jeżeli tak, to znaczy
         //że jesteś zalogowany.
-        if (uzytkownik.Count > 0)
+        if (currentUser.Count > 0)
         {           
             loggedIn.text = login.text;
             loggedScene.SetActive(true);

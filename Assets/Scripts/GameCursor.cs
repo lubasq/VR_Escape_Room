@@ -10,17 +10,15 @@ using UnityEditor;
 
 
 public class GameCursor : MonoBehaviour {
-    public Camera viewCamera;
-    public GameObject gameCursorPrefab;
-    public GameObject teleportPrefab;
+    [SerializeField] private Camera viewCamera;
+    [SerializeField] private GameObject gameCursorPrefab;
+    [SerializeField] private GameObject teleportPrefab;
+    [SerializeField] private Transform Player;
+    [SerializeField] private float RayLenght = 2f;
 
     private GameObject cursorInstance;
     private GameObject teleportInstance;
 
-    public Transform Player;
-
-
-    // Use this for initialization
     void Start () {
         cursorInstance = Instantiate(gameCursorPrefab);
         teleportInstance = Instantiate(teleportPrefab);
@@ -28,25 +26,19 @@ public class GameCursor : MonoBehaviour {
         teleportInstance.SetActive(false);
     }
 	
-	// Update is called once per frame
 	void Update () {
         UpdateCursor();
         CheckInput();
     }
 
-    /// <summary>
-    /// Updates the cursor based on what the camera is pointed at.
-    /// </summary>
     private void UpdateCursor()
     {
-        // Create a gaze ray pointing forward from the camera
         Ray ray = new Ray(viewCamera.transform.position, viewCamera.transform.rotation * Vector3.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {   if (hit.collider.tag == "Ground")
+        {   if (hit.collider.tag == "Ground" && Physics.Raycast(ray, out hit, RayLenght))
             {
-                // If the ray hits something, set the position to the hit point and rotate based on the normal vector of the hit
                 teleportInstance.SetActive(true);
                 cursorInstance.SetActive(false);
                 teleportInstance.transform.position = hit.point;
@@ -55,12 +47,10 @@ public class GameCursor : MonoBehaviour {
             {
                 teleportInstance.SetActive(false);
                 cursorInstance.SetActive(true);
-            }
-            
+            }   
         }
         else
         {
-            // If the ray doesn't hit anything, set the position to the maxCursorDistance and rotate to point away from the camera
             cursorInstance.transform.position = ray.origin + ray.direction.normalized;
             cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, -ray.direction);
         }
@@ -70,13 +60,11 @@ public class GameCursor : MonoBehaviour {
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            // If it's not a double click, it's a single click.
-            // If anything has subscribed to OnClick call it.
             Teleport();
         }
     }
 
-    public void Teleport()
+    private void Teleport()
     {
         if (teleportInstance.activeInHierarchy)
         {
@@ -84,5 +72,4 @@ public class GameCursor : MonoBehaviour {
             Player.position = new Vector3(markerPosition.x, Player.position.y, markerPosition.z);
         }
     }
-
 }

@@ -16,4 +16,9 @@ public class MenuController : MonoBehaviour {
     {
         SceneManager.LoadScene("TestRoom");
     }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }

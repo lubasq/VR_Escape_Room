@@ -49,7 +49,7 @@ public class KeyboardContoller : MonoBehaviour {
         };
     }
 
-    public void Alphabet(string alphabet)
+    private void Alphabet(string alphabet)
     {
         wordIndex++;
         char[] keepchar = alphabet.ToCharArray();
@@ -62,7 +62,7 @@ public class KeyboardContoller : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(null);
     }
 
-    public void Backspace(string alphabet)
+    private void Backspace(string alphabet)
     {
         alpha = null;
         Debug.Log("Deleting letter: " + alpha);
@@ -78,7 +78,7 @@ public class KeyboardContoller : MonoBehaviour {
         }
     }
 
-    public void Shift()
+    private void Shift()
     {
         if (isShiftClicked == false)
         {
@@ -89,47 +89,52 @@ public class KeyboardContoller : MonoBehaviour {
         }
     }
 
-    public void MainLogin()
+    private void MainLogin()
     {
+        if (showButtons == false) { showButtons = !showButtons; };
         Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = mainLogin;
     }
 
-    public void MainPassword()
+    private void MainPassword()
     {
+        if (showButtons == false) { showButtons = !showButtons; };
         Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = mainPassword;
     }
 
-    public void RankLogin()
+    private void RankLogin()
     {
+        if (showButtons == false) { showButtons = !showButtons; };
         Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = rankLogin;
     }
 
-    public void RankPassword()
+    private void RankPassword()
     {
+        if (showButtons == false) { showButtons = !showButtons; };
         Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = rankPassword;
     }
 
-    public void RankMail()
+    private void RankMail()
     {
+        if (showButtons == false) { showButtons = !showButtons; };
         Buttons();
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = rankMail;
     }
 
-    public void Buttons()
+    private void Buttons()
     {
         Debug.Log("Current state: " + showButtons);
         showButtons = !showButtons;
@@ -141,7 +146,7 @@ public class KeyboardContoller : MonoBehaviour {
         Return.SetActive(showButtons);
     }
 
-    public void KeyboardOff()
+    private void KeyboardOff()
     {
         keyboardCanvas.SetActive(false);
         Buttons();

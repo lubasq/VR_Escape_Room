@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 public class Timer : MonoBehaviour {
-    public TMP_Text timer;
+    [SerializeField] private TMP_Text timer;
     private float startTime;
 
     void Start () {
@@ -13,7 +13,6 @@ public class Timer : MonoBehaviour {
 	
 	void Update () {
         float t = Time.time - startTime;
-
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f0");
         if (t >= 60)

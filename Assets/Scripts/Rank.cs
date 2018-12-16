@@ -5,12 +5,12 @@ using TMPro;
 using UnityEngine;
 
 public class Rank : MonoBehaviour {
-    public TMP_Text playersLogin;
-    public TMP_Text playersTime;
-    public TMP_Text loggedPlayerPosition;
-    public TMP_Text loggedPlayerTime;
-    public static string localLogin;
-    public TMP_Text loggedPlayerLogin;
+    [SerializeField] private TMP_Text playersLogin;
+    [SerializeField] private TMP_Text playersTime;
+    [SerializeField] private TMP_Text loggedPlayerPosition;
+    [SerializeField] private TMP_Text loggedPlayerTime;
+    [SerializeField] private static string localLogin;
+    [SerializeField] private TMP_Text loggedPlayerLogin;
 
     // Use this for initialization
     void Start () {
