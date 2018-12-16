@@ -10,11 +10,7 @@ using UnityEditor;
 
 
 public class GameCursor : MonoBehaviour {
-<<<<<<< Updated upstream
     [SerializeField] private Camera viewCamera;
-=======
-    public Camera viewCamera;
->>>>>>> Stashed changes
     [SerializeField] private GameObject gameCursorPrefab;
     [SerializeField] private GameObject teleportPrefab;
     [SerializeField] private Transform Player;
@@ -23,11 +19,6 @@ public class GameCursor : MonoBehaviour {
     private GameObject cursorInstance;
     private GameObject teleportInstance;
 
-<<<<<<< Updated upstream
-=======
-
-    // Use this for initialization
->>>>>>> Stashed changes
     void Start () {
         cursorInstance = Instantiate(gameCursorPrefab);
         teleportInstance = Instantiate(teleportPrefab);
@@ -62,18 +53,6 @@ public class GameCursor : MonoBehaviour {
         {
             cursorInstance.transform.position = ray.origin + ray.direction.normalized;
             cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, -ray.direction);
-        }
-
-        if(Physics.Raycast(transform.position, transform.forward,out hit)) {
-            if(hit.collider != null && Physics.Raycast(ray, out hit, RayLenght-1)) {
-                cursorInstance.SetActive(false);
-                teleportInstance.SetActive(false);
-                var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
-                if(hitReceiver!= null) {
-                    hitReceiver.OnRayHit();
-
-                }
-            }
         }
     }
 
