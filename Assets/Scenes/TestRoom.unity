@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 81048419}
   m_Layer: 0
   m_Name: RightDrawer
-  m_TagString: Untagged
+  m_TagString: Activable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -964,6 +964,10 @@ Prefab:
     - target: {fileID: 4823962404003158, guid: 3fc2517c6d7f1474db9e01be28677a17, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496488153580630, guid: 3fc2517c6d7f1474db9e01be28677a17, type: 2}
+      propertyPath: m_TagString
+      value: Activable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fc2517c6d7f1474db9e01be28677a17, type: 2}
@@ -2220,7 +2224,7 @@ GameObject:
   - component: {fileID: 1037116258}
   m_Layer: 0
   m_Name: LeftDrawer
-  m_TagString: Untagged
+  m_TagString: Activable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2914,6 +2918,7 @@ MonoBehaviour:
     type: 2}
   teleportPrefab: {fileID: 1715855308221632, guid: c9da4dfefd5c3d744b530c409b385edf,
     type: 2}
+  handPrefab: {fileID: 1255077047640964, guid: bb79198c5554b944986fe974be8ea195, type: 2}
   Player: {fileID: 999777051}
   RayLenght: 2
 --- !u!1 &1287378382
@@ -3985,6 +3990,22 @@ Prefab:
       propertyPath: m_Name
       value: Wardrobe
       objectReference: {fileID: 0}
+    - target: {fileID: 1803435338003192, guid: 6a30c620bcca8ed448dd43ba86c3f699, type: 2}
+      propertyPath: m_TagString
+      value: Activable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802545090086594, guid: 6a30c620bcca8ed448dd43ba86c3f699, type: 2}
+      propertyPath: m_TagString
+      value: Activable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429003261608402, guid: 6a30c620bcca8ed448dd43ba86c3f699, type: 2}
+      propertyPath: m_TagString
+      value: Activable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1354142324503098, guid: 6a30c620bcca8ed448dd43ba86c3f699, type: 2}
+      propertyPath: m_TagString
+      value: Activable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a30c620bcca8ed448dd43ba86c3f699, type: 2}
   m_IsPrefabAsset: 0
@@ -4421,7 +4442,7 @@ GameObject:
   - component: {fileID: 2097072426}
   m_Layer: 0
   m_Name: MidDrawer
-  m_TagString: Untagged
+  m_TagString: Activable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
