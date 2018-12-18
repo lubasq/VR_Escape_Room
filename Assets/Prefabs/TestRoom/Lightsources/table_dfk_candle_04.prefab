@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33725902714667126}
   - component: {fileID: 23918712480358732}
   m_Layer: 0
-  m_Name: dfk_candle_04
+  m_Name: table_dfk_candle_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
