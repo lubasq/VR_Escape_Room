@@ -146781,6 +146781,21 @@ Prefab:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 65929102457261050, guid: 278e8eacf74c6154ebc173a666e00c27,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.00000022351742
+      objectReference: {fileID: 0}
+    - target: {fileID: 65929102457261050, guid: 278e8eacf74c6154ebc173a666e00c27,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 2.0449114
+      objectReference: {fileID: 0}
+    - target: {fileID: 65929102457261050, guid: 278e8eacf74c6154ebc173a666e00c27,
+        type: 2}
+      propertyPath: m_Center.z
+      value: -1.0224557
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 278e8eacf74c6154ebc173a666e00c27, type: 2}
   m_IsPrefabAsset: 0
