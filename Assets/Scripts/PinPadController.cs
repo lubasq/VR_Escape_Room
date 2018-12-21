@@ -25,8 +25,6 @@ public class PinPadController : MonoBehaviour
     void Update()
     {
         CheckPin();
-        Debug.Log(pinField.text);
-        Debug.Log(pinField.text.Equals(codeInt));
     }
 
     public void Alphabet(string alphabet)
@@ -39,7 +37,6 @@ public class PinPadController : MonoBehaviour
             nameChar[wordIndex] = keepchar[0];
             alpha = nameChar[wordIndex].ToString();
             word = word + alpha;
-            Debug.Log("Adding number: " + alpha);
             pinField.text = word;
             EventSystem.current.SetSelectedGameObject(null);
         }
@@ -48,7 +45,6 @@ public class PinPadController : MonoBehaviour
     public void Backspace(string alphabet)
     {
         alpha = null;
-        Debug.Log("Deleting number: " + alpha);
         if (wordIndex >= 0)
         {
             wordIndex--;

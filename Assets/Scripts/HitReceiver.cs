@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class HitReceiver : MonoBehaviour
 {
-    public bool locked;
-    private Animator anim;
-    public GameObject key;
+    [SerializeField] private bool locked;
+    [SerializeField] private Animator anim;
+    [SerializeField] private GameObject key;
+
     public int keyVariable;
     public int keyWorth;
 
