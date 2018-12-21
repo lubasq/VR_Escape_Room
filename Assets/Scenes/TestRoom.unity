@@ -10238,6 +10238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 1
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 1
   keyWorth: 0
@@ -15011,6 +15012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 1
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 3
   keyWorth: 0
@@ -15200,6 +15202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
@@ -25497,6 +25500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
@@ -66803,6 +66807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
@@ -76465,6 +76470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
@@ -96512,6 +96518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
@@ -116827,6 +116834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
@@ -146490,6 +146498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
@@ -157126,7 +157135,8 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114629681041995800, guid: 0322a304fb9696e458d22e11b9c7c5a7, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 0322a304fb9696e458d22e11b9c7c5a7, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &2063161742
@@ -157821,6 +157831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+  anim: {fileID: 0}
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
