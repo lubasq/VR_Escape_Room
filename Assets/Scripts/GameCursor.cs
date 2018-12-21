@@ -16,7 +16,7 @@ public class GameCursor : MonoBehaviour
     [SerializeField] private GameObject teleportPrefab;
     [SerializeField] private GameObject handPrefab;
     [SerializeField] private Transform Player;
-    [SerializeField] private float RayLenght = 2f;
+    [SerializeField] private float RayLenght = 3f;
 
     private GameObject cursorInstance;
     private GameObject teleportInstance;
@@ -49,6 +49,16 @@ public class GameCursor : MonoBehaviour
         // Create a gaze ray pointing forward from the camera
         Ray ray = new Ray(viewCamera.transform.position, viewCamera.transform.rotation * Vector3.forward);
         RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, RayLenght))
+        {
+            if (Physics.Raycast(ray, out hit, RayLenght) && gameObject.tag == "InputField")
+            {
+                cursorInstance.transform.position = hit.point;
+                cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            }
+        }
+
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             if (hit.collider.tag == "Ground" && Physics.Raycast(ray, out hit, RayLenght))
@@ -94,7 +104,7 @@ public class GameCursor : MonoBehaviour
             else {
                 handInstance.SetActive(false);
             }
-            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght*3) && hit.collider.tag == "Key" && Input.GetButtonDown("Fire1")) 
+            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght-0,5) && hit.collider.tag == "Key" && Input.GetButtonDown("Fire1")) 
             {
                 handInstance.SetActive(false);
                 cursorInstance.SetActive(true);
