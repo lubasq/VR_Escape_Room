@@ -74,25 +74,37 @@ public class GameCursor : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght - 0,5) && hit.collider.tag == "Activable")
+            if (Physics.Raycast(ray, out hit, RayLenght - 0,5) && hit.collider.tag == "Activable")
             {
                 handInstance.SetActive(true);
-                cursorInstance.SetActive(false);
-                var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();               
+                cursorInstance.SetActive(false);             
                 handInstance.transform.position = cursorInstance.transform.position;
                 handInstance.transform.rotation = cursorInstance.transform.rotation;
                 float y = handInstance.transform.eulerAngles.y;
                 float z = handInstance.transform.eulerAngles.z;
                 handInstance.transform.Translate(Vector3.back * 0.05f);
-                handInstance.transform.rotation = Quaternion.Euler(-45f, y, z);               
+                handInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
+
+                var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
                 if (hitReceiver != null)
                 {
                     hitReceiver.OnRayHit();
                 }
             }
-            else
+            else {
+                handInstance.SetActive(false);
+            }
+            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght*3) && hit.collider.tag == "Key" && Input.GetButtonDown("Fire1")) 
             {
                 handInstance.SetActive(false);
+                cursorInstance.SetActive(true);
+                cursorInstance.transform.position = cursorInstance.transform.position;
+                cursorInstance.transform.rotation = cursorInstance.transform.rotation;
+                var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
+                if (hitReceiver != null)
+                {
+                    hitReceiver.AddKey();
+                }
             }
         }
     }
