@@ -15,12 +15,14 @@ public class GameCursor : MonoBehaviour
     [SerializeField] private GameObject gameCursorPrefab;
     [SerializeField] private GameObject teleportPrefab;
     [SerializeField] private GameObject handPrefab;
+    [SerializeField] private GameObject coloredHandPrefab;
     [SerializeField] private Transform Player;
     [SerializeField] private float RayLenght = 3f;
 
     private GameObject cursorInstance;
     private GameObject teleportInstance;
     private GameObject handInstance;
+    private GameObject coloredHandInstance;
 
     // Use this for initialization
     void Start()
@@ -28,9 +30,11 @@ public class GameCursor : MonoBehaviour
         cursorInstance = Instantiate(gameCursorPrefab);
         teleportInstance = Instantiate(teleportPrefab);
         handInstance = Instantiate(handPrefab);
+        coloredHandInstance = Instantiate(coloredHandPrefab);
         cursorInstance.SetActive(true);
         teleportInstance.SetActive(false);
         handInstance.SetActive(false);
+        coloredHandInstance.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,7 +42,6 @@ public class GameCursor : MonoBehaviour
     {
         UpdateCursor();
         CheckInput();
-
     }
 
     /// <summary>
@@ -82,7 +85,7 @@ public class GameCursor : MonoBehaviour
             cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, -ray.direction);
         }
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        if (Physics.Raycast(transform.position, transform.forward, out hit) )
         {
             if (Physics.Raycast(ray, out hit, RayLenght - 0,5) && hit.collider.tag == "Activable")
             {
@@ -94,7 +97,6 @@ public class GameCursor : MonoBehaviour
                 float z = handInstance.transform.eulerAngles.z;
                 handInstance.transform.Translate(Vector3.back * 0.05f);
                 handInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
-
                 var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
                 if (hitReceiver != null)
                 {
@@ -104,17 +106,25 @@ public class GameCursor : MonoBehaviour
             else {
                 handInstance.SetActive(false);
             }
-            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght-0,5) && hit.collider.tag == "Key" && Input.GetButtonDown("Fire1")) 
+            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght-0,5) && hit.collider.tag == "Key" ) 
             {
+                
                 handInstance.SetActive(false);
-                cursorInstance.SetActive(true);
-                cursorInstance.transform.position = cursorInstance.transform.position;
-                cursorInstance.transform.rotation = cursorInstance.transform.rotation;
+                cursorInstance.SetActive(false);
+                coloredHandInstance.SetActive(true);
+                coloredHandInstance.transform.position = cursorInstance.transform.position;
+                coloredHandInstance.transform.rotation = cursorInstance.transform.rotation;
+                float y = coloredHandInstance.transform.eulerAngles.y;
+                float z = coloredHandInstance.transform.eulerAngles.z;
+                coloredHandInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
                 var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
                 if (hitReceiver != null)
                 {
                     hitReceiver.AddKey();
                 }
+            } else
+            {
+                coloredHandInstance.SetActive(false);
             }
         }
     }

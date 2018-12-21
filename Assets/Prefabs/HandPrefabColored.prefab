@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4729453066050886}
   m_Layer: 0
-  m_Name: HandPrefab
+  m_Name: HandPrefabColored
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ Transform:
   m_GameObject: {fileID: 1255077047640964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.087382, y: 1.9854691, z: 10.2904005}
-  m_LocalScale: {x: 0.004, y: 0.004, z: 0.004}
+  m_LocalScale: {x: 0.0035, y: 0.0035, z: 0.0035}
   m_Children:
   - {fileID: 4484811537404042}
   m_Father: {fileID: 0}
@@ -85,7 +85,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 39cbb527dda735a4688ad5026f485ffb, type: 3}
+  - {fileID: 2100000, guid: 6498d4298a35c5c44894b5f194468896, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

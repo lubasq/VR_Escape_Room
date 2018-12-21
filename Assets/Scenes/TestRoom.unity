@@ -32181,7 +32181,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 555969870}
   m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: 0, y: 0, z: 2.396}
+  m_LocalPosition: {x: 0, y: 0, z: 2.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 320993310}
@@ -32190,7 +32190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -5, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.638, y: 1.09}
+  m_AnchoredPosition: {x: -0.638, y: 1.098}
   m_SizeDelta: {x: 7.471, y: 3.109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &555969872
@@ -106613,6 +106613,8 @@ MonoBehaviour:
   teleportPrefab: {fileID: 1715855308221632, guid: c9da4dfefd5c3d744b530c409b385edf,
     type: 2}
   handPrefab: {fileID: 1255077047640964, guid: bb79198c5554b944986fe974be8ea195, type: 2}
+  coloredHandPrefab: {fileID: 1255077047640964, guid: 549e870c209c1554fb0427342e8b71a3,
+    type: 2}
   Player: {fileID: 999777051}
   RayLenght: 2
 --- !u!1 &1279263926

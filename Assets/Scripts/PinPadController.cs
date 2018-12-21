@@ -30,15 +30,19 @@ public class PinPadController : MonoBehaviour
     }
 
     public void Alphabet(string alphabet)
-    {   
-        wordIndex++;
-        char[] keepchar = alphabet.ToCharArray();
-        nameChar[wordIndex] = keepchar[0];
-        alpha = nameChar[wordIndex].ToString();
-        word = word + alpha;
-        Debug.Log("Adding number: " + alpha);
-        pinField.text = word;
-        EventSystem.current.SetSelectedGameObject(null);
+    {
+        if (wordIndex < 4)
+        {
+            wordIndex++;
+            Debug.Log(wordIndex);
+            char[] keepchar = alphabet.ToCharArray();
+            nameChar[wordIndex] = keepchar[0];
+            alpha = nameChar[wordIndex].ToString();
+            word = word + alpha;
+            Debug.Log("Adding number: " + alpha);
+            pinField.text = word;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 
     public void Backspace(string alphabet)

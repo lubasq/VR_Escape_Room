@@ -39,9 +39,10 @@ public class HitReceiver : MonoBehaviour
 
     public void AddKey()
     {
-        GameVariables.keyCount += keyWorth;
-        Destroy(key);
-        Debug.Log(GameVariables.keyCount);
+        if (Input.GetButtonDown("Fire1")){
+            GameVariables.keyCount += keyWorth;
+            Destroy(key);
+        }
     }
 
 }
