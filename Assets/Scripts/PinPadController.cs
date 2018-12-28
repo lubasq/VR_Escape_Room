@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PinPadController : MonoBehaviour
 {
@@ -11,15 +12,17 @@ public class PinPadController : MonoBehaviour
     [SerializeField] public TMP_InputField pinField;
     [SerializeField] char[] nameChar = new char[5];
     [SerializeField] string alpha = null;
-    [SerializeField] private int codeInt;
-    [SerializeField] private string codeString;
+    [SerializeField] private string codeString;    
+    [SerializeField] private TMP_Text numberOneCode;
+    [SerializeField] private TMP_Text numberTwoCode;
+
+    private int numberTwo;
+    private int numberOne;
+    
 
     void Start()
     {
-        //codeInt = Random.Range(11111, 99999);
-        codeInt = 12345;
-        Debug.Log("Your code is: " + codeInt);
-        codeString = codeInt.ToString();
+        SetCode();
     }
 
     void Update()
@@ -62,7 +65,20 @@ public class PinPadController : MonoBehaviour
     {
         if(pinField.text.Equals(codeString))
         {
-            pinField.text = "Pog U";
+            //TODO CHAIN ANIM
+            pinField.text = "GRATZ";
         }
+    }
+
+    private void SetCode()
+    {
+        numberOne = Random.Range(1, 9);
+        numberOneCode.text = "I." + numberOne;
+        codeString += numberOne;
+        Debug.Log("Your code is: " + codeString);
+        numberTwo = Random.Range(0, 9);
+        numberTwoCode.text = "II." + numberTwo;
+        codeString += numberTwo;
+        Debug.Log("Your code is: " + codeString);
     }
 }

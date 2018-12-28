@@ -18,13 +18,18 @@ public class GameCursor : MonoBehaviour
     [SerializeField] private GameObject coloredHandPrefab;
     [SerializeField] private Transform Player;
     [SerializeField] private float RayLenght = 3f;
+    [SerializeField] private GameObject pauseObject;
+
 
     private GameObject cursorInstance;
     private GameObject teleportInstance;
     private GameObject handInstance;
     private GameObject coloredHandInstance;
+    private bool pause = false;
+    public MenuController pauseScript;
+    Vector3 orginalPos;
 
-    // Use this for initialization
+
     void Start()
     {
         cursorInstance = Instantiate(gameCursorPrefab);
@@ -35,9 +40,11 @@ public class GameCursor : MonoBehaviour
         teleportInstance.SetActive(false);
         handInstance.SetActive(false);
         coloredHandInstance.SetActive(false);
+        //pauseCanvas.enabled = pause;
+        pauseObject.SetActive(false);
+        orginalPos = new Vector3(viewCamera.transform.position.x, viewCamera.transform.position.y, viewCamera.transform.position.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateCursor();
@@ -52,79 +59,94 @@ public class GameCursor : MonoBehaviour
         // Create a gaze ray pointing forward from the camera
         Ray ray = new Ray(viewCamera.transform.position, viewCamera.transform.rotation * Vector3.forward);
         RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, RayLenght))
+        if (pause == false)
         {
-            if (Physics.Raycast(ray, out hit, RayLenght) && gameObject.tag == "InputField")
+            if (Physics.Raycast(ray, out hit, RayLenght))
             {
-                cursorInstance.transform.position = hit.point;
-                cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                if (Physics.Raycast(ray, out hit, RayLenght) && gameObject.tag == "InputField")
+                {
+                    cursorInstance.transform.position = hit.point;
+                    cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                }
             }
-        }
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            if (hit.collider.tag == "Ground" && Physics.Raycast(ray, out hit, RayLenght))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                // If the ray hits something, set the position to the hit point and rotate based on the normal vector of the hit
-                teleportInstance.SetActive(true);
-                cursorInstance.SetActive(false);
-                teleportInstance.transform.position = hit.point;
-                teleportInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                if (hit.collider.tag == "Ground" && Physics.Raycast(ray, out hit, RayLenght))
+                {
+                    // If the ray hits something, set the position to the hit point and rotate based on the normal vector of the hit
+                    teleportInstance.SetActive(true);
+                    cursorInstance.SetActive(false);
+                    teleportInstance.transform.position = hit.point;
+                    teleportInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                }
+                else
+                {
+                    teleportInstance.SetActive(false);
+                    cursorInstance.SetActive(true);
+                }
             }
             else
             {
-                teleportInstance.SetActive(false);
-                cursorInstance.SetActive(true);
+                // If the ray doesn't hit anything, set the position to the maxCursorDistance and rotate to point away from the camera
+                cursorInstance.transform.position = ray.origin + ray.direction.normalized;
+                cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, -ray.direction);
             }
-        }
-        else
-        {
-            // If the ray doesn't hit anything, set the position to the maxCursorDistance and rotate to point away from the camera
-            cursorInstance.transform.position = ray.origin + ray.direction.normalized;
-            cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, -ray.direction);
-        }
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit) )
+            if (Physics.Raycast(transform.position, transform.forward, out hit))
+            {
+                if (Physics.Raycast(ray, out hit, RayLenght - 0, 5) && hit.collider.tag == "Activable")
+                {
+                    handInstance.SetActive(true);
+                    cursorInstance.SetActive(false);
+                    handInstance.transform.position = cursorInstance.transform.position;
+                    handInstance.transform.rotation = cursorInstance.transform.rotation;
+                    float y = handInstance.transform.eulerAngles.y;
+                    float z = handInstance.transform.eulerAngles.z;
+                    handInstance.transform.Translate(Vector3.back * 0.05f);
+                    handInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
+                    var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
+                    if (hitReceiver != null)
+                    {
+                        hitReceiver.OnRayHit();
+                    }
+                }
+                else
+                {
+                    handInstance.SetActive(false);
+                }
+                if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght - 0, 5) && hit.collider.tag == "Key")
+                {
+
+                    handInstance.SetActive(false);
+                    cursorInstance.SetActive(false);
+                    coloredHandInstance.SetActive(true);
+                    coloredHandInstance.transform.position = cursorInstance.transform.position;
+                    coloredHandInstance.transform.rotation = cursorInstance.transform.rotation;
+                    float y = coloredHandInstance.transform.eulerAngles.y;
+                    float z = coloredHandInstance.transform.eulerAngles.z;
+                    coloredHandInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
+                    var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
+                    if (hitReceiver != null)
+                    {
+                        hitReceiver.AddKey();
+                    }
+                }
+                else
+                {
+                    coloredHandInstance.SetActive(false);
+                }
+            }
+        }
+        if (pause == true && Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (Physics.Raycast(ray, out hit, RayLenght - 0,5) && hit.collider.tag == "Activable")
+            if(hit.collider.tag == "Canvas")
             {
-                handInstance.SetActive(true);
-                cursorInstance.SetActive(false);             
-                handInstance.transform.position = cursorInstance.transform.position;
-                handInstance.transform.rotation = cursorInstance.transform.rotation;
-                float y = handInstance.transform.eulerAngles.y;
-                float z = handInstance.transform.eulerAngles.z;
-                handInstance.transform.Translate(Vector3.back * 0.05f);
-                handInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
-                var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
-                if (hitReceiver != null)
-                {
-                    hitReceiver.OnRayHit();
-                }
-            }
-            else {
-                handInstance.SetActive(false);
-            }
-            if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght-0,5) && hit.collider.tag == "Key" ) 
-            {
-                
-                handInstance.SetActive(false);
-                cursorInstance.SetActive(false);
-                coloredHandInstance.SetActive(true);
-                coloredHandInstance.transform.position = cursorInstance.transform.position;
-                coloredHandInstance.transform.rotation = cursorInstance.transform.rotation;
-                float y = coloredHandInstance.transform.eulerAngles.y;
-                float z = coloredHandInstance.transform.eulerAngles.z;
-                coloredHandInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
-                var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
-                if (hitReceiver != null)
-                {
-                    hitReceiver.AddKey();
-                }
-            } else
-            {
-                coloredHandInstance.SetActive(false);
+                cursorInstance.transform.position = hit.point;
+                cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                float y = cursorInstance.transform.eulerAngles.y;
+                float z = cursorInstance.transform.eulerAngles.z;
+                cursorInstance.transform.rotation = Quaternion.Euler(180f, y, z);
             }
         }
     }
@@ -133,9 +155,12 @@ public class GameCursor : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            // If it's not a double click, it's a single click.
-            // If anything has subscribed to OnClick call it.
             Teleport();
+        }
+        if (Input.GetButtonDown("Cancel"))
+        {
+            pauseScript.GamePause();
+            PauseCanvas();      
         }
     }
 
@@ -148,4 +173,20 @@ public class GameCursor : MonoBehaviour
         }
     }
 
+    public void PauseCanvas()
+    {
+        pause = !pause;
+        if (pause == false)
+        {
+            pauseObject.SetActive(false);
+        } else if (pause == true)
+        {
+            pauseObject.SetActive(true);
+            PauseCamera();
+        }
+    }
+    public void PauseCamera()
+    {
+        Player.position = orginalPos;
+    }
 }
