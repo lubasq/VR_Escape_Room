@@ -5,8 +5,8 @@ using UnityEngine;
 public class HitReceiver : MonoBehaviour
 {
     [SerializeField] private bool locked;
+
     private Animator anim;
-    [SerializeField] private GameObject key;
 
     public int keyVariable;
     public int keyWorth;
@@ -42,7 +42,7 @@ public class HitReceiver : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1")){
             GameVariables.keyCount += keyWorth;
-            Destroy(key);
+            Destroy(gameObject);
         }
     }
 
