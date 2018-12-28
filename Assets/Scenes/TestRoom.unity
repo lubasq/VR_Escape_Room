@@ -10377,7 +10377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 1
-  key: {fileID: 0}
   keyVariable: 1
   keyWorth: 0
 --- !u!1001 &218479118
@@ -15210,7 +15209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
-  key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
 --- !u!95 &255096054
@@ -20425,7 +20423,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -20548,7 +20546,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -32827,7 +32825,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -37596,7 +37594,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -63201,7 +63199,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -78149,7 +78147,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -78209,7 +78207,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -103686,7 +103684,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -113661,7 +113659,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
-  key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
 --- !u!95 &1439953436
@@ -118711,7 +118708,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
-  key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
 --- !u!65 &1533387363
@@ -118725,7 +118721,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 21.202553, y: 17.0255, z: 296.44962}
-  m_Center: {x: 2.5489562, y: -2.8057842, z: -685.1563}
+  m_Center: {x: 2.55, y: -2.8057842, z: -100}
 --- !u!95 &1533387364
 Animator:
   serializedVersion: 3
@@ -138807,7 +138803,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -143696,7 +143692,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
@@ -143914,7 +143910,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4198195060786464, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
       propertyPath: m_LocalScale.x
@@ -154232,8 +154228,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 168.65411, y: 134.75597, z: 1370.8584}
-  m_Center: {x: -2.7585102e-14, y: 0, z: -2284.1318}
+  m_Size: {x: 168.65411, y: 134.75597, z: 267.6486}
+  m_Center: {x: -5.0084486e-16, y: 0, z: 81.60029}
 --- !u!4 &2055476568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 28b79788eebd96f41a60a23470e8c5d2,
@@ -154918,7 +154914,7 @@ Prefab:
     - target: {fileID: 65486989455097696, guid: 41849f19442adff4a951d0ff9430516c,
         type: 2}
       propertyPath: m_Center.z
-      value: 0.07
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41849f19442adff4a951d0ff9430516c, type: 2}
