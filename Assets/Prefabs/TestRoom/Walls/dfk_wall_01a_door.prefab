@@ -225,7 +225,6 @@ GameObject:
   - component: {fileID: 23024762129178050}
   - component: {fileID: 114268190201031164}
   - component: {fileID: 95061593759626030}
-  - component: {fileID: 114629681041995800}
   - component: {fileID: 65853905603281242}
   m_Layer: 0
   m_Name: Door.Left
@@ -916,10 +915,10 @@ BoxCollider:
   m_GameObject: {fileID: 1314362212671364}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5813777, y: 2.614303, z: 0.046771035}
-  m_Center: {x: 0.01789558, y: 1.264559, z: -0.0013434812}
+  m_Center: {x: 0.01789558, y: 1.264559, z: 0.1}
 --- !u!65 &65582220873128974
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -930,8 +929,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7619283, y: 2.3859992, z: 0.16616575}
-  m_Center: {x: 0.34274578, y: -0.020086288, z: 0.06504182}
+  m_Size: {x: 0.7619283, y: 2.3859992, z: 0.046565533}
+  m_Center: {x: 0.34274578, y: -0.020086288, z: 0}
 --- !u!65 &65853905603281242
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -942,8 +941,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.82075644, y: 2.3859992, z: 0.16616575}
-  m_Center: {x: -0.37215984, y: -0.020086229, z: 0.06504182}
+  m_Size: {x: 0.82075644, y: 2.3859992, z: 0.059937477}
+  m_Center: {x: -0.37215984, y: -0.020086288, z: 0}
 --- !u!95 &95061593759626030
 Animator:
   serializedVersion: 3
@@ -991,17 +990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4261e431d34c2448baff3fded9e3f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114629681041995800
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1804580928457664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb7a6650b6cb46545967d3b380b7396c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  locked: 0
+  key: {fileID: 0}
+  keyVariable: 0
+  keyWorth: 0
 --- !u!114 &114774544097211264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1013,6 +1005,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4261e431d34c2448baff3fded9e3f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locked: 0
+  key: {fileID: 0}
+  keyVariable: 0
+  keyWorth: 0
 --- !u!224 &224888575562986166
 RectTransform:
   m_ObjectHideFlags: 1

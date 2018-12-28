@@ -5,7 +5,7 @@ using UnityEngine;
 public class HitReceiver : MonoBehaviour
 {
     [SerializeField] private bool locked;
-     private Animator anim;
+    private Animator anim;
     [SerializeField] private GameObject key;
 
     public int keyVariable;

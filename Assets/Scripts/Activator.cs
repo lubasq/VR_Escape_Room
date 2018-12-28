@@ -5,11 +5,11 @@ using UnityEngine;
 public class Activator : MonoBehaviour {
 
     private Animator anim;
-    private Collider collider;
+    private Collider objectCol;
 
     void Start () {
         anim = GetComponent<Animator>();
-        collider = GetComponent<BoxCollider>();
+        objectCol = GetComponent<BoxCollider>();
     }
 	
 	// Update is called once per frame
@@ -17,7 +17,7 @@ public class Activator : MonoBehaviour {
         if (anim.GetBool("isOpen"))   {
             GameVariables.buttonPressed = true;
             anim.SetBool("isOpen",false);
-            collider.enabled = !collider.enabled;
+            objectCol.enabled = !objectCol.enabled;
         }
 
     }

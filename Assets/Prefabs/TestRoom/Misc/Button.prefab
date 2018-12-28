@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 65168423583027782}
   - component: {fileID: 95943207941127052}
   - component: {fileID: 114601611804967540}
+  - component: {fileID: 114694025969072086}
   m_Layer: 0
   m_Name: Press
   m_TagString: Activable
@@ -70,8 +71,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1027316837683738}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.385, y: -2.344, z: -1.2371}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.721, y: -2.3440008, z: -1.2371001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4643864648597270}
@@ -155,7 +156,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: ce9544f6d56a8d94f8c2ac99787fb7a4, type: 2}
+  - {fileID: 2100000, guid: bf9d4edecafda334b8782b9c1696aa81, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -246,3 +247,14 @@ MonoBehaviour:
   key: {fileID: 0}
   keyVariable: 0
   keyWorth: 0
+--- !u!114 &114694025969072086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1367559194371756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41554628866d73945abeaaf0e2c6ce68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
