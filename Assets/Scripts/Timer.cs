@@ -4,7 +4,8 @@ using TMPro;
 using UnityEngine;
 
 public class Timer : MonoBehaviour {
-    [SerializeField] private TMP_Text timer;
+    [SerializeField] private TMP_Text doorTimer;
+    [SerializeField] private TMP_Text pauseTimer;
     private float startTime;
 
     void Start () {
@@ -17,11 +18,13 @@ public class Timer : MonoBehaviour {
         string seconds = (t % 60).ToString("f0");
         if (t >= 60)
         {
-            timer.text = minutes + "m " + seconds + "s";
+            doorTimer.text = minutes + "m " + seconds + "s";
+            pauseTimer.text = minutes + "m " + seconds + "s";
         }
         else
         {
-            timer.text = seconds + "s";
+            doorTimer.text = seconds + "s";
+            pauseTimer.text = seconds + "s";
         }
     }
 }

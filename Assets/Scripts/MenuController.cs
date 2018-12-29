@@ -22,6 +22,9 @@ public class MenuController : MonoBehaviour {
     public void RestartScene()
     {
         SceneManager.LoadScene("MainMenu");
+        GameVariables.keyCount = 0;
+        GameVariables.buttonPressed = false;
+        GameVariables.gotPin = false;
     }
 
     public void GamePause()
