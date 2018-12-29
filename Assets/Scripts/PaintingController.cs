@@ -9,6 +9,8 @@ public class PaintingController : MonoBehaviour {
     [SerializeField] GameObject partPainting4;
     //[SerializeField] GameObject cube;
 
+    private Animator anim;
+
     private float x1,y1,z1;
     private float x2, y2, z2;
     private float x3, y3, z3;
@@ -18,6 +20,8 @@ public class PaintingController : MonoBehaviour {
 
 
     void Start () {
+        anim = GetComponent<Animator>();
+        anim.enabled = false;
         x1 = partPainting1.transform.eulerAngles.x;
         y1 = partPainting1.transform.eulerAngles.y;
         z1 = partPainting1.transform.eulerAngles.z;
@@ -118,6 +122,8 @@ public class PaintingController : MonoBehaviour {
 
         if (b1 == true && b2 == true && b3 == true && b4 == true)
             {
+            anim.enabled = true;
+            anim.SetBool("isOpen", true);
                 Debug.Log("Anim start");
             }
         }
