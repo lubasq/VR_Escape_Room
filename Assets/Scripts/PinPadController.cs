@@ -7,12 +7,15 @@ using UnityEngine.UI;
 
 public class PinPadController : MonoBehaviour
 {
+    [SerializeField] private string codeString;
+    [SerializeField] private TMP_InputField pinField;
+
+    public Animator anim;
+
     [SerializeField] string word = null;
     [SerializeField] int wordIndex = -1;
-    [SerializeField] public TMP_InputField pinField;
     [SerializeField] char[] nameChar = new char[5];
-    [SerializeField] string alpha = null;
-    [SerializeField] private string codeString;    
+    [SerializeField] string alpha = null; 
     [SerializeField] private TMP_Text numberOneCode;
     [SerializeField] private TMP_Text numberTwoCode;
 
@@ -22,12 +25,15 @@ public class PinPadController : MonoBehaviour
 
     void Start()
     {
+        anim.enabled = false;
         SetCode();
     }
 
     void Update()
     {
         CheckPin();
+        Debug.Log(pinField.text);
+        Debug.Log(codeString);
     }
 
     public void Alphabet(string alphabet)
@@ -67,6 +73,7 @@ public class PinPadController : MonoBehaviour
         {
             //TODO CHAIN ANIM
             pinField.text = "GRATZ";
+            anim.enabled = true;
         }
     }
 

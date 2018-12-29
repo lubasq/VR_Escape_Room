@@ -9,5 +9,4 @@ public class ActivatorForPin : MonoBehaviour
     {
             GameVariables.gotPin = true;
     }
-
     }

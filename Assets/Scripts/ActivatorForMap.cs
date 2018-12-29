@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class ActivatorForMap : MonoBehaviour {
 
-   // private HitReceiver hitScript;
     private Animator anim;
 
-    // Use this for initialization
     void Start () {
-        //hitScript = GetComponent<HitReceiver>();
         anim = GetComponent<Animator>();
-        //hitScript.enabled = false;
         anim.enabled = false;
-	}
+        anim.SetBool("isOpen", false);
+    }
 	
-	// Update is called once per frame
 	void Update () {
-		if(GameVariables.gotPin == true) {
+            if (GameVariables.gotPin == true) {
             anim.enabled = true;
-           // hitScript.enabled = true;
-        }
-	}
+         }
+          else {
+            anim.SetBool("isOpen", false);
+         }
+    }
 }
