@@ -5,17 +5,9 @@ using UnityEngine;
 public class ActivatorForPin : MonoBehaviour
 {
 
-    void Start()
+    void OnDestroy()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire1")) {
             GameVariables.gotPin = true;
-        }
+    }
 
     }
-}
