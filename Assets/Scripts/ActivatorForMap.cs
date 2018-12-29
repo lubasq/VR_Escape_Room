@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivatorForMap : MonoBehaviour {
+public class ActivatorForMap : MonoBehaviour
+{
 
     private Animator anim;
 
-    void Start () {
+    void Start()
+    {
         anim = GetComponent<Animator>();
         anim.enabled = false;
         anim.SetBool("isOpen", false);
     }
-	
-	void Update () {
-            if (GameVariables.gotPin == true) {
+
+    void Update()
+    {
+        if (GameVariables.gotPin == true)
+        {
             anim.enabled = true;
-         }
-          else {
+        }
+        else
+        {
             anim.SetBool("isOpen", false);
-         }
+        }
     }
 }
