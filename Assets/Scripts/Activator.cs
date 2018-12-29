@@ -11,10 +11,8 @@ public class Activator : MonoBehaviour {
         anim = GetComponent<Animator>();
         objectCol = GetComponent<BoxCollider>();
     }
-	
-	// Update is called once per frame
+
 	void Update () {
-        Debug.Log(anim.GetBool("isOpen"));
         if (anim.GetBool("isOpen")== true)   {
             GameVariables.buttonPressed = true;
             anim.SetBool("isOpen",false);

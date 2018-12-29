@@ -18,10 +18,14 @@ public class PinPadController : MonoBehaviour
     [SerializeField] string alpha = null; 
     [SerializeField] private TMP_Text numberOneCode;
     [SerializeField] private TMP_Text numberTwoCode;
+    [SerializeField] private TMP_Text numberThreeCode;
+    [SerializeField] private TMP_Text numberFourCode;
 
     private int numberTwo;
     private int numberOne;
-    
+    private int numberThree;
+    private int numberFour;
+
 
     void Start()
     {
@@ -32,8 +36,6 @@ public class PinPadController : MonoBehaviour
     void Update()
     {
         CheckPin();
-        Debug.Log(pinField.text);
-        Debug.Log(codeString);
     }
 
     public void Alphabet(string alphabet)
@@ -41,7 +43,6 @@ public class PinPadController : MonoBehaviour
         if (wordIndex < 4)
         {
             wordIndex++;
-            Debug.Log(wordIndex);
             char[] keepchar = alphabet.ToCharArray();
             nameChar[wordIndex] = keepchar[0];
             alpha = nameChar[wordIndex].ToString();
@@ -71,7 +72,6 @@ public class PinPadController : MonoBehaviour
     {
         if(pinField.text.Equals(codeString))
         {
-            //TODO CHAIN ANIM
             pinField.text = "GRATZ";
             anim.enabled = true;
         }
@@ -82,10 +82,15 @@ public class PinPadController : MonoBehaviour
         numberOne = Random.Range(1, 9);
         numberOneCode.text = "I." + numberOne;
         codeString += numberOne;
-        Debug.Log("Your code is: " + codeString);
         numberTwo = Random.Range(0, 9);
         numberTwoCode.text = "II." + numberTwo;
         codeString += numberTwo;
+        numberThree = Random.Range(1, 9);
+        numberThreeCode.text = "III." + numberThree;
+        codeString += numberThree;
+        numberFour = Random.Range(1, 9);
+        numberFourCode.text = "IV." + numberFour;
+        codeString += numberFour;
         Debug.Log("Your code is: " + codeString);
     }
 }

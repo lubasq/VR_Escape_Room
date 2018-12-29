@@ -30,12 +30,10 @@ public class MenuController : MonoBehaviour {
         if (pause == true)
         {
             Time.timeScale = 0;
-            Debug.Log("Paused");
         }
         else if (pause == false)
         {
             Time.timeScale = 1;
-            Debug.Log("Unpaused");
         }        
     }
 }
