@@ -24,6 +24,10 @@ public class MenuController : MonoBehaviour {
         GameVariables.keyCount = 0;
         GameVariables.buttonPressed = false;
         GameVariables.gotPin = false;
+        for(int i=0;i < GameVariables.correctLeverState.Length;++i)
+        {
+            GameVariables.correctLeverState[i] = false;
+        }
         SceneManager.LoadScene("MainMenu");
 
     }

@@ -123,7 +123,6 @@ public class PaintingController : MonoBehaviour {
         if (b1 == true && b2 == true && b3 == true && b4 == true)
             {
             anim.enabled = true;
-            anim.SetBool("isOpen", true);
             }
         }
         
