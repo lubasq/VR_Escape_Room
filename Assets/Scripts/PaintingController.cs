@@ -124,7 +124,6 @@ public class PaintingController : MonoBehaviour {
             {
             anim.enabled = true;
             anim.SetBool("isOpen", true);
-                Debug.Log("Anim start");
             }
         }
         

@@ -30,10 +30,10 @@ public class HitReceiver : MonoBehaviour
         else if (Input.GetButtonDown("Fire1") && anim.GetBool("isOpen") && locked && GameVariables.keyCount == keyVariable) {
             anim.SetBool("isOpen", false);
         }
-        else if (Input.GetButtonDown("Fire1") && !anim.GetBool("isOpen") && !locked) {
+        else if (Input.GetButtonDown("Fire1") && !anim.GetBool("isOpen") && !locked ) {
             anim.SetBool("isOpen", true);
         }
-        else if (Input.GetButtonDown("Fire1") && anim.GetBool("isOpen") && !locked) {
+        else if (Input.GetButtonDown("Fire1") && anim.GetBool("isOpen") && !locked ) {
             anim.SetBool("isOpen", false);
         }
     }
@@ -45,6 +45,8 @@ public class HitReceiver : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
 
 }
 
