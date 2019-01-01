@@ -9,6 +9,8 @@ public class MenuController : MonoBehaviour {
 
     public bool pause = false;
 
+
+
     public void Exit()
     {
         Application.Quit();
