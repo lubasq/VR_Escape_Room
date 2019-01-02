@@ -24,21 +24,24 @@ public class MenuController : MonoBehaviour
 
     public void RestartScene()
     {
-        GameVariables.keyCount = 0;
+        GameVariables.gotKey = false;
         GameVariables.buttonPressed = false;
         GameVariables.gotPin = false;
+        GameVariables.gotCoin = 0;
         for (int i = 0; i < GameVariables.correctLeverState.Length; ++i)
         {
             GameVariables.correctLeverState[i] = false;
         }
+
         SceneManager.LoadScene("TestRoom");
     }
 
     public void MenuScene()
     {
-        GameVariables.keyCount = 0;
+        GameVariables.gotKey = false;
         GameVariables.buttonPressed = false;
         GameVariables.gotPin = false;
+        GameVariables.gotCoin = 0;
         for (int i = 0; i < GameVariables.correctLeverState.Length; ++i)
         {
             GameVariables.correctLeverState[i] = false;

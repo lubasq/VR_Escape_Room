@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameVariables : MonoBehaviour
 {
 
-    public static int keyCount;
+    public static bool gotKey = false;
     public static bool buttonPressed = false;
     public static bool gotPin = false;
     public static int gotCoin = 0;

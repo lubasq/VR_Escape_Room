@@ -7,7 +7,6 @@ public class LeverSystemController : MonoBehaviour
 
     public List<GameObject> lightCandles = new List<GameObject>();
     public List<GameObject> putOutCandles = new List<GameObject>();
-   // public List<GameObject> candleLights = new List<GameObject>();
 
     private Animator anim;
     [SerializeField] private int whichLever;
