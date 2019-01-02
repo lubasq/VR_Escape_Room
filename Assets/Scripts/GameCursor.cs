@@ -133,7 +133,7 @@ public class GameCursor : MonoBehaviour
                     var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
                     if (hitReceiver != null)
                     {
-                        hitReceiver.AddKey();
+                        hitReceiver.CollectItem();
                     }
                 }
                 else

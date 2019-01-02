@@ -6,7 +6,9 @@ public class HitReceiver : MonoBehaviour
 {
     [SerializeField] private bool locked;
     [SerializeField] private bool coinSlot;
+    [SerializeField] private bool isKey;
     private bool errorRemover = true;
+    
 
     private Animator anim;
 
@@ -33,10 +35,10 @@ public class HitReceiver : MonoBehaviour
             errorRemover = false;
         }
         if (errorRemover && !coinSlot) { 
-            if (Input.GetButtonDown("Fire1") && !anim.GetBool("isOpen") && locked && GameVariables.gotKey) {
+            if (Input.GetButtonDown("Fire1") && !anim.GetBool("isOpen") && locked && GameVariables.gotKey == true) {
                 anim.SetBool("isOpen", true);
             }
-            else if (Input.GetButtonDown("Fire1") && anim.GetBool("isOpen") && locked && GameVariables.gotKey) {
+            else if (Input.GetButtonDown("Fire1") && anim.GetBool("isOpen") && locked && GameVariables.gotKey == true ) {
                 anim.SetBool("isOpen", false);
             }
             else if (Input.GetButtonDown("Fire1") && !anim.GetBool("isOpen") && !locked) {
@@ -49,11 +51,16 @@ public class HitReceiver : MonoBehaviour
 
     }
 
-    public void AddKey()
+    public void CollectItem()
     {
-        if (Input.GetButtonDown("Fire1")){
-            GameVariables.gotKey = true;
-            Destroy(gameObject);
+        if (Input.GetButtonDown("Fire1")) {
+            if (isKey)
+            {
+                GameVariables.gotKey = true;
+                Destroy(gameObject);
+            }
+            else
+                Destroy(gameObject);
         }
     }
 
