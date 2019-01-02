@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour {
+public class MenuController : MonoBehaviour
+{
 
     public bool pause = false;
 
@@ -26,12 +27,23 @@ public class MenuController : MonoBehaviour {
         GameVariables.keyCount = 0;
         GameVariables.buttonPressed = false;
         GameVariables.gotPin = false;
-        for(int i=0;i < GameVariables.correctLeverState.Length;++i)
+        for (int i = 0; i < GameVariables.correctLeverState.Length; ++i)
+        {
+            GameVariables.correctLeverState[i] = false;
+        }
+        SceneManager.LoadScene("TestRoom");
+    }
+
+    public void MenuScene()
+    {
+        GameVariables.keyCount = 0;
+        GameVariables.buttonPressed = false;
+        GameVariables.gotPin = false;
+        for (int i = 0; i < GameVariables.correctLeverState.Length; ++i)
         {
             GameVariables.correctLeverState[i] = false;
         }
         SceneManager.LoadScene("MainMenu");
-
     }
 
     public void GamePause()
@@ -44,6 +56,6 @@ public class MenuController : MonoBehaviour {
         else if (pause == false)
         {
             Time.timeScale = 1;
-        }        
+        }
     }
 }

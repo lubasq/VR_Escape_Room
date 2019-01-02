@@ -19,6 +19,7 @@ public class GameCursor : MonoBehaviour
     [SerializeField] private Transform Player;
     [SerializeField] private float RayLenght = 3f;
     [SerializeField] private GameObject pauseObject;
+    [SerializeField] private GameObject endGameObject;
 
 
     private GameObject cursorInstance;
@@ -28,10 +29,14 @@ public class GameCursor : MonoBehaviour
     private bool pause = false;
     public MenuController pauseScript;
     Vector3 orginalPos;
-
+    private static float a = -1.2f;
+    private static float b = 1.5f;
+    private static float c = 5.0f;
+    Vector3 endPos = new Vector3(a, b, c);
 
     void Start()
     {
+        Time.timeScale = 1;
         cursorInstance = Instantiate(gameCursorPrefab);
         teleportInstance = Instantiate(teleportPrefab);
         handInstance = Instantiate(handPrefab);
@@ -40,7 +45,6 @@ public class GameCursor : MonoBehaviour
         teleportInstance.SetActive(false);
         handInstance.SetActive(false);
         coloredHandInstance.SetActive(false);
-        //pauseCanvas.enabled = pause;
         pauseObject.SetActive(false);
         orginalPos = new Vector3(viewCamera.transform.position.x, viewCamera.transform.position.y, viewCamera.transform.position.z);
     }
@@ -140,13 +144,25 @@ public class GameCursor : MonoBehaviour
         }
         if (pause == true && Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if(hit.collider.tag == "Canvas")
+            if (hit.collider.tag == "Canvas")
             {
+                cursorInstance.SetActive(true);
+                teleportInstance.SetActive(false);
                 cursorInstance.transform.position = hit.point;
                 cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
                 float y = cursorInstance.transform.eulerAngles.y;
                 float z = cursorInstance.transform.eulerAngles.z;
                 cursorInstance.transform.rotation = Quaternion.Euler(180f, y, z);
+            }
+            else if (hit.collider.tag == "EndCanvas")
+            {
+                cursorInstance.SetActive(true);
+                teleportInstance.SetActive(false);
+                cursorInstance.transform.position = hit.point;
+                cursorInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                float y = cursorInstance.transform.eulerAngles.y;
+                float z = cursorInstance.transform.eulerAngles.z;
+                cursorInstance.transform.rotation = Quaternion.Euler(0f, y, z);
             }
         }
     }
@@ -161,6 +177,10 @@ public class GameCursor : MonoBehaviour
         {
             pauseScript.GamePause();
             PauseCanvas();      
+        }
+        if (Input.GetButtonDown("Fire1") && viewCamera.transform.position.z > 2.5)
+        {
+            Ending();
         }
     }
 
@@ -185,8 +205,17 @@ public class GameCursor : MonoBehaviour
             PauseCamera();
         }
     }
+
     public void PauseCamera()
     {
         Player.position = orginalPos;
+    }
+
+    public void Ending()
+    {
+        endGameObject.SetActive(true);
+        pause = true;
+        Player.position = endPos;
+        Time.timeScale = 0;
     }
 }
