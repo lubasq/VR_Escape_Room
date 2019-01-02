@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: ce9e422d5646b1240938497108a0506d
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/TestRoom.unity
+    guid: 6c8c2813fc25eba45b3f257a7f2e2832
   m_configObjects: {}
