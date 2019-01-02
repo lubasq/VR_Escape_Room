@@ -5,6 +5,7 @@ using UnityEngine;
 public class HitReceiver : MonoBehaviour
 {
     [SerializeField] private bool locked;
+    [SerializeField] private bool coinSlot;
 
     private Animator anim;
 
@@ -35,6 +36,10 @@ public class HitReceiver : MonoBehaviour
         }
         else if (Input.GetButtonDown("Fire1") && anim.GetBool("isOpen") && !locked ) {
             anim.SetBool("isOpen", false);
+        }
+        else if (Input.GetButtonDown("Fire1") && coinSlot && GameVariables.gotCoin > 0) {
+            anim.enabled = true;
+            coinSlot = false;
         }
     }
 

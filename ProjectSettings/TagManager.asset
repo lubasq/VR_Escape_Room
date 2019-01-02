@@ -8,7 +8,7 @@ TagManager:
   - InputField
   - Canvas
   - Activable
-  - Key
+  - Collectable
   layers:
   - Default
   - TransparentFX

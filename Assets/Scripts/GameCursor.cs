@@ -115,7 +115,7 @@ public class GameCursor : MonoBehaviour
                 {
                     handInstance.SetActive(false);
                 }
-                if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght - 0, 5) && hit.collider.tag == "Key")
+                if (hit.collider != null && Physics.Raycast(ray, out hit, RayLenght - 0, 5) && hit.collider.tag == "Collectable")
                 {
 
                     handInstance.SetActive(false);
