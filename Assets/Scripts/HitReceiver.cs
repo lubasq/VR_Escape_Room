@@ -62,6 +62,7 @@ public class HitReceiver : MonoBehaviour
             else
                 Destroy(gameObject);
         }
+
     }
 
 
