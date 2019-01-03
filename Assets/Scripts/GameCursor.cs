@@ -28,7 +28,6 @@ public class GameCursor : MonoBehaviour
     private GameObject coloredHandInstance;
     private bool pause = false;
     public MenuController pauseScript;
-    Vector3 orginalPos;
     private static float a = -1.2f;
     private static float b = 1.5f;
     private static float c = 5.0f;
@@ -46,7 +45,6 @@ public class GameCursor : MonoBehaviour
         handInstance.SetActive(false);
         coloredHandInstance.SetActive(false);
         pauseObject.SetActive(false);
-        orginalPos = new Vector3(viewCamera.transform.position.x, viewCamera.transform.position.y, viewCamera.transform.position.z);
     }
 
     void Update()
@@ -208,7 +206,12 @@ public class GameCursor : MonoBehaviour
 
     public void PauseCamera()
     {
-        Player.position = orginalPos;
+        float _x = -1.5f;
+        float _y = 1.5f;
+        float _z = 0f;
+        Player.position = new Vector3(_x,_y,_z);
+        Vector3 xD = new Vector3(0, 0, 0);
+        viewCamera.transform.rotation = Quaternion.FromToRotation(Vector3.up, xD);
     }
 
     public void Ending()

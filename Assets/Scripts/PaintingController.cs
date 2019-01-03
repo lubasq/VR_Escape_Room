@@ -28,7 +28,7 @@ public class PaintingController : MonoBehaviour {
     }
 
 	void Update () {
-        //CheckState();
+        CheckState();
     }
 
      public void ChangeRotation0()
@@ -36,7 +36,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 0;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -45,7 +45,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 1;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -54,7 +54,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 2;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -63,7 +63,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 3;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -72,7 +72,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 4;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -81,7 +81,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 5;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -90,7 +90,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 6;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -99,7 +99,7 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 7;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
@@ -108,56 +108,100 @@ public class PaintingController : MonoBehaviour {
         var localIndex = 8;
         Mathf.Round(z[localIndex]);
         z[localIndex] += 90;
-        if (z[localIndex] > 360) z[localIndex] = 0;
+        if (z[localIndex] >= 360) z[localIndex] = 0;
         partPainting[localIndex].transform.rotation = Quaternion.Euler(x[localIndex], y[localIndex], z[localIndex]);
     }
 
 
 
 
-    /* public void CheckState()
+     public void CheckState()
      {
-         if (z1 == 180)
+         if (z[0] == 180)
          {
-             b1 = true;
+             b[0] = true;
          }
          else
          {
-             b1 = false;
+             b[0] = false;
          }
 
-         if (z2 == 90)
-         {
-             b2 = true;
-         }
-         else
-         {
-             b2 = false;
-         }
+        if (z[1] == 90)
+        {
+            b[1] = true;
+        }
+        else
+        {
+            b[1] = false;
+        }
 
-         if (z3 == 180)
-         {
-             b3 = true;
-         }
-         else
-         {
-             b3 = false;
-         }
+        if (z[2] == 180)
+        {
+            b[2] = true;
+        }
+        else
+        {
+            b[2] = false;
+        }
 
-         if (z4 == 90 )
-         {
-             b4 = true;
-         }
-         else
-         {
-             b4 = false;
-         }
+        if (z[3] == 0)
+        {
+            b[3] = true;
+        }
+        else
+        {
+            b[3] = false;
+        }
 
+        if (z[4] == 180)
+        {
+            b[4] = true;
+        }
+        else
+        {
+            b[4] = false;
+        }
+        
+        if (z[5] == 90)
+        {
+            b[5] = true;
+        }
+        else
+        {
+            b[5] = false;
+        }
 
-         if (b1 == true && b2 == true && b3 == true && b4 == true)
+        if (z[6] == 180)
+        {
+            b[6] = true;
+        }
+        else
+        {
+            b[6] = false;
+        }
+
+        if (z[7] == 90)
+        {
+            b[7] = true;
+        }
+        else
+        {
+            b[7] = false;
+        }
+
+        if (z[8] == 180)
+        {
+            b[8] = true;
+        }
+        else
+        {
+            b[8] = false;
+        }
+
+        if (b[0] == true && b[1] == true && b[2] == true && b[3] == true && b[4] == true && b[5] == true && b[6] == true && b[7] == true && b[8] == true)
              {
-             anim.enabled = true;
+            anim.enabled = true;
              }
-         }*/
+         }
 
 }
