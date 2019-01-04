@@ -36,8 +36,7 @@ public class WeightSystemController : MonoBehaviour
 
     void Awake()
     {
-        for(int i=0;i<pulled.Length;++i)
-        {
+        for (int i = 0; i < pulled.Length; ++i) {
             pulled[i] = 0;
         }
         anim = GetComponent<Animator>();
@@ -45,25 +44,23 @@ public class WeightSystemController : MonoBehaviour
 
     void OnEnable()
     {
-        startPos[whichFirstSack] = sacks[whichFirstSack].transform.position;   
-        endPos[whichFirstSack] = startPos[whichFirstSack] + Vector3.down * firstDistance; 
+        startPos[whichFirstSack] = sacks[whichFirstSack].transform.position;
+        endPos[whichFirstSack] = startPos[whichFirstSack] + Vector3.down * firstDistance;
         Debug.Log(startPos[whichFirstSack]);
         Debug.Log(endPos[whichFirstSack]);
-        startPos[whichSecondSack] = sacks[whichSecondSack].transform.position; 
+        startPos[whichSecondSack] = sacks[whichSecondSack].transform.position;
         endPos[whichSecondSack] = startPos[whichSecondSack] + Vector3.down * secondDistance;
         if (pulled[whichLever] < 3)
             pulled[whichLever] += 1;
-        else
-        {
-            for (int i = 0; i < pulled.Length; ++i)
-            {
+        else {
+            for (int i = 0; i < pulled.Length; ++i) {
                 pulled[i] = 1;
             }
         }
     }
 
     void OnDisable()
-{
+    {
 
         anim.SetBool("isOpen", false);
     }
@@ -71,47 +68,46 @@ public class WeightSystemController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(pulled[whichLever]);
-        if (anim.GetBool("isOpen"))
-        { 
-            if (pulled[whichLever] < 3)
-            {
-                Debug.Log("am i here");
-                currentLerpTime += Time.deltaTime;
+        /* Debug.Log(pulled[whichLever]);
+         if (anim.GetBool("isOpen"))
+         { 
+             if (pulled[whichLever] < 3)
+             {
+                 Debug.Log("am i here");
+                 currentLerpTime += Time.deltaTime;
 
-                float movement = currentLerpTime / lerpTime;
-                sacks[whichFirstSack].transform.position = Vector3.Lerp(startPos[whichFirstSack], endPos[whichFirstSack], movement);
-                sacks[whichSecondSack].transform.position = Vector3.Lerp(startPos[whichSecondSack], endPos[whichSecondSack], movement);
+                 float movement = currentLerpTime / lerpTime;
+                 sacks[whichFirstSack].transform.position = Vector3.Lerp(startPos[whichFirstSack], endPos[whichFirstSack], movement);
+                 sacks[whichSecondSack].transform.position = Vector3.Lerp(startPos[whichSecondSack], endPos[whichSecondSack], movement);
 
-                if (currentLerpTime > lerpTime)
-                {
+                 if (currentLerpTime > lerpTime)
+                 {
 
-                    currentLerpTime = 0f;
-                    startPos[whichFirstSack] = new Vector3(sacks[whichFirstSack].transform.position.x, sacks[whichFirstSack].transform.position.y, sacks[whichFirstSack].transform.position.z);
-                    endPos[whichFirstSack] = startPos[whichFirstSack] + Vector3.down * firstDistance;
-                    startPos[whichSecondSack] = new Vector3(sacks[whichSecondSack].transform.position.x, sacks[whichSecondSack].transform.position.y, sacks[whichSecondSack].transform.position.z);
-                    endPos[whichSecondSack] = startPos[whichSecondSack] + Vector3.down * secondDistance;
+                     currentLerpTime = 0f;
+                     startPos[whichFirstSack] = new Vector3(sacks[whichFirstSack].transform.position.x, sacks[whichFirstSack].transform.position.y, sacks[whichFirstSack].transform.position.z);
+                     endPos[whichFirstSack] = startPos[whichFirstSack] + Vector3.down * firstDistance;
+                     startPos[whichSecondSack] = new Vector3(sacks[whichSecondSack].transform.position.x, sacks[whichSecondSack].transform.position.y, sacks[whichSecondSack].transform.position.z);
+                     endPos[whichSecondSack] = startPos[whichSecondSack] + Vector3.down * secondDistance;
 
-                }
-            }
-            else
-            {
-                    Debug.Log("?");
-                    currentLerpTime += Time.deltaTime;
-                    float movement = currentLerpTime / lerpTime;
-                    for (int i = 0; i < sacks.Length; ++i)
-                    {
-                    // (resetPos) = (sacks[0].transform.position = resetPos) = (sacks[0].transform.position);
-                    startPos[i] = sacks[i].transform.position; 
-                    sacks[i].transform.position = Vector3.Lerp(startPos[i], resetPos, movement);
-                    }
-                    if(currentLerpTime > lerpTime)
-                {
-                    currentLerpTime = 0;
-                    //reset startpos and endposition
-                }
-                }
-            }
-        }
+                 }
+             }
+             else
+             {
+                     Debug.Log("?");
+                     currentLerpTime += Time.deltaTime;
+                     float movement = currentLerpTime / lerpTime;
+                     for (int i = 0; i < sacks.Length; ++i)
+                     {
+                     // (resetPos) = (sacks[0].transform.position = resetPos) = (sacks[0].transform.position);
+                     startPos[i] = sacks[i].transform.position; 
+                     sacks[i].transform.position = Vector3.Lerp(startPos[i], resetPos, movement);
+                     }
+                     if(currentLerpTime > lerpTime)
+                 {
+                     currentLerpTime = 0;
+                     //reset startpos and endposition
+                 }
+                 }
+             } */
+         } 
     }
-

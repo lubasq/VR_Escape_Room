@@ -23179,7 +23179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.2999144, y: -188.39998}
+  m_AnchoredPosition: {x: -1.2999268, y: -188.39998}
   m_SizeDelta: {x: 0, y: -2.9999695}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!111 &1893295739
@@ -25857,6 +25857,7 @@ GameObject:
   - component: {fileID: 2108624585}
   - component: {fileID: 2108624584}
   - component: {fileID: 2108624583}
+  - component: {fileID: 2108624588}
   m_Layer: 5
   m_Name: LoadingScreen
   m_TagString: Untagged
@@ -25962,6 +25963,24 @@ RectTransform:
   m_AnchoredPosition: {x: 527.2, y: 259.5}
   m_SizeDelta: {x: 734.7, y: 361.7}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &2108624588
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2108624582}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 977c689211992914188c6e0572be01b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2144005806
 GameObject:
   m_ObjectHideFlags: 0

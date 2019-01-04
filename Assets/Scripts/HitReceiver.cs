@@ -6,8 +6,9 @@ public class HitReceiver : MonoBehaviour
 {
     [SerializeField] private bool locked;
     [SerializeField] private bool coinSlot;
-    [SerializeField] private bool isKey;
+  //  [SerializeField] private bool isKey;
     private bool errorRemover = true;
+    [SerializeField] private string type;
     
 
     private Animator anim;
@@ -54,19 +55,24 @@ public class HitReceiver : MonoBehaviour
     public void CollectItem()
     {
         if (Input.GetButtonDown("Fire1")) {
-            if (isKey)
-            {
+            if (type.Equals("isKey")) {
                 GameVariables.gotKey = true;
                 Destroy(gameObject);
             }
-            else
+            else if (type.Equals("isCoin")) {
+                GameVariables.gotCoin += 1;
                 Destroy(gameObject);
+            }
+            else if (type.Equals("isPin")) {
+                GameVariables.gotPin = true;
+                Destroy(gameObject);
+            }
+            else {
+                Destroy(gameObject);
+            }
         }
 
     }
-
-
-
 }
 
 
