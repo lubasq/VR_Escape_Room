@@ -46,12 +46,12 @@ public class Registration : MonoBehaviour
         var regex = new Regex("^[a-zA-Z0-9]{4,15}$");
 
         //if login is too short or contain illegal characters
-        if (regex.IsMatch(login))
+        if (!regex.IsMatch(login))
         {
             error = "Login is too short, or contains illegal characters.";
         }
 
-        if (regex.IsMatch(password))
+        if (!regex.IsMatch(password))
         {
             error += "\nPassword incorrect.";
         }
