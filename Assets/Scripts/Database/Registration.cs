@@ -70,11 +70,11 @@ public class Registration : MonoBehaviour
         notRegisteredAlert.text = error;
         if (error.Length > 0)
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 }

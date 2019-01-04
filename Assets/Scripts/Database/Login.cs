@@ -108,11 +108,11 @@ public class Login : MonoBehaviour
         notLoggedIn.text = error;
         if (error.Length > 0)
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 }
