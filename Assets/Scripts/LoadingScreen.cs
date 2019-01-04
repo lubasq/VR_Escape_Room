@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadingScreen : MonoBehaviour {
 
@@ -9,6 +11,16 @@ public class LoadingScreen : MonoBehaviour {
 
     public void LoadingScene()
     {
+        StartCoroutine(LoadScene());
+    }
+
+    IEnumerator LoadScene()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync("TestRoom");
         loadingScreen.SetActive(true);
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
     }
 }

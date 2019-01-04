@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-
+   // public GameObject resetGlobalVariables;
     public bool pause = false;
 
 
@@ -24,28 +24,21 @@ public class MenuController : MonoBehaviour
 
     public void RestartScene()
     {
-        GameVariables.gotKey = false;
-        GameVariables.buttonPressed = false;
-        GameVariables.gotPin = false;
-        GameVariables.gotCoin = 0;
-        for (int i = 0; i < GameVariables.correctLeverState.Length; ++i)
-        {
-            GameVariables.correctLeverState[i] = false;
-        }
-
+        GameVariables.resetVariables();
         SceneManager.LoadScene("TestRoom");
     }
 
     public void MenuScene()
     {
-        GameVariables.gotKey = false;
-        GameVariables.buttonPressed = false;
-        GameVariables.gotPin = false;
-        GameVariables.gotCoin = 0;
-        for (int i = 0; i < GameVariables.correctLeverState.Length; ++i)
-        {
-            GameVariables.correctLeverState[i] = false;
-        }
+        //    GameVariables.gotKey = false;
+        //    GameVariables.buttonPressed = false;
+        //    GameVariables.gotPin = false;
+        //    GameVariables.gotCoin = 0;
+        //    for (int i = 0; i < GameVariables.correctLeverState.Length; ++i)
+        //    {
+        //        GameVariables.correctLeverState[i] = false;
+        //   }
+     //   resetGlobalVariables.GetComponent<GameVariables>().enabled = true;
         SceneManager.LoadScene("MainMenu");
     }
 
