@@ -49,7 +49,7 @@ public class WeightSystemController : MonoBehaviour
         endPos[whichFirstSack] = startPos[whichFirstSack] + Vector3.down * firstDistance; 
         Debug.Log(startPos[whichFirstSack]);
         Debug.Log(endPos[whichFirstSack]);
-        startPos[whichSecondSack] = sacks[whichSecondSack].transform.position; /
+        startPos[whichSecondSack] = sacks[whichSecondSack].transform.position; 
         endPos[whichSecondSack] = startPos[whichSecondSack] + Vector3.down * secondDistance;
         if (pulled[whichLever] < 3)
             pulled[whichLever] += 1;
