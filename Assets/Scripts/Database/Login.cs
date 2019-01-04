@@ -7,9 +7,7 @@ using System.Data;
 using System;
 using System.IO;
 using UnityEditor;
-
-
-
+using System.Text.RegularExpressions;
 
 public class UserData : IEquatable<UserData>
 {
@@ -54,34 +52,67 @@ public class Login : MonoBehaviour
         
     private void LoginIn()
     {
-        //sprawdzenie sciezek
+        //check path of database
         Debug.Log("Persistent path: " + Application.persistentDataPath);
         Debug.Log("dataPath path: " + Application.dataPath);
-        //pobierz dane
-        List<UserData> currentUser = new List<UserData>();
-        global::Database user = new global::Database();
-        IDataReader reader = user.DBSelect("Users", new string[] {}, new string[] { "login", "password" }, new string[] { login.text, password.text }, new string[] {}, "");
-
-        //odczytaj dane i zamień w liste
-        while (reader.Read())
+        if( ValidateData(login.text, password.text) )
         {
-            currentUser.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
+            //get data
+            List<UserData> currentUser = new List<UserData>();
+            global::Database user = new global::Database();
+            IDataReader reader = user.DBSelect("Users", new string[] { }, new string[] { "login", "password" }, new string[] { login.text, password.text }, new string[] { }, "");
+            
+            //chage it to list, interface have no possibility to check if any rows exist.
+            while (reader.Read())
+            {
+                currentUser.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
+            }
+            //close connection 
+            user.DBClose();
+            user = null;
+
+            //Sprawdź czy istnieją jakiekolwiek rekordy - jeżeli tak, to znaczy
+            //że jesteś zalogowany.
+            if (currentUser.Count > 0)
+            {
+                loggedIn.text = login.text;
+                loggedScene.SetActive(true);
+                notLoggedScene.SetActive(false);
+                loginText = login.text;
+            }
+            else
+            {
+                notLoggedIn.text = "Oops, something went wrong!\n Please check your login or password and try again!";
+            }
         }
-        //Zamknij połączenie z bazą danych, zniszcz obiekt 
-        user.DBClose();
-        user = null;
-        //Sprawdź czy istnieją jakiekolwiek rekordy - jeżeli tak, to znaczy
-        //że jesteś zalogowany.
-        if (currentUser.Count > 0)
-        {           
-            loggedIn.text = login.text;
-            loggedScene.SetActive(true);
-            notLoggedScene.SetActive(false);
-            loginText = login.text;
+        
+    }
+
+    private bool ValidateData(string login, string password)
+    {
+        string error = "";
+        var regex = new Regex("^[a-zA-Z0-9]{4,15}$");
+        
+        //if login is too short or contain illegal characters
+        if (regex.IsMatch(login))
+        {
+            error = "Login is too short, or contains illegal characters.";
+        }
+
+        if(regex.IsMatch(password))
+        {
+            error += "\nPassword incorrect.";
+        }
+
+        //show info about incorrect data
+        notLoggedIn.text = error;
+        if (error.Length > 0)
+        {
+            return true;
         }
         else
         {
-           notLoggedIn.text = "Oops, something went wrong!\n Please check your login or password and try again!";
+            return false;
         }
     }
 }
