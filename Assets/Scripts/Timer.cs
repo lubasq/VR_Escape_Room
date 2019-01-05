@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 
@@ -56,5 +57,24 @@ public class Timer : MonoBehaviour
             pauseTimer.text = seconds + "s";
             endTimer.text = seconds + "s";
         }
+    }
+
+    private void SaveScoreToDB()
+    {
+
+        string id = PlayerPrefs.GetInt("id").ToString();
+        global::Database doDB = new global::Database();        
+
+        if (doDB.DBInsert("Scores", new string[] { "game_date", "game_time", "Users_id_user", "Levels_id_level" }, new string[] { System.DateTime.Now.ToString("yyyy-mm-dd"), endTimer.text, id ,"1" })) 
+        {
+            Debug.Log("Score saved");
+        }
+        else
+        {
+            Debug.Log("Score saving doesn't work");
+        }
+        doDB.DBClose();
+        doDB = null;
+        
     }
 }

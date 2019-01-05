@@ -66,15 +66,16 @@ public class Login : MonoBehaviour
             while (reader.Read())
             {
                 currentUser.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
+               
             }
             //close connection 
             user.DBClose();
             user = null;
-
             //Sprawdź czy istnieją jakiekolwiek rekordy - jeżeli tak, to znaczy
             //że jesteś zalogowany.
             if (currentUser.Count > 0)
             {
+                PlayerPrefs.SetInt("id", currentUser[0]._id);
                 loggedIn.text = login.text;
                 loggedScene.SetActive(true);
                 notLoggedScene.SetActive(false);
