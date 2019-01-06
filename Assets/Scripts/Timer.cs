@@ -71,7 +71,7 @@ public class Timer : MonoBehaviour
         string id = PlayerPrefs.GetInt("id").ToString();
         global::Database doDB = new global::Database();        
 
-        if (doDB.DBInsert("Scores", new string[] { "game_date", "game_time", "Users_id_user", "Levels_id_level" }, new string[] { System.DateTime.Now.ToString("yyyy-mm-dd"), timeDB, id ,"1" })) 
+        if (doDB.DBInsert("Scores", new string[] { "game_date", "game_time", "Users_id_user", "Levels_id_level" }, new string[] { System.DateTime.Now.ToString("yyyy-MM-d"), timeDB, id ,"1" })) 
         {
             Debug.Log("Score saved");
         }

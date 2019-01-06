@@ -19,6 +19,8 @@ public class UserData : IEquatable<UserData>
 
     public string email { get; set; }
 
+    public int status { get; set; }
+
     public bool Equals(UserData other)
     {
         if (other == null) return false;
@@ -63,18 +65,11 @@ public class Login : MonoBehaviour
             List<UserData> currentUser = new List<UserData>();
             global::Database user = new global::Database();
             IDataReader reader = user.DBSelect("Users", new string[] { }, new string[] { "login", "password" }, new string[] { login.text, password.text }, new string[] { }, "");
-            /*@@@@@@@@@@@@@@@@@@@@@
-
-
-            wywołaj mi tu podstawianie do statusu, ze userStatus = x;
-
-            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
-
-
+            
             //chage it to list, interface have no possibility to check if any rows exist.
             while (reader.Read())
             {
-                currentUser.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3) });
+                currentUser.Add(new UserData() { _id = reader.GetInt32(0), login = reader.GetString(1), password = reader.GetString(2), email = reader.GetString(3), status= reader.GetInt32(4) });
                
             }
             //close connection 
@@ -84,29 +79,33 @@ public class Login : MonoBehaviour
             //że jesteś zalogowany.
             if (currentUser.Count > 0)
             {
-                if (userStatus == -1)
+                switch (currentUser[0].status)
                 {
-                    notLoggedIn.text = "Your account has been deleted.";
-                }
-                else if (userStatus == 0)
-                {
-                    notLoggedIn.text = "Your account has been banned.";
-                }
-                else if (userStatus == 1)
-                {
-                    PlayerPrefs.SetInt("id", currentUser[0]._id);
-                    loggedIn.text = login.text;
-                    loggedScene.SetActive(true);
-                    notLoggedScene.SetActive(false);
-                    loginText = login.text;
-                } else if (userStatus == 2)
-                {
-                    PlayerPrefs.SetInt("id", currentUser[0]._id);
-                    loggedIn.text = login.text;
-                    loggedScene.SetActive(true);
-                    notLoggedScene.SetActive(false);
-                    adminPanel.SetActive(true);
-                    loginText = login.text;
+                    case -1:
+                        notLoggedIn.text = "Your account has been deleted.";
+                        break;
+                    case 0:
+                        notLoggedIn.text = "Your account has been banned.";
+                        break;
+                    case 1:
+                        PlayerPrefs.SetInt("id", currentUser[0]._id);
+                        loggedIn.text = login.text;
+                        loggedScene.SetActive(true);
+                        notLoggedScene.SetActive(false);
+                        loginText = login.text;
+                        break;
+                    case 2:
+                        PlayerPrefs.SetInt("id", currentUser[0]._id);
+                        loggedIn.text = login.text;
+                        loggedScene.SetActive(true);
+                        notLoggedScene.SetActive(false);
+                        adminPanel.SetActive(true);
+                        loginText = login.text;
+                        break;
+                    default:
+                        notLoggedIn.text = "Something went wrong.";
+                        Debug.Log("Current user status: " + currentUser[0].status);
+                        break;
                 }
             }
             else

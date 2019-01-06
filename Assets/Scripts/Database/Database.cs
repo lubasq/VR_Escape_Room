@@ -172,6 +172,59 @@ public class Database {
         }
     }
 
+    public bool DBUpdate(string tableName, string[] columns, string[] values, string[] whereColumns, string[] whereValues)
+    {
+        string sqlQuery = "UPDATE " + tableName + " SET ";
+
+        if (columns.Length > 0)
+        {
+            for (int i = 0; i < columns.Length; i++)
+            {
+                sqlQuery += columns[i] + " = " + values[i];
+
+                if ((columns.Length > 1) && (i < columns.Length - 1))
+                {
+                    sqlQuery += ", ";
+                }
+            }
+        }        
+
+        if (whereColumns.Length > 0)
+        {
+            sqlQuery += " WHERE ";
+
+            for (int i = 0; i < whereColumns.Length; i++)
+            {
+                sqlQuery += whereColumns[i] + "='" + whereValues[i] + "'";
+
+                if ((whereColumns.Length > 1) && (i < whereColumns.Length - 1))
+                {
+                    sqlQuery += " AND ";
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("WHERE inj UPDATE SQL is mandatory");
+            return false;            
+        }
+
+        try
+        {
+            //polacz sie z baza i wykonaj polecenie
+            DBConnetion.Open();
+            DBCommand = DBConnetion.CreateCommand();
+            DBCommand.CommandText = sqlQuery;
+            DBDataReader = DBCommand.ExecuteReader();
+            return true;
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log("Problem z Update, " + e.ToString());
+            return false;
+        }
+    }
+
     /// <summary>
     /// Funkcja zamykająca połączenie i zerowanie informacji
     /// w obiekcie.
