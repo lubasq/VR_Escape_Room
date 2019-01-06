@@ -15,6 +15,7 @@ public class KeyboardContoller : MonoBehaviour {
     [SerializeField] private TMP_InputField rankLogin;
     [SerializeField] private TMP_InputField rankPassword;
     [SerializeField] private TMP_InputField rankMail;
+    [SerializeField] private TMP_InputField adminSearch;
     [SerializeField] private TMP_InputField activeInput = null;
     [SerializeField] char[] nameChar = new char[30];
     [SerializeField] string alpha = null;
@@ -132,6 +133,15 @@ public class KeyboardContoller : MonoBehaviour {
         keyboardCanvas.SetActive(true);
         word = null;
         activeInput = rankMail;
+    }
+
+    private void AdminSearch()
+    {
+        if (showButtons == false) { showButtons = !showButtons; };
+        Buttons();
+        keyboardCanvas.SetActive(true);
+        word = null;
+        activeInput = adminSearch;
     }
 
     private void Buttons()

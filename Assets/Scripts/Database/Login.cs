@@ -34,8 +34,10 @@ public class Login : MonoBehaviour
     [SerializeField] private TMP_Text notLoggedIn;
     [SerializeField] private GameObject loggedScene;
     [SerializeField] private GameObject notLoggedScene;
+    [SerializeField] private GameObject adminPanel;
 
     public static string loginText;
+    private int userStatus;
 
     void Start()
     {
@@ -61,7 +63,14 @@ public class Login : MonoBehaviour
             List<UserData> currentUser = new List<UserData>();
             global::Database user = new global::Database();
             IDataReader reader = user.DBSelect("Users", new string[] { }, new string[] { "login", "password" }, new string[] { login.text, password.text }, new string[] { }, "");
-            
+            /*@@@@@@@@@@@@@@@@@@@@@
+
+
+            wywołaj mi tu podstawianie do statusu, ze userStatus = x;
+
+            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+
             //chage it to list, interface have no possibility to check if any rows exist.
             while (reader.Read())
             {
@@ -75,11 +84,30 @@ public class Login : MonoBehaviour
             //że jesteś zalogowany.
             if (currentUser.Count > 0)
             {
-                PlayerPrefs.SetInt("id", currentUser[0]._id);
-                loggedIn.text = login.text;
-                loggedScene.SetActive(true);
-                notLoggedScene.SetActive(false);
-                loginText = login.text;
+                if (userStatus == -1)
+                {
+                    notLoggedIn.text = "Your account has been deleted.";
+                }
+                else if (userStatus == 0)
+                {
+                    notLoggedIn.text = "Your account has been banned.";
+                }
+                else if (userStatus == 1)
+                {
+                    PlayerPrefs.SetInt("id", currentUser[0]._id);
+                    loggedIn.text = login.text;
+                    loggedScene.SetActive(true);
+                    notLoggedScene.SetActive(false);
+                    loginText = login.text;
+                } else if (userStatus == 2)
+                {
+                    PlayerPrefs.SetInt("id", currentUser[0]._id);
+                    loggedIn.text = login.text;
+                    loggedScene.SetActive(true);
+                    notLoggedScene.SetActive(false);
+                    adminPanel.SetActive(true);
+                    loginText = login.text;
+                }
             }
             else
             {
