@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using TMPro;
@@ -13,20 +14,23 @@ public class Timer : MonoBehaviour
     private float startTime1;
     private bool delay = true;
     private float t;
-    private string minutes;
-    private string seconds;
+    private static string minutes;
+    private static string seconds;
     private float delayTime;
+    string timeDB = string.Format("{0:D2}:{1:D2}", minutes, seconds);
 
     void Start()
     {
-        delayTime = 2;
+        delayTime = 0;//Set delay time here
         startTime = Time.time;
         startTime1 = Time.time + delayTime;
+        //TimeSpan timeSpan = timeSpan.FromSeconds(time);
+        Debug.Log(System.DateTime.Now.ToString("yyyy-mm-dd"));
+        Debug.Log(System.DateTime.Now);
     }
 
     void Update()
     {
-
         if (delay)
         {
             t = Time.time - startTime;
@@ -47,25 +51,27 @@ public class Timer : MonoBehaviour
 
         if (t >= 60)
         {
+            timeDB = string.Format("{0:D2}:{1:D2}", minutes, seconds);
             doorTimer.text = minutes + "m " + seconds + "s";
             pauseTimer.text = minutes + "m " + seconds + "s";
             endTimer.text = minutes + "m " + seconds + "s";
         }
         else
         {
+            timeDB = string.Format("{0:D2}:{1:D2}", minutes, seconds);
             doorTimer.text = seconds + "s";
             pauseTimer.text = seconds + "s";
             endTimer.text = seconds + "s";
         }
     }
 
-    private void SaveScoreToDB()
+    public void SaveScoreToDB()
     {
-
+        
         string id = PlayerPrefs.GetInt("id").ToString();
         global::Database doDB = new global::Database();        
 
-        if (doDB.DBInsert("Scores", new string[] { "game_date", "game_time", "Users_id_user", "Levels_id_level" }, new string[] { System.DateTime.Now.ToString("yyyy-mm-dd"), endTimer.text, id ,"1" })) 
+        if (doDB.DBInsert("Scores", new string[] { "game_date", "game_time", "Users_id_user", "Levels_id_level" }, new string[] { System.DateTime.Now.ToString("yyyy-mm-dd"), timeDB, id ,"1" })) 
         {
             Debug.Log("Score saved");
         }

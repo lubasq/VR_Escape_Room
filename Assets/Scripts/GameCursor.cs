@@ -216,6 +216,8 @@ public class GameCursor : MonoBehaviour
 
     public void Ending()
     {
+        Timer var = new Timer();
+        var.SaveScoreToDB();
         endGameObject.SetActive(true);
         pause = true;
         Player.position = endPos;
