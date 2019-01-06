@@ -24,9 +24,6 @@ public class Timer : MonoBehaviour
         delayTime = 0;//Set delay time here
         startTime = Time.time;
         startTime1 = Time.time + delayTime;
-        //TimeSpan timeSpan = timeSpan.FromSeconds(time);
-        Debug.Log(System.DateTime.Now.ToString("yyyy-mm-dd"));
-        Debug.Log(System.DateTime.Now);
     }
 
     void Update()
@@ -71,7 +68,7 @@ public class Timer : MonoBehaviour
         string id = PlayerPrefs.GetInt("id").ToString();
         global::Database doDB = new global::Database();        
 
-        if (doDB.DBInsert("Scores", new string[] { "game_date", "game_time", "Users_id_user", "Levels_id_level" }, new string[] { System.DateTime.Now.ToString("yyyy-MM-d"), timeDB, id ,"1" })) 
+        if (doDB.DBInsert("Scores", new string[] { "game_date", "game_time", "Users_id_user", "Levels_id_level" }, new string[] { System.DateTime.Now.ToString("yyyy-MM-dd"), timeDB, id ,"1" })) 
         {
             Debug.Log("Score saved");
         }

@@ -6,8 +6,9 @@ using System.Data;
 
 public class AdminController : MonoBehaviour
 {
-
     [SerializeField] private TMP_InputField search;
+    [SerializeField] private TMP_Text alert;
+    [SerializeField] private TMP_Text playerData;
     private int[] user;         //[0] - ID, [1] - status
     private global::Database DB;
 
@@ -18,30 +19,36 @@ public class AdminController : MonoBehaviour
         switch (user[1])
         {
             case -1:
-                Debug.Log("Player already deleted, you couldn't ban him.");
+                //Debug.Log("Player already deleted.");
+                alert.text = "Player already deleted.";
                 break;
             case 0:
-                Debug.Log("Player already banned");
+                //Debug.Log("Player already banned");
+                alert.text = "Player already banned.";
                 break;
             case 1:
                 DB = new global::Database();
 
-                if (DB.DBUpdate("Users", new string[] { "status" }, new string[] { "0" }, new string[] { "id" }, new string[] { user[0].ToString() }))
+                if (DB.DBUpdate("Users", new string[] { "user_status" }, new string[] { "0" }, new string[] { "id_user" }, new string[] { user[0].ToString() }))
                 {
-                    Debug.Log("Banned succesfully");
+                    //Debug.Log("Banned succesfully.");
+                    alert.text = "Banned succesfully.";
                 }
                 else
                 {
-                    Debug.Log("Problems with banning.");
+                    //Debug.Log("Problems with banning.");
+                    alert.text = "Failed.";
                 }
                 DB.DBClose();
                 DB = null;
                 break;
             case 2:
-                Debug.Log("Are u mad? Don't try to change admin status!");
+                //Debug.Log("Are u crazy? Don't try to change admin status!");
+                alert.text = "You can't change status of admin.";
                 break;
             default:
-                Debug.Log("There is no info about player?");
+                //Debug.Log("There is no info about player?");
+                alert.text = "Player doesn't exist.";
                 break;
         }
     }
@@ -53,30 +60,36 @@ public class AdminController : MonoBehaviour
         switch (user[1])
         {
             case -1:
-                Debug.Log("Player already deleted, you couldn't ban him.");
+                //Debug.Log("Player already banned.");
+                alert.text = "Player already banned.";
                 break;
             case 0:
-                Debug.Log("Player already banned");
+                //Debug.Log("Player already banned");
+                alert.text = "Player already banned.";
                 break;
             case 1:
                 DB = new global::Database();
 
-                if (DB.DBUpdate("Users", new string[] { "status" }, new string[] { "-1" }, new string[] { "id" }, new string[] { user[0].ToString() }))
+                if (DB.DBUpdate("Users", new string[] { "user_status" }, new string[] { "-1" }, new string[] { "id_user" }, new string[] { user[0].ToString() }))
                 {
-                    Debug.Log("Banned succesfully");
+                    //Debug.Log("Succesfully deleted");
+                    alert.text = "Succesfully deleted";
                 }
                 else
                 {
-                    Debug.Log("Problems with banning.");
+                    //Debug.Log("Problems with removing.");
+                    alert.text = "Problems with removing.";
                 }
                 DB.DBClose();
                 DB = null;
                 break;
             case 2:
-                Debug.Log("Are u mad? Don't try to change admin status!");
+                //Debug.Log("Are u mad? Don't try to change admin status!");
+                alert.text = "You can't change status of admin.";
                 break;
             default:
-                Debug.Log("There is no info about player?");
+                //Debug.Log("There is no info about player?");
+                alert.text = "Player doesn't exist.";
                 break;
         }
     }
@@ -88,30 +101,36 @@ public class AdminController : MonoBehaviour
         switch (user[1])
         {
             case -1:
-                Debug.Log("Player already deleted, you couldn't unban him.");
+                //Debug.Log("Player already deleted, you couldn't unban him.");
+                alert.text = "You can't unban deleted player";
                 break;
             case 0:
                 DB = new global::Database();
 
-                if (DB.DBUpdate("Users", new string[] { "status" }, new string[] { "1" }, new string[] { "id" }, new string[] { user[0].ToString() }))
+                if (DB.DBUpdate("Users", new string[] { "user_status" }, new string[] { "1" }, new string[] { "id_user" }, new string[] { user[0].ToString() }))
                 {
-                    Debug.Log("Unbanned succesfully");
+                    //Debug.Log("Unbanned succesfully");
+                    alert.text = "Unbanned succesfully";
                 }
                 else
                 {
-                    Debug.Log("Problems with unbanning.");
+                   //Debug.Log("Problems with unbanning.");
+                    alert.text = "Problems with unbanning.";
                 }
                 DB.DBClose();
                 DB = null;
                 break;
             case 1:
-                Debug.Log("Player isn't banned now.");
+                //Debug.Log("Player isn't banned.");
+                alert.text = "Player isn't banned.";
                 break;
             case 2:
-                Debug.Log("Are u mad? Don't try to change admin status!");
+                //Debug.Log("Are u mad? Don't try to change admin status!");
+                alert.text = "You can't change status of admin.";
                 break;
             default:
-                Debug.Log("There is no info about player?");
+               //Debug.Log("There is no info about player?");
+                alert.text = "Player doesn't exist.";
                 break;
         }
     }
@@ -119,7 +138,7 @@ public class AdminController : MonoBehaviour
     public void SearchPlayer()
     {
         //search.text  -  searched var
-        Debug.Log("You are looking for player " + search.text);
+        //Debug.Log("You are looking for player " + search.text);
 
         DB = new global::Database();
         IDataReader reader = DB.DBSelect("Users", new string[] { }, new string[] { "login", }, new string[] { search.text }, new string[] { }, "");
@@ -135,11 +154,13 @@ public class AdminController : MonoBehaviour
 
         if (user[0] != null)
         {
-            Debug.Log("Info about player confirmed");
+            //Debug.Log("Info about player confirmed");
+            playerData.text = "You are changing " + search.text + "'s status.";
         }
         else
         {
-            Debug.Log("Wrong login. Check it and try again.");
+            //Debug.Log("Wrong login. Check it and try again.");
+            playerData.text = "Wrong login. Check it and try again.";
         }
     }
 }

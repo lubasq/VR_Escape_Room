@@ -32,9 +32,11 @@ public class GameCursor : MonoBehaviour
     private static float b = 1.5f;
     private static float c = 5.0f;
     Vector3 endPos = new Vector3(a, b, c);
+    private bool dbSaverStatus;
 
     void Start()
     {
+        dbSaverStatus = false;
         Time.timeScale = 1;
         cursorInstance = Instantiate(gameCursorPrefab);
         teleportInstance = Instantiate(teleportPrefab);
@@ -216,11 +218,15 @@ public class GameCursor : MonoBehaviour
 
     public void Ending()
     {
-        Timer var = new Timer();
-        var.SaveScoreToDB();
-        endGameObject.SetActive(true);
-        pause = true;
-        Player.position = endPos;
-        Time.timeScale = 0;
+        if (!dbSaverStatus)
+        {
+            Time.timeScale = 0;
+            Timer var = new Timer();
+            var.SaveScoreToDB();
+            endGameObject.SetActive(true);
+            pause = true;
+            Player.position = endPos;
+            dbSaverStatus = !dbSaverStatus;
+        }
     }
 }

@@ -63,7 +63,7 @@ public class Registration : MonoBehaviour
         catch(Exception ex)
         {
             error += "\nEmail incorrect.";
-            Debug.Log("EMAIL" + ex.Message);
+            //Debug.Log("EMAIL" + ex.Message);
         }
 
         //show info about incorrect data

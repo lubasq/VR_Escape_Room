@@ -57,8 +57,8 @@ public class Login : MonoBehaviour
     private void LoginIn()
     {
         //check path of database
-        Debug.Log("Persistent path: " + Application.persistentDataPath);
-        Debug.Log("dataPath path: " + Application.dataPath);
+        //Debug.Log("Persistent path: " + Application.persistentDataPath);
+        //Debug.Log("dataPath path: " + Application.dataPath);
         if( ValidateData(login.text, password.text) )
         {
             //get data

@@ -57,7 +57,7 @@ public class KeyboardContoller : MonoBehaviour {
         nameChar[wordIndex] = keepchar[0];
         alpha = nameChar[wordIndex].ToString();
         word = word + alpha;
-        Debug.Log("Adding letter: " + alpha);
+        //Debug.Log("Adding letter: " + alpha);
         activeInput.text = word;
         isShiftClicked = false;
         EventSystem.current.SetSelectedGameObject(null);
@@ -66,7 +66,7 @@ public class KeyboardContoller : MonoBehaviour {
     private void Backspace(string alphabet)
     {
         alpha = null;
-        Debug.Log("Deleting letter: " + alpha);
+        //Debug.Log("Deleting letter: " + alpha);
         if (wordIndex >=0)
         {
             wordIndex--;
@@ -146,9 +146,9 @@ public class KeyboardContoller : MonoBehaviour {
 
     private void Buttons()
     {
-        Debug.Log("Current state: " + showButtons);
+        //Debug.Log("Current state: " + showButtons);
         showButtons = !showButtons;
-        Debug.Log("Changing state to: " + showButtons);
+        //Debug.Log("Changing state to: " + showButtons);
         Login.SetActive(showButtons);
         Register.SetActive(showButtons);
         Create.SetActive(showButtons);

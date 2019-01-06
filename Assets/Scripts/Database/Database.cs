@@ -106,7 +106,7 @@ public class Database {
             sqlQuery += " ORDER BY " + orderBy;
         }
 
-        Debug.Log(sqlQuery);
+        //Debug.Log(sqlQuery);
         //polacz sie z baza i wykonaj polecenie
         DBConnetion.Open();
         DBCommand = DBConnetion.CreateCommand();
