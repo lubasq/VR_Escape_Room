@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Mono.Data.Sqlite;
-using System.Data;
-using System;
+﻿using UnityEngine;
 using TMPro;
 using System.Text.RegularExpressions;
-using System.Net.Mail;
+using System.Data;
 
 public class Registration : MonoBehaviour
 {
@@ -17,14 +12,15 @@ public class Registration : MonoBehaviour
     [SerializeField] private GameObject notRegistered;
     [SerializeField] private TMP_Text notRegisteredAlert;
     [SerializeField] private TMP_Text RegisteredAlert;
+    private string error = "";
     
 
     public void RegisterPlayer()
     {
         global::Database register = new global::Database();
-        if (ValidateData(login.text, password.text, email.text))
+        if (ValidateData(login.text, password.text, email.text) && !PlayerExist(login.text))
         {
-            if (register.DBInsert("Users", new string[] { "login", "password", "email" }, new string[] { login.text, password.text, email.text }))
+            if (register.DBInsert("Users", new string[] { "login", "password", "email", "user_status" }, new string[] { login.text, password.text, email.text, "1" }))
             {
                 registered.SetActive(true);
                 notRegistered.SetActive(false);
@@ -36,13 +32,12 @@ public class Registration : MonoBehaviour
             }
             register.DBClose();
             register = null;
-        }
+        } 
 
     }
 
     private bool ValidateData(string login, string password, string email)
     {
-        string error = "";
         var regex = new Regex("^[a-zA-Z0-9]{4,15}$");
 
         //if login is too short or contain illegal characters
@@ -56,19 +51,14 @@ public class Registration : MonoBehaviour
             error += "\nPassword incorrect.";
         }
 
-        try
+        string emailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                                   + "@"
+                                   + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))\z";
+        var emailRegex = new Regex(emailPattern);
+        if (!emailRegex.IsMatch(email))
         {
-            MailAddress m = new MailAddress(email);
-
-            if(!m.Address == email)
-            {
-                error += "\nEmail incorrect.";
-            }
-        }
-        catch(Exception ex)
-        {
-            error += "\nSomething went wrong with email validation.";
-            Debug.Log("EMAIL: " + ex.Message);
+            Debug.Log(email);
+            error += "\nEmail incorrect.";        
         }
 
         //show info about incorrect data
@@ -81,5 +71,22 @@ public class Registration : MonoBehaviour
         {
             return true;
         }
+    }
+
+    private bool PlayerExist(string login)
+    {
+        bool statement = false;
+        global::Database DB = new global::Database();
+        IDataReader reader = DB.DBSelect("Users", new string[] { "login" }, new string[] { "login" }, new string[] { login }, new string[] { }, "");
+
+        //check if any player with this login exist
+        while (reader.Read())
+        {
+            statement = true;            
+        }
+        //close connection 
+        DB.DBClose();
+        DB = null;
+        return statement;
     }
 }

@@ -172,6 +172,15 @@ public class Database {
         }
     }
 
+    /// <summary>
+    /// Aktualizacja danych w bazie
+    /// </summary>
+    /// <param name = "tableName" > Nazwa przeszukiwanej tabeli</param>
+    /// <param name="columns" > Nazwa kolumn do aktualizacji</param>
+    /// <param name="values"> Nazwy kolumn, z których chcemy mieć informacje. Domyślnie *</param>
+    /// <param name="whereColumns"> Nazwy kolumn, według których ma być szukany wynik</param>
+    /// <param name="whereValues"> Wartości pól dla szukanych wynikow</param>
+    /// <returns>Zwraca TRUE jezeli doda poprawnie, FALSE w przypadku bledu.</returns>
     public bool DBUpdate(string tableName, string[] columns, string[] values, string[] whereColumns, string[] whereValues)
     {
         string sqlQuery = "UPDATE " + tableName + " SET ";
@@ -220,7 +229,7 @@ public class Database {
         }
         catch (System.Exception e)
         {
-            Debug.Log("Problem z Update, " + e.ToString());
+            Debug.Log("Problem z Updatem " + e.ToString());
             return false;
         }
     }
