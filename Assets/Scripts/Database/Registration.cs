@@ -59,11 +59,16 @@ public class Registration : MonoBehaviour
         try
         {
             MailAddress m = new MailAddress(email);
+
+            if(!m.Address == email)
+            {
+                error += "\nEmail incorrect.";
+            }
         }
         catch(Exception ex)
         {
-            error += "\nEmail incorrect.";
-            //Debug.Log("EMAIL" + ex.Message);
+            error += "\nSomething went wrong with email validation.";
+            Debug.Log("EMAIL: " + ex.Message);
         }
 
         //show info about incorrect data
