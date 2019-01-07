@@ -66,7 +66,7 @@ public class Timer : MonoBehaviour
             minutes = "0" + minutes;
         }
         timeDB = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
-        Debug.Log(timeDB);
+        //Debug.Log(timeDB);
     }
 
     public void SaveScoreToDB()

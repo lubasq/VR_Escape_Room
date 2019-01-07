@@ -60,7 +60,7 @@ public class Registration : MonoBehaviour
         {
             MailAddress m = new MailAddress(email);
 
-            if(!m.Address == email)
+            //if(!m.Address == email)
             {
                 error += "\nEmail incorrect.";
             }
