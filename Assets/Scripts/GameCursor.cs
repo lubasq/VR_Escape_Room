@@ -108,7 +108,7 @@ public class GameCursor : MonoBehaviour
                     float y = handInstance.transform.eulerAngles.y;
                     float z = handInstance.transform.eulerAngles.z;
                     handInstance.transform.Translate(Vector3.back * 0.05f);
-                    handInstance.transform.rotation = Quaternion.Euler(-45f, y, z);
+                    handInstance.transform.rotation = Quaternion.Euler(-50f, y, z);
                     var hitReceiver = hit.collider.gameObject.GetComponent<HitReceiver>();
                     if (hitReceiver != null)
                     {
