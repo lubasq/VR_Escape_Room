@@ -92,6 +92,7 @@ public class Login : MonoBehaviour
                         loggedIn.text = login.text;
                         loggedScene.SetActive(true);
                         notLoggedScene.SetActive(false);
+                        adminPanel.SetActive(false);
                         loginText = login.text;
                         break;
                     case 2:
