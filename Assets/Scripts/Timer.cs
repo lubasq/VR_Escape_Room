@@ -14,10 +14,11 @@ public class Timer : MonoBehaviour
     private float startTime1;
     private bool delay = true;
     private float t;
+    private static string hours="00";
     private static string minutes;
     private static string seconds;
     private float delayTime;
-    string timeDB = string.Format("{0:D2}:{1:D2}", minutes, seconds);
+    string timeDB = string.Format("{0:D2}:{1:D2}:{2:D2}",hours, minutes, seconds);
 
     void Start()
     {
@@ -28,38 +29,44 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
+        
         if (delay)
         {
             t = Time.time - startTime;
             minutes = ((int)t / 60).ToString();
             seconds = (t % 60).ToString("f0");
-
             if (seconds == delayTime.ToString())
             {
                 delay =! delay;
             }
         } else
         {
-
             t = Time.time - startTime1;
             minutes = ((int)t / 60).ToString();
             seconds = (t % 60).ToString("f0");
         }
 
         if (t >= 60)
-        {
-            timeDB = string.Format("{0:D2}:{1:D2}", minutes, seconds);
-            doorTimer.text = minutes + "m " + seconds + "s";
-            pauseTimer.text = minutes + "m " + seconds + "s";
-            endTimer.text = minutes + "m " + seconds + "s";
+        {       doorTimer.text = minutes + "m " + seconds + "s";
+                pauseTimer.text = minutes + "m " + seconds + "s";
+                endTimer.text = minutes + "m " + seconds + "s";
         }
         else
         {
-            timeDB = string.Format("{0:D2}:{1:D2}", minutes, seconds);
-            doorTimer.text = seconds + "s";
-            pauseTimer.text = seconds + "s";
-            endTimer.text = seconds + "s";
+                doorTimer.text = seconds + "s";
+                pauseTimer.text = seconds + "s";
+                endTimer.text = seconds + "s";            
         }
+        if (Mathf.Round(t % 60) < 10)
+        {
+            seconds = "0" + seconds;
+        }
+        if (Mathf.Round(t / 60) < 10)
+        {
+            minutes = "0" + minutes;
+        }
+        timeDB = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
+        Debug.Log(timeDB);
     }
 
     public void SaveScoreToDB()
