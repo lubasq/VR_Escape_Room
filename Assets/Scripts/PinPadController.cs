@@ -20,11 +20,13 @@ public class PinPadController : MonoBehaviour
     [SerializeField] private TMP_Text numberTwoCode;
     [SerializeField] private TMP_Text numberThreeCode;
     [SerializeField] private TMP_Text numberFourCode;
+    [SerializeField] private TMP_Text numberFiveCode;
 
     private int numberTwo;
     private int numberOne;
     private int numberThree;
     private int numberFour;
+    private int numberFive;
 
 
     void Start()
@@ -91,6 +93,9 @@ public class PinPadController : MonoBehaviour
         numberFour = Random.Range(1, 9);
         numberFourCode.text = "IV." + numberFour;
         codeString += numberFour;
+        numberFive = Random.Range(1, 9);
+        numberFiveCode.text = "V." + numberFive;
+        codeString += numberFive;
         Debug.Log("Your code is: " + codeString);
     }
 }
