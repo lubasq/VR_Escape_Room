@@ -19,13 +19,13 @@ public class MenuController : MonoBehaviour
 
     public void GameSceneLoader()
     {
-        SceneManager.LoadScene("TestRoom");
+        SceneManager.LoadScene("EscapeRoom");
     }
 
     public void RestartScene()
     {
         GameVariables.resetVariables();
-        SceneManager.LoadScene("TestRoom");
+        SceneManager.LoadScene("EscapeRoom");
     }
 
     public void MenuScene()

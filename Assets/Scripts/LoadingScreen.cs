@@ -16,7 +16,7 @@ public class LoadingScreen : MonoBehaviour {
 
     IEnumerator LoadScene()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync("TestRoom");
+        AsyncOperation operation = SceneManager.LoadSceneAsync("EscapeRoom");
         loadingScreen.SetActive(true);
         while (!operation.isDone)
         {
