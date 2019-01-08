@@ -20,7 +20,7 @@ public class GameCursor : MonoBehaviour
     [SerializeField] private float RayLenght = 3f;
     [SerializeField] private GameObject pauseObject;
     [SerializeField] private GameObject endGameObject;
-
+    [SerializeField] private AudioSource stepSound;
 
     private GameObject cursorInstance;
     private GameObject teleportInstance;
@@ -47,6 +47,7 @@ public class GameCursor : MonoBehaviour
         handInstance.SetActive(false);
         coloredHandInstance.SetActive(false);
         pauseObject.SetActive(false);
+        stepSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -170,7 +171,7 @@ public class GameCursor : MonoBehaviour
     private void CheckInput()
     {
         if (Input.GetButtonDown("Fire1"))
-        {
+        {            
             Teleport();
         }
         if (Input.GetButtonDown("Cancel"))
@@ -188,6 +189,7 @@ public class GameCursor : MonoBehaviour
     {
         if (teleportInstance.activeInHierarchy)
         {
+            stepSound.Play();
             Vector3 markerPosition = teleportInstance.transform.position;
             Player.position = new Vector3(markerPosition.x, Player.position.y, markerPosition.z);
         }
