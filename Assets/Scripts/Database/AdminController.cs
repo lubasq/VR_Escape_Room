@@ -9,7 +9,7 @@ public class AdminController : MonoBehaviour
     [SerializeField] private TMP_InputField search;
     [SerializeField] private TMP_Text alert;
     [SerializeField] private TMP_Text playerData;
-    private int[] user;         //[0] - ID, [1] - status
+    private int[] user = new int[] { 99, 99 };         //[0] - ID, [1] - status
     private global::Database DB;
 
     public void BanPlayer()
@@ -51,6 +51,7 @@ public class AdminController : MonoBehaviour
                 alert.text = "Player doesn't exist.";
                 break;
         }
+    user[0] = 99;
     }
 
     public void DeletePlayer()
@@ -92,6 +93,7 @@ public class AdminController : MonoBehaviour
                 alert.text = "Player doesn't exist.";
                 break;
         }
+    user[0] = 99;
     }
 
     public void UnbanPlayer()
@@ -133,13 +135,14 @@ public class AdminController : MonoBehaviour
                 alert.text = "Player doesn't exist.";
                 break;
         }
+    user[0] = 99;
     }
 
     public void SearchPlayer()
     {
         //search.text  -  searched var
         //Debug.Log("You are looking for player " + search.text);
-
+        bool userExist = false;
         DB = new global::Database();
         IDataReader reader = DB.DBSelect("Users", new string[] { }, new string[] { "login", }, new string[] { search.text }, new string[] { }, "");
 
@@ -147,12 +150,18 @@ public class AdminController : MonoBehaviour
         while (reader.Read())
         {
             user = new int[2] { reader.GetInt32(0), reader.GetInt32(4) };
+            userExist = true;
         }
         //close connection 
         DB.DBClose();
         DB = null;
+        Debug.Log(user[0]);
+        if (!userExist)
+        {
+            user[0] = 99;
+        }
 
-        if (user[0] != null)
+        if (user[0] != 99)
         {
             //Debug.Log("Info about player confirmed");
             playerData.text = "You are changing " + search.text + "'s status.";
@@ -162,5 +171,7 @@ public class AdminController : MonoBehaviour
             //Debug.Log("Wrong login. Check it and try again.");
             playerData.text = "Wrong login. Check it and try again.";
         }
+
+        
     }
 }
