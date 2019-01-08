@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// @author Adrian Madoń 
+
 public static class GameVariables
 { 
     public static bool gotKey = false;

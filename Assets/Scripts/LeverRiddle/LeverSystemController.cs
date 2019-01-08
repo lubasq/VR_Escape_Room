@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// @author Adrian Madoń 
+
 public class LeverSystemController : MonoBehaviour
 {
 

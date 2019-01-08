@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// @author Adrian Madoń 
+
 public class LeverDeactivater : MonoBehaviour
 {
 
     public List<GameObject> leversList;
-
-
-    void Start()
-    {
-    }
 
     void Update()
     {

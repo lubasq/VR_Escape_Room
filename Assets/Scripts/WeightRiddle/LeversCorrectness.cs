@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// @author Adrian Madoń 
+
 public class LeversCorrectness : MonoBehaviour {
 
-    private WeightSystemController[] removeScript;
+    private WeightRiddleController[] removeScript;
     private Animation anim;
 
 	void Start () {
-        removeScript = GetComponentsInChildren<WeightSystemController>();
+        removeScript = GetComponentsInChildren<WeightRiddleController>();
         anim = GetComponent<Animation>();
         anim.wrapMode = WrapMode.ClampForever;
 	}
@@ -16,7 +18,7 @@ public class LeversCorrectness : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         if(GameVariables.sacksInRow) {
-             foreach(WeightSystemController remover in removeScript) {
+             foreach(WeightRiddleController remover in removeScript) {
                 Destroy(remover);
             }
             anim.Play();
