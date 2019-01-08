@@ -1882,10 +1882,7 @@ MonoBehaviour:
   login: {fileID: 733901246}
   password: {fileID: 942912112}
   email: {fileID: 390665487}
-  registered: {fileID: 379728741}
-  notRegistered: {fileID: 870729217}
-  notRegisteredAlert: {fileID: 763104329}
-  RegisteredAlert: {fileID: 1358121105}
+  registrationAlert: {fileID: 763104329}
 --- !u!1 &162948961
 GameObject:
   m_ObjectHideFlags: 0
@@ -8531,7 +8528,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Restart
+  m_Text: Log Out
 --- !u!222 &598206193
 CanvasRenderer:
   m_ObjectHideFlags: 0

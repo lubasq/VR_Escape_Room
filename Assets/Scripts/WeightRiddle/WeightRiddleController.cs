@@ -51,7 +51,7 @@ public class WeightRiddleController : MonoBehaviour
             for (int i = 0; i < sacks.Length; ++i) 
                 // (resetPos) = (sacks[0].transform.position = resetPos) = (sacks[0].transform.position);
                 startPos[i] = sacks[i].transform.position;
-
+                //probs causing bugs
                 if (pulled[whichLever] == 3) {
                     for (int i = 0; i < pulled.Length; ++i) {
                         pulled[i] = 0;
@@ -63,7 +63,7 @@ public class WeightRiddleController : MonoBehaviour
 
     void OnDisable()
     {
-        if (WeightRiddleController.pulled[0] == 2 && WeightRiddleController.pulled[1] == 2 && WeightRiddleController.pulled[2] == 1) {
+        if (pulled[0] == 2 && pulled[1] == 2 && pulled[2] == 1) {
             GameVariables.sacksInRow = true;
         }
         else {

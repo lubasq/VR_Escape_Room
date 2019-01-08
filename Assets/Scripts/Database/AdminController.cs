@@ -62,7 +62,7 @@ public class AdminController : MonoBehaviour
         {
             case -1:
                 //Debug.Log("Player already banned.");
-                alert.text = "Player already banned.";
+                alert.text = "Player already deleted, can't be banned.";
                 break;
             case 0:
                 //Debug.Log("Player already banned");

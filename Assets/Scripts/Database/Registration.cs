@@ -8,10 +8,7 @@ public class Registration : MonoBehaviour
     [SerializeField] private TMP_InputField login;
     [SerializeField] private TMP_InputField password;
     [SerializeField] private TMP_InputField email;
-    [SerializeField] private GameObject registered;
-    [SerializeField] private GameObject notRegistered;
-    [SerializeField] private TMP_Text notRegisteredAlert;
-    [SerializeField] private TMP_Text RegisteredAlert;
+    [SerializeField] private TMP_Text registrationAlert;
     private string error = "";
     
 
@@ -22,17 +19,26 @@ public class Registration : MonoBehaviour
         {
             if (register.DBInsert("Users", new string[] { "login", "password", "email", "user_status" }, new string[] { login.text, password.text, email.text, "1" }))
             {
-                registered.SetActive(true);
-                notRegistered.SetActive(false);
-                RegisteredAlert.text = "Account created succesfully. \n You can now log in and play!";
+                registrationAlert.text = "Account created succesfully. \n You can now log in and play!";
             }
             else
             {
-                notRegisteredAlert.text = "Ooops, something wrong! \n Please check your data and try again.";
+                registrationAlert.text = "Ooops, something wrong! \n Please check your data and try again.";
             }
             register.DBClose();
             register = null;
-        } 
+        }
+        else
+        {
+            if (error.Length > 0)
+            {
+                registrationAlert.text = error;
+            }
+            else
+            {
+                registrationAlert.text = "User with this login already exist.";
+            }
+        }
 
     }
 
@@ -62,7 +68,6 @@ public class Registration : MonoBehaviour
         }
 
         //show info about incorrect data
-        notRegisteredAlert.text = error;
         if (error.Length > 0)
         {
             return false;
