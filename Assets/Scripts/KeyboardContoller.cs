@@ -135,7 +135,7 @@ public class KeyboardContoller : MonoBehaviour {
         activeInput = rankMail;
     }
 
-    private void AdminSearch()
+    public void AdminSearch()
     {
         if (showButtons == false) { showButtons = !showButtons; };
         Buttons();
